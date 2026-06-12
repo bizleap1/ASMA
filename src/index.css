@@ -1,0 +1,134 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-accent-primary: var(--accent-primary);
+  --color-accent-secondary: var(--accent-secondary);
+
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Playfair Display", serif;
+}
+
+/* Original Light Themes */
+:root, [data-theme="champagne"] {
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F9F6F0;
+  --text-primary: #3B3530;
+  --text-secondary: #6B625A;
+  --accent-primary: #D4B06A;
+  --accent-secondary: #B8904D;
+}
+
+[data-theme="pearl"] {
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F2F5F3;
+  --text-primary: #1A3326;
+  --text-secondary: #4A6356;
+  --accent-primary: #D4AF37;
+  --accent-secondary: #063925;
+}
+
+[data-theme="ivory"] {
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #FDF5F6;
+  --text-primary: #362B2C;
+  --text-secondary: #665A5B;
+  --accent-primary: #D4A3A7;
+  --accent-secondary: #B8858A;
+}
+
+/* New Premium Light Themes */
+[data-theme="alabaster"] {
+  --bg-primary: #FAFAFA;
+  --bg-secondary: #F0EFEA;
+  --text-primary: #2E2A27;
+  --text-secondary: #5C544F;
+  --accent-primary: #CD7F32;
+  --accent-secondary: #A0522D;
+}
+
+[data-theme="glacier"] {
+  --bg-primary: #F8F9FA;
+  --bg-secondary: #E9ECEF;
+  --text-primary: #0B1B3D;
+  --text-secondary: #2C3E50;
+  --accent-primary: #0F52BA;
+  --accent-secondary: #003366;
+}
+
+[data-theme="sand"] {
+  --bg-primary: #FDFDF8;
+  --bg-secondary: #F5F5DC;
+  --text-primary: #3B3C36;
+  --text-secondary: #6B6E5B;
+  --accent-primary: #DAA520;
+  --accent-secondary: #B8860B;
+}
+
+html, body {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.5s ease, color 0.5s ease;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  letter-spacing: -0.025em;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary); 
+}
+::-webkit-scrollbar-thumb {
+  background: var(--bg-secondary); 
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary); 
+}
+
+@layer utilities {
+  .animate-marquee {
+    animation: marquee 30s linear infinite;
+  }
+  .animate-marquee:hover {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Google Translate Overrides */
+body {
+  top: 0 !important;
+}
+.skiptranslate {
+  display: none !important;
+}
+#goog-gt-tt {
+  display: none !important;
+}
+.goog-te-banner-frame {
+  display: none !important;
+}
+.goog-te-menu-value:hover {
+  text-decoration: none !important;
+}
+.goog-text-highlight {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
