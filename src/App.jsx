@@ -34,6 +34,17 @@ const TopNav = () => {
   const [profileOpen, setProfileOpen] = React.useState(false);
   const location = useLocation();
 
+  React.useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [mobileMenuOpen]);
+
   // Close profile dropdown when clicking outside
   React.useEffect(() => {
     const handleClickOutside = () => setProfileOpen(false);
@@ -290,7 +301,7 @@ const TopNav = () => {
             )}
 
             <a href="tel:09156953895" className="mt-2 mb-8 w-full py-4 bg-text-primary text-white rounded-xl font-bold tracking-widest text-sm hover:bg-accent-primary transition-colors text-center inline-block flex-shrink-0">
-              Call Now
+              Inquire Now
             </a>
           </div>
         </div>
