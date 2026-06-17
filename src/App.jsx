@@ -26,6 +26,36 @@ const PhoneNumber = ({ number }) => {
   return <span className="translate-no" translate="no">{hindiNumber}</span>;
 };
 
+const SEO = ({ title, description, keywords, image }) => {
+  const defaultTitle = 'Advait Stock Market Academy | Expert Trading Courses';
+  const defaultDesc = 'Master the stock market with Advait Stock Market Academy. We offer premium courses on technical analysis, options trading, and financial freedom in India.';
+  const defaultKeywords = 'stock market academy, trading courses, options trading, technical analysis, stock market India, learn trading, share market training, Advait Stock Market Academy';
+  const defaultImage = 'https://raw.githubusercontent.com/bizleap1/ASMA/main/public/logo-dark.png';
+
+  const fullTitle = title ? `${title} | Advait Stock Market Academy` : defaultTitle;
+
+  return (
+    <Helmet>
+      <title>{fullTitle}</title>
+      <meta name="description" content={description || defaultDesc} />
+      <meta name="keywords" content={keywords || defaultKeywords} />
+      
+      {/* Open Graph / Facebook / WhatsApp */}
+      <meta property="og:type" content="website" />
+      <meta property="og:title" content={fullTitle} />
+      <meta property="og:description" content={description || defaultDesc} />
+      <meta property="og:image" content={image || defaultImage} />
+
+      {/* Twitter */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={fullTitle} />
+      <meta name="twitter:description" content={description || defaultDesc} />
+      <meta name="twitter:image" content={image || defaultImage} />
+    </Helmet>
+  );
+};
+
+
 const TopNav = () => {
   const [scrolled, setScrolled] = React.useState(false);
   const [activeSection, setActiveSection] = React.useState('home');
