@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Routes, Route, useLocation, Link, useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import shubhangiImg from './assets/shubhangi.png';
 import krishnaImg from './assets/krishna.png';
 import vrushaliImg from './assets/vrushali.png';
@@ -3459,6 +3460,7 @@ const VideoHero = () => (
 
 const Home = () => (
   <main className="flex-grow">
+    <SEO title="Home" description="Advait Stock Market Academy - The best place to learn technical analysis, options trading, and fundamental analysis in India." keywords="stock market academy, trading classes, learn trading India, best stock market courses" />
     <VideoHero />
     <MultiChartSection />
     <AboutSection />
@@ -3471,10 +3473,10 @@ const Home = () => (
   </main>
 );
 
-const PageWrapper = ({ children, backHash }) => {
+const PageWrapper = ({ children, backHash, seoTitle, seoDesc, seoKeywords }) => {
   return (
     <main className="flex-grow pt-0 pb-12 min-h-screen relative bg-bg-secondary/5">
-
+      {seoTitle && <SEO title={seoTitle} description={seoDesc} keywords={seoKeywords} />}
       {children}
     </main>
   );
@@ -4225,14 +4227,14 @@ function App() {
       <TopNav />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/analysis" element={<PageWrapper backHash="#analysis"><PageHero title="Analysis" subtitle="Real-time data, institutional insights, and proprietary technical sentiment." image="/hero_analysis_bg.png" tag="Market Intelligence" /><MarketNewsSection /><MultiChartSection /></PageWrapper>} />
-        <Route path="/about" element={<PageWrapper backHash="#about"><PageHero title="About Us" subtitle="Learn about our journey, our mission, and the experts behind Advait." image="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1920&auto=format&fit=crop" tag="Our Story" /><AboutSection hideExploreButton={true} /><MissionVisionSection /><CoreValuesSection /></PageWrapper>} />
-        <Route path="/services" element={<PageWrapper backHash="#services"><PageHero title="Services" subtitle="Comprehensive financial services designed to elevate your trading journey." image="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1920&auto=format&fit=crop" tag="What We Offer" /><ServicesPageSection /></PageWrapper>} />
-        <Route path="/service/:serviceId" element={<PageWrapper backHash="#services"><ServiceDetailsPage /></PageWrapper>} />
-        <Route path="/courses" element={<PageWrapper backHash="#courses"><PageHero title="Courses" subtitle="Master the stock market with our expertly crafted educational programs." image="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1920&auto=format&fit=crop" tag="Education" /><CoursesSection isCoursesPage={true} /></PageWrapper>} />
-        <Route path="/course/:courseId" element={<PageWrapper backHash="#courses"><CourseDetailsPage /></PageWrapper>} />
-        <Route path="/gallery" element={<PageWrapper backHash="#gallery"><PageHero title="Gallery" subtitle="A glimpse into our events, seminars, and academy culture." image="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1920&auto=format&fit=crop" tag="Our Community" /><GallerySection isGalleryPage={true} /></PageWrapper>} />
-        <Route path="/contact" element={<PageWrapper backHash="#contact"><PageHero title="Contact Us" subtitle="Get in touch with our experts. We're here to help you succeed." image="https://images.unsplash.com/photo-1516387938699-a93567ec168e?q=80&w=1920&auto=format&fit=crop" tag="Get in Touch" /><ContactSection isContactPage={true} /></PageWrapper>} />
+        <Route path="/analysis" element={<PageWrapper seoTitle="Market Analysis" seoDesc="Real-time data, institutional insights, and proprietary technical sentiment." backHash="#analysis"><PageHero title="Analysis" subtitle="Real-time data, institutional insights, and proprietary technical sentiment." image="/hero_analysis_bg.png" tag="Market Intelligence" /><MarketNewsSection /><MultiChartSection /></PageWrapper>} />
+        <Route path="/about" element={<PageWrapper seoTitle="About Us" seoDesc="Learn about Advait Stock Market Academy's journey, mission, and expert team." seoKeywords="about advait academy, stock market experts, trading academy background" backHash="#about"><PageHero title="About Us" subtitle="Learn about our journey, our mission, and the experts behind Advait." image="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1920&auto=format&fit=crop" tag="Our Story" /><AboutSection hideExploreButton={true} /><MissionVisionSection /><CoreValuesSection /></PageWrapper>} />
+        <Route path="/services" element={<PageWrapper seoTitle="Our Services" seoDesc="Comprehensive financial services including portfolio management and account handling." seoKeywords="portfolio management, stock advisory, trading services India" backHash="#services"><PageHero title="Services" subtitle="Comprehensive financial services designed to elevate your trading journey." image="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1920&auto=format&fit=crop" tag="What We Offer" /><ServicesPageSection /></PageWrapper>} />
+        <Route path="/service/:serviceId" element={<PageWrapper seoTitle="Service Details" seoDesc="Learn more about our premium stock market services." backHash="#services"><ServiceDetailsPage /></PageWrapper>} />
+        <Route path="/courses" element={<PageWrapper seoTitle="Premium Trading Courses" seoDesc="Master the stock market with our expertly crafted educational programs in technical analysis and options." seoKeywords="technical analysis course, options trading course, learn stock market" backHash="#courses"><PageHero title="Courses" subtitle="Master the stock market with our expertly crafted educational programs." image="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1920&auto=format&fit=crop" tag="Education" /><CoursesSection isCoursesPage={true} /></PageWrapper>} />
+        <Route path="/course/:courseId" element={<PageWrapper seoTitle="Course Details" seoDesc="Detailed curriculum and information about our stock market trading courses." backHash="#courses"><CourseDetailsPage /></PageWrapper>} />
+        <Route path="/gallery" element={<PageWrapper seoTitle="Gallery" seoDesc="A glimpse into our events, seminars, and academy culture." backHash="#gallery"><PageHero title="Gallery" subtitle="A glimpse into our events, seminars, and academy culture." image="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1920&auto=format&fit=crop" tag="Our Community" /><GallerySection isGalleryPage={true} /></PageWrapper>} />
+        <Route path="/contact" element={<PageWrapper seoTitle="Contact Us" seoDesc="Get in touch with Advait Stock Market Academy experts." seoKeywords="contact trading academy, stock market institute near me" backHash="#contact"><PageHero title="Contact Us" subtitle="Get in touch with our experts. We're here to help you succeed." image="https://images.unsplash.com/photo-1516387938699-a93567ec168e?q=80&w=1920&auto=format&fit=crop" tag="Get in Touch" /><ContactSection isContactPage={true} /></PageWrapper>} />
         <Route path="/blog" element={<PageWrapper backHash="#home"><PageHero title="Academy Blog" subtitle="Insights, strategies, and tutorials from stock market experts." image="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?q=80&w=1920&auto=format&fit=crop" tag="Learning Hub" /><BlogPageSection /></PageWrapper>} />
         <Route path="/blog/:id" element={<PageWrapper backHash="blog"><BlogPostSection /></PageWrapper>} />
         <Route path="/dashboard" element={<PageWrapper backHash="#home"><PageHero title="Student Dashboard" subtitle="Manage your courses, profile, and progress." image="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1920&auto=format&fit=crop" tag="Dashboard" /><DashboardSection /></PageWrapper>} />
