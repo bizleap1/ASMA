@@ -1,14 +1,17 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
-export const SEO = ({ title, description, keywords, url, image, schema }) => {
+const SEO = ({ title, description, keywords, url, image, schema }) => {
   const siteTitle = 'Advait Share Market Academy - #1 Stock Market Training in Nagpur';
-  const fullTitle = title ? `${title} | ${siteTitle}` : siteTitle;
-  const defaultDesc = 'Learn stock market trading, technical analysis, and fundamental analysis from experts. Central India\'s most trusted share market academy.';
+  const defaultTitle = 'Advait Stock Market Academy | ASMA Nagpur';
+  const fullTitle = title === 'Home' ? 'ASMA: Advait Stock Market Academy' : title ? `${title} | ${siteTitle}` : defaultTitle;
+  const defaultDesc = 'Master the stock market with Advait Stock Market Academy (ASMA) in Nagpur. We offer premium courses on technical analysis, options trading, and financial freedom in India. Best share market classes in Nagpur.';
   const metaDesc = description || defaultDesc;
-  const defaultImage = 'https://advaitacademy.in/og-image.jpg';
+  const defaultKeywords = 'best stock market academy, best stock market academy in nagpur, asma, ASMA, asma nagpur, ASMA Nagpur, Advait Stock Market Academy, stock market academy nagpur, best share market classes in nagpur, trading courses nagpur, options trading, technical analysis, stock market India, learn trading';
+  const metaKeywords = keywords || defaultKeywords;
+  const defaultImage = 'https://raw.githubusercontent.com/bizleap1/ASMA/main/public/logo-dark.png';
   const metaImage = image || defaultImage;
-  const canonicalUrl = url || 'https://advaitacademy.in';
+  const canonicalUrl = url || 'https://www.asmaonline.in';
 
   return (
     <Helmet>
@@ -16,7 +19,7 @@ export const SEO = ({ title, description, keywords, url, image, schema }) => {
       <title>{fullTitle}</title>
       <meta name="title" content={fullTitle} />
       <meta name="description" content={metaDesc} />
-      {keywords && <meta name="keywords" content={keywords} />}
+      <meta name="keywords" content={metaKeywords} />
 
       {/* Canonical Link */}
       <link rel="canonical" href={canonicalUrl} />
@@ -44,3 +47,5 @@ export const SEO = ({ title, description, keywords, url, image, schema }) => {
     </Helmet>
   );
 };
+
+export default SEO;
