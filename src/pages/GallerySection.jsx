@@ -16,11 +16,11 @@ const GallerySection = ({ isGalleryPage = false }) => {
   const [isAutoPlaying, setIsAutoPlaying] = React.useState(true);
 
   const baseGalleryItems = [
-    { url: "/Home/new1.jpg", title: "Live Market Training", desc: "Expert faculty explaining complex market concepts with live chart analysis." },
-    { url: "/Home/new2.jpg", title: "Student Classroom", desc: "Our dedicated students focusing during intense trading sessions." },
-    { url: "/Home/new3.jpg", title: "Faculty Mentorship", desc: "Guidance from our lead mentor on the trading floor." },
-    { url: "/Home/new4.jpg", title: "Welcome to ASMA", desc: "Reception area of Advait Share Market Academy." },
-    { url: "/Home/new5.jpg", title: "Interactive Discussions", desc: "Group discussions and doubt clearing sessions with faculty." },
+    { url: "/Home/new1.png", title: "Live Market Training", desc: "Expert faculty explaining complex market concepts with live chart analysis." },
+    { url: "/Home/new2.png", title: "Student Classroom", desc: "Our dedicated students focusing during intense trading sessions." },
+    { url: "/Home/new3.png", title: "Faculty Mentorship", desc: "Guidance from our lead mentor on the trading floor." },
+    { url: "/Home/new4.png", title: "Welcome to ASMA", desc: "Reception area of Advait Share Market Academy." },
+    { url: "/Home/new5.png", title: "Interactive Discussions", desc: "Group discussions and doubt clearing sessions with faculty." },
     { url: "/Home/1.png", title: "Live Trading Floor", desc: "Experience the pulse of the market in our state-of-the-art facility." },
     { url: "/Home/2.png", title: "Mentorship Sessions", desc: "Get one-on-one guidance from experienced market professionals." },
     { url: "/Home/3.png", title: "Analysis Workshops", desc: "Deep dive into technical charts and fundamental data." },
