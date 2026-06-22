@@ -17,6 +17,9 @@ const GallerySection = ({ isGalleryPage = false }) => {
   const [isLightboxOpen, setIsLightboxOpen] = React.useState(false);
 
   const baseGalleryItems = [
+    { url: "/Home/ANUJ9212.MP4", title: "Live Market Sessions", desc: "Experience our interactive trading floor." },
+    { url: "/Home/ANUJ9219.MP4", title: "Trading Insights", desc: "In-depth technical analysis breakdowns." },
+    { url: "/Home/ANUJ9245.MP4", title: "Student Community", desc: "Join our active community of professional traders." },
     { url: "/Home/new2.png", title: "Student Classroom", desc: "Our dedicated students focusing during intense trading sessions." },
     { url: "/Home/new3.png", title: "Faculty Mentorship", desc: "Guidance from our lead mentor on the trading floor." },
     { url: "/Home/new5.png", title: "Interactive Discussions", desc: "Group discussions and doubt clearing sessions with faculty." },
@@ -137,17 +140,26 @@ const GallerySection = ({ isGalleryPage = false }) => {
         {/* Cinematic Showcase Layout */}
         <div className="flex flex-col gap-3 md:gap-4 w-full max-w-5xl mx-auto">
 
-          {/* Main Featured Image */}
+          {/* Main Featured Image/Video */}
           <div 
             className="relative w-full h-[250px] sm:h-[350px] lg:h-[450px] rounded-[24px] overflow-hidden shadow-xl group bg-bg-secondary border border-text-primary/5 cursor-pointer"
             onClick={() => { setIsLightboxOpen(true); setIsAutoPlaying(false); }}
           >
-            <img loading="lazy"
-              key={activeImg} // Forces re-render for transition if needed, or rely on CSS
-              src={galleryItems[activeImg].url}
-              alt={galleryItems[activeImg].title}
-              className="w-full h-full object-cover transition-transform duration-[2s] ease-in-out group-hover:scale-105 animate-fade-in"
-            />
+            {galleryItems[activeImg].url.toLowerCase().endsWith('.mp4') ? (
+              <video 
+                key={activeImg}
+                src={galleryItems[activeImg].url}
+                className="w-full h-full object-cover transition-transform duration-[2s] ease-in-out group-hover:scale-105 animate-fade-in"
+                autoPlay muted loop playsInline
+              />
+            ) : (
+              <img loading="lazy"
+                key={activeImg} // Forces re-render for transition if needed, or rely on CSS
+                src={galleryItems[activeImg].url}
+                alt={galleryItems[activeImg].title}
+                className="w-full h-full object-cover transition-transform duration-[2s] ease-in-out group-hover:scale-105 animate-fade-in"
+              />
+            )}
 
             {/* Premium Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
@@ -178,11 +190,22 @@ const GallerySection = ({ isGalleryPage = false }) => {
                   : 'opacity-50 hover:opacity-100 hover:scale-[1.02]'
                   }`}
               >
-                <img loading="lazy" src={item.url} alt={`Thumbnail ${i + 1}`} className="w-full h-full object-cover" />
+                {item.url.toLowerCase().endsWith('.mp4') ? (
+                  <video src={item.url} className="w-full h-full object-cover" muted playsInline />
+                ) : (
+                  <img loading="lazy" src={item.url} alt={`Thumbnail ${i + 1}`} className="w-full h-full object-cover" />
+                )}
 
                 {/* Selection indicator */}
                 {activeImg === i && (
                   <div className="absolute inset-0 bg-accent-primary/20 mix-blend-overlay"></div>
+                )}
+                
+                {/* Play icon overlay for videos */}
+                {item.url.toLowerCase().endsWith('.mp4') && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                    <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" /></svg>
+                  </div>
                 )}
               </div>
             ))}
@@ -217,7 +240,7 @@ const GallerySection = ({ isGalleryPage = false }) => {
               <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
             </button>
 
-            {/* Image Container */}
+            {/* Image/Video Container */}
             <motion.div 
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -226,12 +249,20 @@ const GallerySection = ({ isGalleryPage = false }) => {
               className="relative max-w-5xl max-h-[90vh] w-full"
               onClick={(e) => e.stopPropagation()} // Prevent click from bubbling to backdrop
             >
-              <img 
-                src={galleryItems[activeImg].url} 
-                alt={galleryItems[activeImg].title}
-                className="w-full h-full object-contain rounded-xl shadow-2xl max-h-[80vh]"
-              />
-              <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-6 rounded-b-xl">
+              {galleryItems[activeImg].url.toLowerCase().endsWith('.mp4') ? (
+                <video 
+                  src={galleryItems[activeImg].url} 
+                  className="w-full h-full object-contain rounded-xl shadow-2xl max-h-[80vh]"
+                  controls autoPlay playsInline
+                />
+              ) : (
+                <img 
+                  src={galleryItems[activeImg].url} 
+                  alt={galleryItems[activeImg].title}
+                  className="w-full h-full object-contain rounded-xl shadow-2xl max-h-[80vh]"
+                />
+              )}
+              <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-6 rounded-b-xl pointer-events-none">
                 <h3 className="text-2xl font-bold text-white mb-2">{galleryItems[activeImg].title}</h3>
                 <p className="text-white/80">{galleryItems[activeImg].desc}</p>
               </div>
