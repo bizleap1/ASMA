@@ -14,6 +14,7 @@ import Home from './Home';
 const GallerySection = ({ isGalleryPage = false }) => {
   const [activeImg, setActiveImg] = React.useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = React.useState(true);
+  const [isLightboxOpen, setIsLightboxOpen] = React.useState(false);
 
   const baseGalleryItems = [
     { url: "/Home/new1.png", title: "Live Market Training", desc: "Expert faculty explaining complex market concepts with live chart analysis." },
@@ -59,6 +60,16 @@ const GallerySection = ({ isGalleryPage = false }) => {
   const handleImageClick = (index) => {
     setActiveImg(index);
     setIsAutoPlaying(false); // Stop autoplay when user manually interacts
+  };
+
+  const handleNext = (e) => {
+    e.stopPropagation();
+    setActiveImg((prev) => (prev + 1) % galleryItems.length);
+  };
+
+  const handlePrev = (e) => {
+    e.stopPropagation();
+    setActiveImg((prev) => (prev - 1 + galleryItems.length) % galleryItems.length);
   };
 
   return (
@@ -129,12 +140,15 @@ const GallerySection = ({ isGalleryPage = false }) => {
         <div className="flex flex-col gap-3 md:gap-4 w-full max-w-5xl mx-auto">
 
           {/* Main Featured Image */}
-          <div className="relative w-full h-[250px] sm:h-[350px] lg:h-[450px] rounded-[24px] overflow-hidden shadow-xl group bg-bg-secondary border border-text-primary/5">
+          <div 
+            className="relative w-full h-[250px] sm:h-[350px] lg:h-[450px] rounded-[24px] overflow-hidden shadow-xl group bg-bg-secondary border border-text-primary/5 cursor-pointer"
+            onClick={() => { setIsLightboxOpen(true); setIsAutoPlaying(false); }}
+          >
             <img loading="lazy"
               key={activeImg} // Forces re-render for transition if needed, or rely on CSS
               src={galleryItems[activeImg].url}
               alt={galleryItems[activeImg].title}
-              className="w-full h-full object-cover object-top transition-transform duration-[2s] ease-in-out group-hover:scale-105 animate-fade-in"
+              className="w-full h-full object-cover transition-transform duration-[2s] ease-in-out group-hover:scale-105 animate-fade-in"
             />
 
             {/* Premium Gradient Overlay */}
@@ -166,7 +180,7 @@ const GallerySection = ({ isGalleryPage = false }) => {
                   : 'opacity-50 hover:opacity-100 hover:scale-[1.02]'
                   }`}
               >
-                <img loading="lazy" src={item.url} alt={`Thumbnail ${i + 1}`} className="w-full h-full object-cover object-top" />
+                <img loading="lazy" src={item.url} alt={`Thumbnail ${i + 1}`} className="w-full h-full object-cover" />
 
                 {/* Selection indicator */}
                 {activeImg === i && (
@@ -178,6 +192,63 @@ const GallerySection = ({ isGalleryPage = false }) => {
 
         </div>
       </div>
+
+      {/* Lightbox Modal */}
+      <AnimatePresence>
+        {isLightboxOpen && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[200] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4"
+            onClick={() => setIsLightboxOpen(false)}
+          >
+            {/* Close Button */}
+            <button 
+              className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors bg-black/50 p-3 rounded-full z-50"
+              onClick={(e) => { e.stopPropagation(); setIsLightboxOpen(false); }}
+            >
+              <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+
+            {/* Prev Button */}
+            <button 
+              className="absolute left-4 md:left-10 text-white/70 hover:text-white hover:scale-110 transition-all bg-black/50 p-4 rounded-full z-50"
+              onClick={handlePrev}
+            >
+              <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+            </button>
+
+            {/* Image Container */}
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="relative max-w-5xl max-h-[90vh] w-full"
+              onClick={(e) => e.stopPropagation()} // Prevent click from bubbling to backdrop
+            >
+              <img 
+                src={galleryItems[activeImg].url} 
+                alt={galleryItems[activeImg].title}
+                className="w-full h-full object-contain rounded-xl shadow-2xl max-h-[80vh]"
+              />
+              <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-6 rounded-b-xl">
+                <h3 className="text-2xl font-bold text-white mb-2">{galleryItems[activeImg].title}</h3>
+                <p className="text-white/80">{galleryItems[activeImg].desc}</p>
+              </div>
+            </motion.div>
+
+            {/* Next Button */}
+            <button 
+              className="absolute right-4 md:right-10 text-white/70 hover:text-white hover:scale-110 transition-all bg-black/50 p-4 rounded-full z-50"
+              onClick={handleNext}
+            >
+              <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </AnimatedSection>
   );
 };
