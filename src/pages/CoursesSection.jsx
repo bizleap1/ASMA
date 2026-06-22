@@ -7,11 +7,11 @@ import { blogPosts } from '../blogData';
 import shubhangiImg from '../assets/shubhangi.png';
 import krishnaImg from '../assets/krishna.png';
 import vrushaliImg from '../assets/vrushali.png';
-import { serviceData, courseDetails, baseCourses, additionalCourses, FREE_NOTES } from '../data';
+import { serviceData, courseDetails, baseCourses, additionalCourses, coursePackages, FREE_NOTES } from '../data';
 import AnimatedSection from '../components/AnimatedSection';
 
 const CoursesSection = ({ isCoursesPage = false }) => {
-  const courses = isCoursesPage ? [...baseCourses, ...additionalCourses] : baseCourses;
+  const displayItems = isCoursesPage ? coursePackages : coursePackages.slice(0, 3);
 
   return (
     <AnimatedSection id="courses" className="py-8 md:py-12 bg-white relative overflow-hidden">
@@ -97,7 +97,7 @@ const CoursesSection = ({ isCoursesPage = false }) => {
 
         {/* Alternating List Layout */}
         <div className="flex flex-col">
-          {courses.map((course, index) => {
+          {displayItems.map((pkg, index) => {
             const isEven = index % 2 !== 0; // index 1, 3 etc. are visually 'Even' rows
 
             return (
@@ -107,19 +107,29 @@ const CoursesSection = ({ isCoursesPage = false }) => {
                 <div className={`w-full md:w-1/2 flex flex-col justify-center ${isEven ? 'md:order-2 md:pl-6 text-left' : 'md:pr-6 text-left md:text-right'}`}>
                   <div className={`w-8 h-[2px] bg-[#166534] mb-4 transform group-hover:scale-x-150 transition-transform duration-500 ${isEven ? 'origin-left' : 'origin-left md:origin-right md:ml-auto'}`}></div>
                   <h3 className="text-xl md:text-2xl lg:text-3xl font-display font-bold text-text-primary mb-3 leading-tight group-hover:text-[#166534] transition-colors duration-500">
-                    {course.title}
+                    {pkg.title}
                   </h3>
-                  <p className={`text-text-secondary text-base md:text-lg leading-relaxed font-light mb-6 max-w-md ${isEven ? '' : 'md:ml-auto'}`}>
-                    {course.desc}
+                  <p className={`text-text-secondary text-base md:text-lg leading-relaxed font-light mb-4 max-w-md ${isEven ? '' : 'md:ml-auto'}`}>
+                    {pkg.desc}
                   </p>
+                  
+                  {pkg.coursesIncluded && (
+                    <div className={`flex flex-wrap gap-2 mb-6 ${isEven ? '' : 'md:justify-end'}`}>
+                      {pkg.coursesIncluded.map((courseName, cIdx) => (
+                        <span key={cIdx} className="px-3 py-1 bg-[#166534]/5 text-[#166534] rounded-full text-[10px] font-bold uppercase tracking-wider border border-[#166534]/10">
+                          {courseName}
+                        </span>
+                      ))}
+                    </div>
+                  )}
 
                   {/* Price replacing Explore Course */}
                   <div className={`inline-flex flex-wrap items-center gap-3 mt-2 ${isEven ? '' : 'md:justify-end'}`}>
                     <Link
-                      to={`/course/${encodeURIComponent(course.title)}`}
+                      to={`/course/${pkg.id}`}
                       className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#166534] text-white text-xs md:text-sm font-bold uppercase tracking-widest rounded-full hover:bg-[#0f4523] hover:-translate-y-0.5 transition-all shadow-md w-fit"
                     >
-                      Read More
+                      View Package Details
                       <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                     </Link>
                   </div>
@@ -130,7 +140,7 @@ const CoursesSection = ({ isCoursesPage = false }) => {
                   <div
                     className="text-[80px] md:text-[140px] lg:text-[180px] font-black leading-none tracking-tighter drop-shadow-2xl hover:scale-105 transition-transform duration-700 select-none"
                     style={{
-                      backgroundImage: `url(${course.image})`,
+                      backgroundImage: `url(${pkg.image})`,
                       backgroundColor: '#166534', // Fallback color if image fails to load
                       backgroundSize: 'cover',
                       backgroundPosition: 'center',

@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import shareMarketImg from "./assets/ANU00469.JPG";
+import stockInvestmentImg from "./assets/ANU00455.JPG";
 
 export const serviceData = [
   {
@@ -7,7 +9,7 @@ export const serviceData = [
     title: "Share Market Training",
     category: "Training",
     desc: "In-depth courses on stock market investing, trading strategies, technical analysis and financial planning for beginners and advanced learners.",
-    image: "https://images.pexels.com/photos/6801874/pexels-photo-6801874.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: shareMarketImg,
     fullDesc: "Our Share Market Training program is designed to equip you with the knowledge and skills needed to navigate the stock market confidently. Whether you are a beginner looking to understand the basics or an experienced trader seeking advanced strategies, this course covers everything from fundamental analysis to technical indicators and risk management.",
     benefits: ["Comprehensive Curriculum", "Live Market Sessions", "Expert Mentorship", "Practical Trading Strategies"]
   },
@@ -16,7 +18,7 @@ export const serviceData = [
     title: "Stock Investment",
     category: "Investment",
     desc: "Unlock your wealth potential with smart stock investments - guided strategies, expert insights and confident decisions for a secure financial future.",
-    image: "https://images.pexels.com/photos/4386404/pexels-photo-4386404.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: stockInvestmentImg,
     fullDesc: "Investing in stocks is one of the most effective ways to build long-term wealth. Our stock investment advisory service provides you with expert insights, carefully researched stock picks, and portfolio management strategies tailored to your financial goals and risk tolerance.",
     benefits: ["Personalized Portfolio Advice", "In-depth Market Research", "Regular Performance Reviews", "Risk Mitigation Strategies"]
   },
@@ -355,6 +357,34 @@ export const additionalCourses = [
     price: "₹ 4,999.00"
   }
 ];
+
+export const coursePackages = [
+  {
+    id: "starter-package",
+    title: "Starter Package",
+    desc: "Perfect for beginners. Includes Equity Market, Dmat Account Operation, and basic Financial Planning.",
+    image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=1200&auto=format&fit=crop",
+    price: "₹ 8,999.00",
+    coursesIncluded: ["Equity Market", "Dmat Account Operation", "Financial Planning"]
+  },
+  {
+    id: "pro-trader-package",
+    title: "Pro Trader Package",
+    desc: "For serious traders. Includes Technical Analysis, Trading Techniques, and Risk Management.",
+    image: "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?q=80&w=1200&auto=format&fit=crop",
+    price: "₹ 14,999.00",
+    coursesIncluded: ["Technical Analysis", "Trading Techniques", "Risk Management"]
+  },
+  {
+    id: "master-investor-package",
+    title: "Master Investor Package",
+    desc: "The ultimate wealth-building bundle. Includes Portfolio Management, Mutual Funds, and Advanced Psychological Training.",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
+    price: "₹ 19,999.00",
+    coursesIncluded: ["Portfolio Managment", "Mutual Fund", "Advanced Psychological Training"]
+  }
+];
+
 export const FREE_NOTES = [
   {
     id: 1,

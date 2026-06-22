@@ -7,14 +7,13 @@ import { blogPosts } from '../blogData';
 import shubhangiImg from '../assets/shubhangi.png';
 import krishnaImg from '../assets/krishna.png';
 import vrushaliImg from '../assets/vrushali.png';
-import { serviceData, courseDetails, baseCourses, additionalCourses, FREE_NOTES } from '../data';
+import { serviceData, courseDetails, baseCourses, additionalCourses, coursePackages, FREE_NOTES } from '../data';
 
 const CourseDetailsPage = () => {
   const { courseId } = useParams();
   const [isModalOpen, setIsModalOpen] = React.useState(false);
-  const decodedTitle = decodeURIComponent(courseId || "");
-  const allCourses = [...baseCourses, ...additionalCourses];
-  const course = allCourses.find(c => c.title === decodedTitle);
+  const decodedId = decodeURIComponent(courseId || "");
+  const course = coursePackages.find(p => p.id === decodedId) || [...baseCourses, ...additionalCourses].find(c => c.title === decodedId);
 
   const handleCourseSubmit = (e) => {
     e.preventDefault();
@@ -40,8 +39,8 @@ const CourseDetailsPage = () => {
   const details = courseDetails[course.title] || {
     duration: "Flexible",
     mode: "Online Live / Classroom",
-    curriculum: ["Course overview and basics", "Practical sessions", "Q&A support"],
-    benefits: ["Professional Mentorship", "Quality course materials"]
+    curriculum: course.coursesIncluded ? course.coursesIncluded.map(c => `Complete module on ${c}`) : ["Course overview and basics", "Practical sessions", "Q&A support"],
+    benefits: ["Professional Mentorship", "Quality course materials", "Dedicated Support"]
   };
 
   return (
