@@ -134,7 +134,7 @@ const GallerySection = ({ isGalleryPage = false }) => {
               key={activeImg} // Forces re-render for transition if needed, or rely on CSS
               src={galleryItems[activeImg].url}
               alt={galleryItems[activeImg].title}
-              className="w-full h-full object-cover transition-transform duration-[2s] ease-in-out group-hover:scale-105 animate-fade-in"
+              className="w-full h-full object-cover object-top transition-transform duration-[2s] ease-in-out group-hover:scale-105 animate-fade-in"
             />
 
             {/* Premium Gradient Overlay */}
@@ -166,7 +166,7 @@ const GallerySection = ({ isGalleryPage = false }) => {
                   : 'opacity-50 hover:opacity-100 hover:scale-[1.02]'
                   }`}
               >
-                <img loading="lazy" src={item.url} alt={`Thumbnail ${i + 1}`} className="w-full h-full object-cover" />
+                <img loading="lazy" src={item.url} alt={`Thumbnail ${i + 1}`} className="w-full h-full object-cover object-top" />
 
                 {/* Selection indicator */}
                 {activeImg === i && (
