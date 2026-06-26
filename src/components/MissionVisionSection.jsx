@@ -43,7 +43,7 @@ const MissionVisionSection = () => (
           {/* Subtle color overlay to match theme */}
           <div className="absolute inset-0 bg-accent-primary/10 mix-blend-multiply z-10 group-hover:opacity-0 transition-opacity duration-500"></div>
           <img loading="lazy"
-            src="https://images.pexels.com/photos/1705164/pexels-photo-1705164.jpeg?auto=compress&cs=tinysrgb&w=1920"
+            src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1920&auto=format&fit=crop"
             alt="Vision"
             className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
           />
