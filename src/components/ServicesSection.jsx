@@ -62,7 +62,6 @@ const ServicesSection = () => {
                   Featured
                 </div>
                 <h3 className="text-3xl md:text-5xl font-display font-bold text-white mb-4 group-hover:text-accent-primary transition-colors duration-500">{services[0].title}</h3>
-                <p className="text-white/80 font-light leading-relaxed text-base md:text-lg max-w-lg">{services[0].desc}</p>
               </div>
             </div>
           </div>
@@ -78,7 +77,6 @@ const ServicesSection = () => {
               </Link>
               <div>
                 <h3 className="text-xl md:text-2xl font-display font-bold text-white mb-2 group-hover:text-accent-primary transition-colors duration-500">{services[1].title}</h3>
-                <p className="text-white/80 font-light leading-relaxed text-sm line-clamp-3">{services[1].desc}</p>
               </div>
             </div>
           </div>
@@ -94,7 +92,6 @@ const ServicesSection = () => {
               </Link>
               <div>
                 <h3 className="text-xl md:text-2xl font-display font-bold text-white mb-2 group-hover:text-accent-primary transition-colors duration-500">{services[2].title}</h3>
-                <p className="text-white/80 font-light leading-relaxed text-sm line-clamp-3">{services[2].desc}</p>
               </div>
             </div>
           </div>

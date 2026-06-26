@@ -1,7 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import shareMarketImg from "./assets/ANU00469.JPG";
-import stockInvestmentImg from "./assets/ANU00455.JPG";
 
 export const serviceData = [
   {
@@ -9,7 +7,7 @@ export const serviceData = [
     title: "Share Market Training",
     category: "Training",
     desc: "In-depth courses on stock market investing, trading strategies, technical analysis and financial planning for beginners and advanced learners.",
-    image: shareMarketImg,
+    image: "https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=800",
     fullDesc: "Our Share Market Training program is designed to equip you with the knowledge and skills needed to navigate the stock market confidently. Whether you are a beginner looking to understand the basics or an experienced trader seeking advanced strategies, this course covers everything from fundamental analysis to technical indicators and risk management.",
     benefits: ["Comprehensive Curriculum", "Live Market Sessions", "Expert Mentorship", "Practical Trading Strategies"]
   },
@@ -18,7 +16,7 @@ export const serviceData = [
     title: "Stock Investment",
     category: "Investment",
     desc: "Unlock your wealth potential with smart stock investments - guided strategies, expert insights and confident decisions for a secure financial future.",
-    image: stockInvestmentImg,
+    image: "https://images.pexels.com/photos/164527/pexels-photo-164527.jpeg?auto=compress&cs=tinysrgb&w=800",
     fullDesc: "Investing in stocks is one of the most effective ways to build long-term wealth. Our stock investment advisory service provides you with expert insights, carefully researched stock picks, and portfolio management strategies tailored to your financial goals and risk tolerance.",
     benefits: ["Personalized Portfolio Advice", "In-depth Market Research", "Regular Performance Reviews", "Risk Mitigation Strategies"]
   },

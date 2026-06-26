@@ -78,9 +78,8 @@ const ServicesPageSection = () => {
                   <div className="flex flex-col transform transition-all duration-500 translate-y-8 group-hover:translate-y-0">
                     <h3 className="text-2xl font-display font-bold text-white mb-2 group-hover:text-accent-primary transition-colors duration-500 leading-tight drop-shadow-lg">{service.title}</h3>
                     
-                    <div className="overflow-hidden transition-all duration-500 max-h-0 opacity-0 group-hover:max-h-[150px] group-hover:opacity-100 group-hover:mt-2">
-                      <p className="text-white/90 text-sm font-medium leading-relaxed drop-shadow-md mb-5">{service.desc}</p>
-                      <Link to={`/service/${service.id}`} className="inline-flex items-center gap-2 px-6 py-2 bg-accent-primary text-text-primary text-xs font-bold uppercase tracking-widest rounded-full hover:bg-white hover:-translate-y-1 transition-all shadow-[0_5px_15px_rgba(212,175,55,0.4)] w-fit">
+                    <div className="overflow-hidden transition-all duration-500 max-h-0 opacity-0 group-hover:max-h-[80px] group-hover:opacity-100 group-hover:mt-2">
+                      <Link to={`/service/${service.id}`} className="inline-flex items-center gap-2 px-6 py-2 bg-accent-primary text-text-primary text-xs font-bold uppercase tracking-widest rounded-full hover:bg-white hover:-translate-y-1 transition-all shadow-[0_5px_15px_rgba(212,175,55,0.4)] w-fit mt-2">
                         Read More
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                       </Link>
