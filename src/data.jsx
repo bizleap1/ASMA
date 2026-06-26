@@ -57,33 +57,6 @@ export const serviceData = [
     benefits: ["Customized Portfolios", "Active Monitoring", "Risk Minimization", "Wealth Maximization"]
   },
   {
-    id: "algo-trading",
-    title: "Algorithmic Trading",
-    category: "Training",
-    desc: "Automate your trading with customized algorithms and systematic setups for consistent, emotion-free execution.",
-    image: "https://images.unsplash.com/photo-1605152276897-4f618f831968?auto=format&fit=crop&w=800",
-    fullDesc: "Take emotions out of your trading with our Algorithmic Trading service. We help you design, backtest, and deploy automated trading strategies using advanced technical indicators, ensuring precision and speed in your trade execution.",
-    benefits: ["Emotion-Free Trading", "High-Speed Execution", "Backtested Strategies", "Custom Strategy Development"]
-  },
-  {
-    id: "commodity-currency",
-    title: "Commodity & Currency",
-    category: "Training",
-    desc: "Diversify your portfolio by exploring opportunities in MCX and Forex markets with expert guidance.",
-    image: "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=800",
-    fullDesc: "Expand your trading horizon beyond equities. Learn the nuances of trading precious metals, energy, and global currency pairs. Our experts guide you on global macroeconomic factors and technical setups specific to these highly leveraged markets.",
-    benefits: ["Global Market Exposure", "Leveraged Trading", "Macro-Economic Insights", "Diversified Risk"]
-  },
-  {
-    id: "financial-planning",
-    title: "Financial Planning",
-    category: "Investment",
-    desc: "Comprehensive strategies for long-term wealth creation, goal-based investing, and smart asset allocation.",
-    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800",
-    fullDesc: "Achieve true financial freedom with our tailored financial planning services. We assess your current financial standing, define clear future goals, and create a roadmap involving mutual funds, stocks, insurance, and retirement planning to secure your future.",
-    benefits: ["Goal-Based Investing", "Retirement Planning", "Tax Optimization", "Emergency Fund Setup"]
-  },
-  {
     id: "health-insurance",
     title: "Health Insurance",
     category: "Insurance",
@@ -459,9 +432,9 @@ export const FREE_NOTES = [
           <h4 className="text-lg font-bold text-text-primary mb-2 border-b pb-2">Position Sizing Formula</h4>
           <p className="p-4 bg-bg-secondary/30 rounded-lg text-sm border border-gray-100 font-mono text-text-primary mb-3">Position Size = (Total Account Value * Risk %) / (Entry Price - Stop Loss Price)</p>
           <div className="bg-gray-50 border-l-4 border-accent-primary p-3 rounded text-sm text-text-primary">
-            <strong>Example Calculation:</strong><br />
-            Account = ₹1,00,000. Risk = 1% (₹1000).<br />
-            Entry Price = ₹500. Stop Loss = ₹480. (Risk per share = ₹20)<br />
+            <strong>Example Calculation:</strong><br/>
+            Account = ₹1,00,000. Risk = 1% (₹1000).<br/>
+            Entry Price = ₹500. Stop Loss = ₹480. (Risk per share = ₹20)<br/>
             Position Size = 1000 / 20 = <strong>50 Shares.</strong>
           </div>
         </div>
@@ -471,7 +444,7 @@ export const FREE_NOTES = [
         </div>
         <div>
           <h4 className="text-lg font-bold text-text-primary mb-2 border-b pb-2">Scaling In and Out</h4>
-          <p>You don't have to enter or exit a trade all at once. Professional traders use scaling to manage risk.<br /><strong>Scaling In:</strong> Buying 50% of your position at support, and the other 50% once the trend is confirmed.<br /><strong>Scaling Out:</strong> Selling half your position at your first profit target, moving your stop-loss to breakeven, and letting the rest "run" risk-free.</p>
+          <p>You don't have to enter or exit a trade all at once. Professional traders use scaling to manage risk.<br/><strong>Scaling In:</strong> Buying 50% of your position at support, and the other 50% once the trend is confirmed.<br/><strong>Scaling Out:</strong> Selling half your position at your first profit target, moving your stop-loss to breakeven, and letting the rest "run" risk-free.</p>
         </div>
       </div>
     )
