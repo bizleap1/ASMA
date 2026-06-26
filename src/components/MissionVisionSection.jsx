@@ -31,7 +31,7 @@ const MissionVisionSection = () => (
           {/* Subtle color overlay to match theme */}
           <div className="absolute inset-0 bg-accent-primary/10 mix-blend-multiply z-10 group-hover:opacity-0 transition-opacity duration-500"></div>
           <img loading="lazy"
-            src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1920&auto=format&fit=crop"
+            src="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=1920"
             alt="Mission"
             className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
           />
@@ -43,7 +43,7 @@ const MissionVisionSection = () => (
           {/* Subtle color overlay to match theme */}
           <div className="absolute inset-0 bg-accent-primary/10 mix-blend-multiply z-10 group-hover:opacity-0 transition-opacity duration-500"></div>
           <img loading="lazy"
-            src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1920&auto=format&fit=crop"
+            src="https://images.pexels.com/photos/1705164/pexels-photo-1705164.jpeg?auto=compress&cs=tinysrgb&w=1920"
             alt="Vision"
             className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
           />

@@ -56,7 +56,7 @@ export const serviceData = [
     fullDesc: "Our Portfolio Management Services (PMS) cater to high-net-worth individuals and institutions. We create customized, diversified portfolios tailored to your specific financial goals, risk appetite, and investment horizon to ensure sustainable growth.",
     benefits: ["Customized Portfolios", "Active Monitoring", "Risk Minimization", "Wealth Maximization"]
   },
-    {
+  {
     id: "algo-trading",
     title: "Algorithmic Trading",
     category: "Training",
@@ -459,9 +459,9 @@ export const FREE_NOTES = [
           <h4 className="text-lg font-bold text-text-primary mb-2 border-b pb-2">Position Sizing Formula</h4>
           <p className="p-4 bg-bg-secondary/30 rounded-lg text-sm border border-gray-100 font-mono text-text-primary mb-3">Position Size = (Total Account Value * Risk %) / (Entry Price - Stop Loss Price)</p>
           <div className="bg-gray-50 border-l-4 border-accent-primary p-3 rounded text-sm text-text-primary">
-            <strong>Example Calculation:</strong><br/>
-            Account = ₹1,00,000. Risk = 1% (₹1000).<br/>
-            Entry Price = ₹500. Stop Loss = ₹480. (Risk per share = ₹20)<br/>
+            <strong>Example Calculation:</strong><br />
+            Account = ₹1,00,000. Risk = 1% (₹1000).<br />
+            Entry Price = ₹500. Stop Loss = ₹480. (Risk per share = ₹20)<br />
             Position Size = 1000 / 20 = <strong>50 Shares.</strong>
           </div>
         </div>
@@ -471,7 +471,7 @@ export const FREE_NOTES = [
         </div>
         <div>
           <h4 className="text-lg font-bold text-text-primary mb-2 border-b pb-2">Scaling In and Out</h4>
-          <p>You don't have to enter or exit a trade all at once. Professional traders use scaling to manage risk.<br/><strong>Scaling In:</strong> Buying 50% of your position at support, and the other 50% once the trend is confirmed.<br/><strong>Scaling Out:</strong> Selling half your position at your first profit target, moving your stop-loss to breakeven, and letting the rest "run" risk-free.</p>
+          <p>You don't have to enter or exit a trade all at once. Professional traders use scaling to manage risk.<br /><strong>Scaling In:</strong> Buying 50% of your position at support, and the other 50% once the trend is confirmed.<br /><strong>Scaling Out:</strong> Selling half your position at your first profit target, moving your stop-loss to breakeven, and letting the rest "run" risk-free.</p>
         </div>
       </div>
     )
