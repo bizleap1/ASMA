@@ -64,7 +64,7 @@ const AboutSection = ({ hideExploreButton = false }) => {
             <img loading="lazy"
               src="/founder.jpg"
               alt="Advait Academy Leadership"
-              className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-110 group-hover:rotate-1 transition-transform duration-1000 ease-out"
+              className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-110 group-hover:rotate-1 transition-transform duration-1000 ease-out brightness-105 contrast-105 saturate-110"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-text-primary/95 via-text-primary/40 to-transparent"></div>
 

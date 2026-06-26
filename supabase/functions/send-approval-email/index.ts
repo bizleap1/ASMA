@@ -20,7 +20,7 @@ serve(async (req) => {
       throw new Error('RESEND_API_KEY is not set')
     }
 
-    let toEmail = 'meshramshreya28@gmail.com'
+    let toEmail = 'advaitsharemarketacademy@gmail.com'
     let subject = 'New User Approval Request'
     let text = `New user signup request from ${email}.\n\nPlease approve their account by clicking this link:\n${approvalLink}`
 
