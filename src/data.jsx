@@ -256,6 +256,39 @@ export const courseDetails = {
       "Mental Rehearsal, Meditation & Visualization Techniques for Traders"
     ],
     benefits: ["Daily Mental Prep Checklist", "Stress Management Techniques", "Lifetime Mindset Audits", "Trading Routine Builder"]
+  },
+  "Advanced Beginner": {
+    duration: "Flexible",
+    mode: "Online Live & Offline Classroom",
+    curriculum: [
+      { title: "Equity Market", desc: "Learn the basics of stock market investing, understanding market structure, and analyzing companies." },
+      { title: "Commodity Market", desc: "Explore trading in precious metals, energy, and agricultural commodities on MCX." },
+      { title: "Currency Market", desc: "Understand global currency pairs, forex trading, and macroeconomic impacts." },
+      { title: "Demat & Trading Account Operations", desc: "Navigate modern trading platforms, place orders, and manage your portfolio." },
+      { title: "Basics of Technical Analysis", desc: "Learn to read charts, identify trends, and use essential indicators." },
+      { title: "Mutual Funds & SIP", desc: "Discover how to build long-term wealth through passive investing and systematic plans." },
+      { title: "Portfolio Management Basics", desc: "Understand asset allocation and diversification strategies for balanced growth." },
+      { title: "Risk Management Fundamentals", desc: "Learn position sizing, stop-loss placement, and capital protection techniques." },
+      { title: "Financial Planning", desc: "Set financial goals, manage debt, and create a roadmap for financial freedom." }
+    ],
+    benefits: ["Comprehensive Curriculum", "Expert Mentorship", "Quality course materials", "Dedicated Support"]
+  },
+  "Master Expert": {
+    duration: "Flexible",
+    mode: "Online Live & Offline Classroom",
+    curriculum: [
+      { title: "Advanced Technical Analysis", desc: "Master complex chart patterns, multi-timeframe analysis, and advanced indicators." },
+      { title: "Fundamental Analysis", desc: "Deep dive into financial statements, valuation models, and macroeconomic trends." },
+      { title: "Futures Market", desc: "Learn to leverage futures contracts for hedging, speculation, and arbitrage." },
+      { title: "Options Market", desc: "Master options Greeks, advanced spreads, and income-generating strategies." },
+      { title: "Advanced Trading Techniques", desc: "Explore scalping, algorithmic setups, and high-probability breakout strategies." },
+      { title: "Trading Strategies", desc: "Develop, backtest, and deploy systematic trading rules for consistent execution." },
+      { title: "Portfolio Optimization", desc: "Advanced techniques for dynamic asset allocation and maximizing risk-adjusted returns." },
+      { title: "Advanced Risk Management", desc: "Utilize statistical models, Kelly criterion, and drawdown management." },
+      { title: "Market Psychology", desc: "Understand cognitive biases, crowd behavior, and the emotional discipline of elite traders." },
+      { title: "Advanced Psychological Training", desc: "Develop a winning mindset, overcome FOMO, and build unshakeable trading discipline." }
+    ],
+    benefits: ["Advanced Strategies", "Live Market Trading Practice", "Premium Community Access", "Exclusive Strategy Checklists"]
   }
 };
 export const baseCourses = [
@@ -331,28 +364,28 @@ export const additionalCourses = [
 
 export const coursePackages = [
   {
-    id: "starter-package",
-    title: "Starter Package",
-    desc: "Perfect for beginners. Includes Equity Market, Dmat Account Operation, and basic Financial Planning.",
+    id: "advanced-beginner",
+    title: "Advanced Beginner",
+    desc: "A complete foundational journey covering equity, currency, demat operations, basics of technical analysis, mutual funds, and financial planning.",
     image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=1200&auto=format&fit=crop",
     price: "₹ 8,999.00",
-    coursesIncluded: ["Equity Market", "Dmat Account Operation", "Financial Planning"]
+    coursesIncluded: [
+      "Equity Market",
+      "Commodity Market",
+      "Currency Market"
+    ]
   },
   {
-    id: "pro-trader-package",
-    title: "Pro Trader Package",
-    desc: "For serious traders. Includes Technical Analysis, Trading Techniques, and Risk Management.",
-    image: "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?q=80&w=1200&auto=format&fit=crop",
-    price: "₹ 14,999.00",
-    coursesIncluded: ["Technical Analysis", "Trading Techniques", "Risk Management"]
-  },
-  {
-    id: "master-investor-package",
-    title: "Master Investor Package",
-    desc: "The ultimate wealth-building bundle. Includes Portfolio Management, Mutual Funds, and Advanced Psychological Training.",
+    id: "masters",
+    title: "Master Expert",
+    desc: "The ultimate wealth-building bundle. Master advanced technical analysis, futures & options, trading strategies, and market psychology.",
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
     price: "₹ 19,999.00",
-    coursesIncluded: ["Portfolio Managment", "Mutual Fund", "Advanced Psychological Training"]
+    coursesIncluded: [
+      "Advanced Technical Analysis",
+      "Futures Market",
+      "Options Market"
+    ]
   }
 ];
 

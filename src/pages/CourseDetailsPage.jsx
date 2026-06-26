@@ -125,11 +125,18 @@ const CourseDetailsPage = () => {
 
               <div className="space-y-4">
                 {details.curriculum.map((item, idx) => (
-                  <div key={idx} className="group flex items-center gap-6 p-5 rounded-2xl border border-gray-50 bg-gray-50/50 hover:bg-white hover:border-[#166534]/20 hover:shadow-lg hover:shadow-[#166534]/5 transition-all duration-300">
-                    <div className="w-10 h-10 rounded-xl bg-white text-gray-400 font-display font-black flex items-center justify-center shrink-0 border border-gray-100 group-hover:bg-[#166534] group-hover:text-white group-hover:border-[#166534] transition-colors">
+                  <div key={idx} className="group flex items-start gap-6 p-5 rounded-2xl border border-gray-50 bg-gray-50/50 hover:bg-white hover:border-[#166534]/20 hover:shadow-lg hover:shadow-[#166534]/5 transition-all duration-300">
+                    <div className="w-10 h-10 rounded-xl bg-white text-gray-400 font-display font-black flex items-center justify-center shrink-0 border border-gray-100 group-hover:bg-[#166534] group-hover:text-white group-hover:border-[#166534] transition-colors mt-0.5">
                       {String(idx + 1).padStart(2, '0')}
                     </div>
-                    <p className="text-text-primary font-medium text-base md:text-lg">{item}</p>
+                    {typeof item === 'string' ? (
+                      <p className="text-text-primary font-medium text-base md:text-lg mt-1.5">{item}</p>
+                    ) : (
+                      <div className="flex-1">
+                        <h4 className="text-text-primary font-bold text-base md:text-lg">{item.title}</h4>
+                        <p className="text-text-secondary text-sm mt-1.5 leading-relaxed">{item.desc}</p>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>

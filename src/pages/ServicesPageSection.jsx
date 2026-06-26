@@ -119,10 +119,10 @@ const ServicesPageSection = () => {
                     num: "Part 02"
                   },
                   {
-                    id: "motor-insurance",
-                    title: "Motor Insurance",
-                    desc: "Get reliable motor insurance for bikes and cars, covering accidental damage, theft, third-party liability, and hassle-free claim processes.",
-                    image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=800",
+                    id: "travel-insurance",
+                    title: "Travel Insurance",
+                    desc: "Secure your trips against emergencies and baggage loss, ensuring you have a worry-free journey anywhere in the world.",
+                    image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800",
                     num: "Part 03"
                   }
                 ].map((item, i) => (
@@ -203,13 +203,13 @@ const ServicesPageSection = () => {
                   <span className="inline-block font-bold text-[#166534] text-[10px] tracking-[0.2em] uppercase bg-white px-3 py-1.5 rounded-full shadow-sm border border-gray-100 transition-all duration-500 group-hover:bg-[#166534] group-hover:text-white group-hover:border-[#166534]">Part 03</span>
                 </div>
                 <div className="w-24 h-24 rounded-full bg-white border-[5px] border-white flex items-center justify-center shadow-lg relative z-10 shrink-0">
-                  <img loading="lazy" src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=800" alt="Motor" className="w-full h-full rounded-full object-cover shadow-inner" />
+                  <img loading="lazy" src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800" alt="Travel" className="w-full h-full rounded-full object-cover shadow-inner" />
                   <div className="absolute -inset-2.5 rounded-full border-[1.5px] border-[#166534]/30 group-hover:scale-110 transition-all duration-500 group-hover:border-[#166534]/60"></div>
                 </div>
                 <div className="ml-6 w-[280px] bg-white/90 backdrop-blur-xl rounded-[1.5rem] p-6 shadow-md border border-white hover:shadow-xl transition-all duration-500 transform group-hover:-translate-y-2 flex flex-col items-start">
-                  <h3 className="text-xl font-display font-bold text-text-primary mb-2 group-hover:text-[#166534] transition-colors duration-300">Motor Insurance</h3>
-                  <p className="text-text-secondary text-sm leading-relaxed mb-4">Covering accidental damage and third-party liability.</p>
-                  <Link to="/service/motor-insurance" className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-[#166534] text-white text-[9px] font-bold uppercase tracking-widest rounded-full hover:bg-[#0f4523] hover:-translate-y-0.5 transition-all shadow-sm w-fit mt-auto">
+                  <h3 className="text-xl font-display font-bold text-text-primary mb-2 group-hover:text-[#166534] transition-colors duration-300">Travel Insurance</h3>
+                  <p className="text-text-secondary text-sm leading-relaxed mb-4">Secure your trips against emergencies and baggage loss.</p>
+                  <Link to="/service/travel-insurance" className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-[#166534] text-white text-[9px] font-bold uppercase tracking-widest rounded-full hover:bg-[#0f4523] hover:-translate-y-0.5 transition-all shadow-sm w-fit mt-auto">
                     Read More
                     <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                   </Link>
@@ -222,13 +222,13 @@ const ServicesPageSection = () => {
                   <span className="inline-block font-bold text-[#166534] text-[10px] tracking-[0.2em] uppercase bg-white px-3 py-1.5 rounded-full shadow-sm border border-gray-100 transition-all duration-500 group-hover:bg-[#166534] group-hover:text-white group-hover:border-[#166534]">Part 04</span>
                 </div>
                 <div className="w-24 h-24 rounded-full bg-white border-[5px] border-white flex items-center justify-center shadow-lg relative z-10 shrink-0">
-                  <img loading="lazy" src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800" alt="Life" className="w-full h-full rounded-full object-cover shadow-inner" />
+                  <img loading="lazy" src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800" alt="Property" className="w-full h-full rounded-full object-cover shadow-inner" />
                   <div className="absolute -inset-2.5 rounded-full border-[1.5px] border-[#166534]/30 group-hover:scale-110 transition-all duration-500 group-hover:border-[#166534]/60"></div>
                 </div>
                 <div className="mr-6 w-[280px] bg-white/90 backdrop-blur-xl rounded-[1.5rem] p-6 shadow-md border border-white hover:shadow-xl transition-all duration-500 transform group-hover:-translate-y-2 flex flex-col items-start lg:items-end lg:text-right">
-                  <h3 className="text-xl font-display font-bold text-text-primary mb-2 group-hover:text-[#166534] transition-colors duration-300">Life Insurance</h3>
-                  <p className="text-text-secondary text-sm leading-relaxed mb-4">Lifelong protection and wealth-building investment benefits.</p>
-                  <Link to="/service/life-insurance" className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-[#166534] text-white text-[9px] font-bold uppercase tracking-widest rounded-full hover:bg-[#0f4523] hover:-translate-y-0.5 transition-all shadow-sm w-fit mt-auto">
+                  <h3 className="text-xl font-display font-bold text-text-primary mb-2 group-hover:text-[#166534] transition-colors duration-300">Property Insurance</h3>
+                  <p className="text-text-secondary text-sm leading-relaxed mb-4">Safeguard properties against fire, theft, and natural disasters.</p>
+                  <Link to="/service/property-insurance" className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-[#166534] text-white text-[9px] font-bold uppercase tracking-widest rounded-full hover:bg-[#0f4523] hover:-translate-y-0.5 transition-all shadow-sm w-fit mt-auto">
                     Read More
                     <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                   </Link>
@@ -241,13 +241,13 @@ const ServicesPageSection = () => {
                   <span className="inline-block font-bold text-[#166534] text-[10px] tracking-[0.2em] uppercase bg-white px-3 py-1.5 rounded-full shadow-sm border border-gray-100 transition-all duration-500 group-hover:bg-[#166534] group-hover:text-white group-hover:border-[#166534]">Part 05</span>
                 </div>
                 <div className="w-24 h-24 rounded-full bg-white border-[5px] border-white flex items-center justify-center shadow-lg relative z-10 shrink-0">
-                  <img loading="lazy" src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800" alt="Travel" className="w-full h-full rounded-full object-cover shadow-inner" />
+                  <img loading="lazy" src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=800" alt="Motor" className="w-full h-full rounded-full object-cover shadow-inner" />
                   <div className="absolute -inset-2.5 rounded-full border-[1.5px] border-[#166534]/30 group-hover:scale-110 transition-all duration-500 group-hover:border-[#166534]/60"></div>
                 </div>
                 <div className="mr-6 w-[280px] bg-white/90 backdrop-blur-xl rounded-[1.5rem] p-6 shadow-md border border-white hover:shadow-xl transition-all duration-500 transform group-hover:-translate-y-2 flex flex-col items-start lg:items-end lg:text-right">
-                  <h3 className="text-xl font-display font-bold text-text-primary mb-2 group-hover:text-[#166534] transition-colors duration-300">Travel Insurance</h3>
-                  <p className="text-text-secondary text-sm leading-relaxed mb-4">Secure your trips against emergencies and baggage loss.</p>
-                  <Link to="/service/travel-insurance" className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-[#166534] text-white text-[9px] font-bold uppercase tracking-widest rounded-full hover:bg-[#0f4523] hover:-translate-y-0.5 transition-all shadow-sm w-fit mt-auto">
+                  <h3 className="text-xl font-display font-bold text-text-primary mb-2 group-hover:text-[#166534] transition-colors duration-300">Motor Insurance</h3>
+                  <p className="text-text-secondary text-sm leading-relaxed mb-4">Covering accidental damage and third-party liability.</p>
+                  <Link to="/service/motor-insurance" className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-[#166534] text-white text-[9px] font-bold uppercase tracking-widest rounded-full hover:bg-[#0f4523] hover:-translate-y-0.5 transition-all shadow-sm w-fit mt-auto">
                     Read More
                     <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                   </Link>
@@ -260,13 +260,13 @@ const ServicesPageSection = () => {
                   <span className="inline-block font-bold text-[#166534] text-[10px] tracking-[0.2em] uppercase bg-white px-3 py-1.5 rounded-full shadow-sm border border-gray-100 transition-all duration-500 group-hover:bg-[#166534] group-hover:text-white group-hover:border-[#166534]">Part 06</span>
                 </div>
                 <div className="w-24 h-24 rounded-full bg-white border-[5px] border-white flex items-center justify-center shadow-lg relative z-10 shrink-0">
-                  <img loading="lazy" src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800" alt="Property" className="w-full h-full rounded-full object-cover shadow-inner" />
+                  <img loading="lazy" src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800" alt="Life" className="w-full h-full rounded-full object-cover shadow-inner" />
                   <div className="absolute -inset-2.5 rounded-full border-[1.5px] border-[#166534]/30 group-hover:scale-110 transition-all duration-500 group-hover:border-[#166534]/60"></div>
                 </div>
                 <div className="mr-6 w-[280px] bg-white/90 backdrop-blur-xl rounded-[1.5rem] p-6 shadow-md border border-white hover:shadow-xl transition-all duration-500 transform group-hover:-translate-y-2 flex flex-col items-start lg:items-end lg:text-right">
-                  <h3 className="text-xl font-display font-bold text-text-primary mb-2 group-hover:text-[#166534] transition-colors duration-300">Property Insurance</h3>
-                  <p className="text-text-secondary text-sm leading-relaxed mb-4">Safeguard properties against fire, theft, and natural disasters.</p>
-                  <Link to="/service/property-insurance" className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-[#166534] text-white text-[9px] font-bold uppercase tracking-widest rounded-full hover:bg-[#0f4523] hover:-translate-y-0.5 transition-all shadow-sm w-fit mt-auto">
+                  <h3 className="text-xl font-display font-bold text-text-primary mb-2 group-hover:text-[#166534] transition-colors duration-300">Life Insurance</h3>
+                  <p className="text-text-secondary text-sm leading-relaxed mb-4">Lifelong protection and wealth-building investment benefits.</p>
+                  <Link to="/service/life-insurance" className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-[#166534] text-white text-[9px] font-bold uppercase tracking-widest rounded-full hover:bg-[#0f4523] hover:-translate-y-0.5 transition-all shadow-sm w-fit mt-auto">
                     Read More
                     <svg className="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                   </Link>
