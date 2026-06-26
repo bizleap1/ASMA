@@ -64,9 +64,8 @@ const AboutSection = ({ hideExploreButton = false }) => {
             <img loading="lazy"
               src="/founder.jpg"
               alt="Advait Academy Leadership"
-              className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-110 group-hover:rotate-1 transition-transform duration-1000 ease-out brightness-105 contrast-105 saturate-110"
+              className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-110 group-hover:rotate-1 transition-transform duration-1000 ease-out brightness-110 contrast-100 saturate-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-text-primary/95 via-text-primary/40 to-transparent"></div>
 
             </div>
 
@@ -82,9 +81,12 @@ const AboutSection = ({ hideExploreButton = false }) => {
             
             <div className="flex-1 rounded-[32px] bg-white border border-text-primary/5 p-8 md:p-12 shadow-lg flex flex-col justify-center relative overflow-hidden group hover:border-accent-primary/30 transition-colors duration-500">
             <div className="absolute top-0 right-0 w-64 h-64 bg-accent-secondary/10 rounded-full blur-[80px] group-hover:bg-accent-primary/20 transition-colors duration-700"></div>
-            <h3 className="text-2xl md:text-4xl font-display font-bold text-text-primary mb-6 relative z-10 leading-snug">
+            <h3 className="text-2xl md:text-4xl font-display font-bold text-text-primary mb-4 relative z-10 leading-snug">
               Central India's Most Experienced Stock Market Academy
             </h3>
+            <div className="inline-block bg-gradient-to-r from-accent-primary to-[#166534] text-white px-5 py-1.5 rounded-full font-bold text-sm tracking-widest uppercase relative z-10 w-fit mb-4 shadow-md">
+              Established Since 2006
+            </div>
             <p className="text-text-secondary text-lg md:text-xl leading-relaxed relative z-10 mt-4">
               Designed for <strong className="text-text-primary font-bold">beginners to professional traders</strong>, we teach strictly in live markets. Our disciplined, confidence-driven strategies ensure practical learning that translates to real-world success. <br/><br/>
               With our deep expertise in Technical Analysis and Smart Money Concepts, we focus on empowering students with actionable strategies for Intraday and Swing trading. Our ultimate goal is to instill strong risk management principles to ensure your capital is always protected while you achieve consistent growth.
