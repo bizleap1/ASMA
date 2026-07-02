@@ -122,7 +122,15 @@ const FooterSection = () => (
 
     {/* Bottom Bar */}
     <div className="container mx-auto px-6 md:px-12 border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 relative z-10">
-      <div className="text-sm font-light text-bg-secondary/50">&copy; {new Date().getFullYear()} Advait Stock Market Academy. All rights reserved.</div>
+      <div className="text-sm font-light text-bg-secondary/50 flex flex-col gap-1 items-center md:items-start text-center md:text-left">
+        <span>&copy; {new Date().getFullYear()} Advait Stock Market Academy. All rights reserved.</span>
+        <span>
+          Developed and Managed by{' '}
+          <a href="https://bizleap.in/" target="_blank" rel="noopener noreferrer" className="text-accent-primary hover:text-white transition-colors font-medium">
+            BIZLEAP
+          </a>
+        </span>
+      </div>
       <div className="flex gap-6 text-sm font-light text-bg-secondary/50">
         <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
         <Link to="/terms" className="hover:text-white transition-colors">Terms & Conditions</Link>
