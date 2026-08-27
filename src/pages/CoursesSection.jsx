@@ -9,11 +9,18 @@ import krishnaImg from '../assets/krishna.png';
 import vrushaliImg from '../assets/vrushali.png';
 import { serviceData, courseDetails, baseCourses, additionalCourses, coursePackages, FREE_NOTES } from '../data';
 import AnimatedSection from '../components/AnimatedSection';
+import NotificationScroller from '../components/NotificationScroller';
+import LatestUpdatesSection from '../components/LatestUpdatesSection';
 
 const CoursesSection = ({ isCoursesPage = false }) => {
   const displayItems = isCoursesPage ? coursePackages : coursePackages.slice(0, 3);
 
   return (
+    <>
+    <div className="mb-0">
+      <NotificationScroller />
+    </div>
+    <LatestUpdatesSection />
     <AnimatedSection id="courses" className="py-8 md:py-12 bg-white relative overflow-hidden">
       <div className="container mx-auto px-4 md:px-8 lg:px-12 relative z-10 max-w-[1200px]">
 
@@ -183,6 +190,7 @@ const CoursesSection = ({ isCoursesPage = false }) => {
       </div>
 
     </AnimatedSection>
+    </>
   );
 };
 

@@ -167,6 +167,10 @@ html { scroll-behavior: smooth; }
 .delay-400 { animation-delay: 0.4s; }
 .delay-500 { animation-delay: 0.5s; }
 
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+
 
 .animate-fadeInUp { animation: fadeInUp 0.8s ease-out forwards; opacity: 0; }
 .animate-fadeIn { animation: fadeIn 1s ease-out forwards; opacity: 0; }
