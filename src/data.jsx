@@ -285,6 +285,37 @@ export const courseDetails = {
       "Mental Rehearsal, Meditation & Visualization Techniques for Traders"
     ],
     benefits: ["Daily Mental Prep Checklist", "Stress Management Techniques", "Lifetime Mindset Audits", "Trading Routine Builder"]
+  },
+  "Advanced Foundation": {
+    duration: "~2 Months",
+    mode: "Online Live & Offline Classroom",
+    curriculum: [
+      "Equity Market",
+      "Commodity Market",
+      "Demat & Account Operations",
+      "Technical Analysis",
+      "Mindset Development",
+      "Mutual Funds & SIP",
+      "Portfolio Management",
+      "Risk Management",
+      "Financial Planning",
+      "Market Psychology"
+    ],
+    benefits: ["Lifetime Mentorship Support", "Live Market Trading Practice", "Premium Telegram Community Access", "Exclusive Strategy Checklists"]
+  },
+  "Professional Master Program": {
+    duration: "~4 Months",
+    mode: "Online Live & Offline Classroom",
+    curriculum: [
+      "Futures Market",
+      "Options Market",
+      "Advanced Trading Techniques",
+      "Master Trading Strategies",
+      "Fundamental Analysis",
+      "Portfolio Optimization",
+      "Advanced Psychological Training"
+    ],
+    benefits: ["Advanced Trading Setups", "Technique Manuals & Cheat Sheets", "Daily Pre-Market Analysis", "Live Execution Practice"]
   }
 };
 export const baseCourses = [
@@ -360,28 +391,20 @@ export const additionalCourses = [
 
 export const coursePackages = [
   {
-    id: "starter-package",
-    title: "Starter Package",
-    desc: "Perfect for beginners. Includes Equity Market, Dmat Account Operation, and basic Financial Planning.",
+    id: "advanced-foundation",
+    title: "Advanced Foundation",
+    desc: "A powerful path to financial freedom. Master the essentials and build a solid foundation.",
     image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=1200&auto=format&fit=crop",
-    price: "₹ 8,999.00",
-    coursesIncluded: ["Equity Market", "Dmat Account Operation", "Financial Planning"]
+    price: "₹29,999",
+    coursesIncluded: ["Equity Market", "Commodity Market", "Demat & Account Operations", "Technical Analysis", "Mindset Development", "Mutual Funds & SIP", "Portfolio Management", "Risk Management", "Financial Planning", "Market Psychology"]
   },
   {
-    id: "pro-trader-package",
-    title: "Pro Trader Package",
-    desc: "For serious traders. Includes Technical Analysis, Trading Techniques, and Risk Management.",
+    id: "professional-master-program",
+    title: "Professional Master Program",
+    desc: "Advanced techniques for serious traders. Advanced Foundation builds on everything in Professional Master Program (cumulative, not standalone).",
     image: "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?q=80&w=1200&auto=format&fit=crop",
-    price: "₹ 14,999.00",
-    coursesIncluded: ["Technical Analysis", "Trading Techniques", "Risk Management"]
-  },
-  {
-    id: "master-investor-package",
-    title: "Master Investor Package",
-    desc: "The ultimate wealth-building bundle. Includes Portfolio Management, Mutual Funds, and Advanced Psychological Training.",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
-    price: "₹ 19,999.00",
-    coursesIncluded: ["Portfolio Managment", "Mutual Fund", "Advanced Psychological Training"]
+    price: "₹49,999",
+    coursesIncluded: ["Futures Market", "Options Market", "Advanced Trading Techniques", "Master Trading Strategies", "Fundamental Analysis", "Portfolio Optimization", "Advanced Psychological Training"]
   }
 ];
 
