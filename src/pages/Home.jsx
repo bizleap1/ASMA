@@ -19,12 +19,10 @@ import AdvantageSection from '../components/AdvantageSection';
 import ReviewsSection from '../components/ReviewsSection';
 import ContactSection from './ContactSection';
 import VideoHero from '../components/VideoHero';
-import NotificationScroller from '../components/NotificationScroller';
 const Home = () => (
   <main className="flex-grow">
     <SEO title="Home" description="Advait Stock Market Academy - The best place to learn technical analysis, options trading, and fundamental analysis in India." keywords="stock market academy, trading classes, learn trading India, best stock market courses" />
     <VideoHero />
-    <NotificationScroller />
     <AboutSection />
     <AchievementsSection />
     <MultiChartSection />

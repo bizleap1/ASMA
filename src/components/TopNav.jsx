@@ -9,6 +9,7 @@ import krishnaImg from '../assets/krishna.png';
 import vrushaliImg from '../assets/vrushali.png';
 import { serviceData, courseDetails, baseCourses, additionalCourses, FREE_NOTES } from '../data';
 import Home from '../pages/Home';
+import NotificationScroller from './NotificationScroller';
 
 const TopNav = () => {
   const [scrolled, setScrolled] = React.useState(false);
@@ -132,8 +133,8 @@ const TopNav = () => {
 
   return (
     <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 flex flex-col ${isNavSolid ? 'bg-white/95 backdrop-blur-md shadow-md border-b border-gray-100' : 'bg-transparent border-transparent'}`}>
-      <div className={`bg-text-primary text-bg-primary text-center px-4 md:text-sm font-bold tracking-widest uppercase transition-all duration-500 overflow-hidden ${isNavSolid ? 'max-h-0 opacity-0 py-0 text-[0px]' : 'max-h-16 opacity-100 py-2 text-xs'}`}>
-        India's Biggest & Most Experienced Stock Market Academy of Central India
+      <div className={`transition-all duration-500 overflow-hidden ${isNavSolid ? 'max-h-0 opacity-0' : 'max-h-[100px] opacity-100'}`}>
+        <NotificationScroller />
       </div>
       <nav className="w-full py-1 md:py-2 px-4 md:px-8 lg:px-12 transition-all duration-500">
         <div className="container mx-auto flex justify-between items-center gap-2 lg:gap-4 px-2 md:px-0">
