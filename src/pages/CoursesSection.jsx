@@ -13,7 +13,40 @@ import NotificationScroller from '../components/NotificationScroller';
 import LatestUpdatesSection from '../components/LatestUpdatesSection';
 
 const CoursesSection = ({ isCoursesPage = false }) => {
-  const displayItems = isCoursesPage ? coursePackages : coursePackages.slice(0, 3);
+  const [courses, setCourses] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('courses')
+          .select('*')
+          .eq('is_active', true)
+          .order('display_order', { ascending: true });
+
+        if (error) throw error;
+        setCourses(data || []);
+      } catch (err) {
+        console.error("Error fetching courses:", err);
+        // Fallback to static data if DB fails during dev
+        setCourses(coursePackages);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchCourses();
+  }, []);
+
+  const displayItems = isCoursesPage ? courses : courses.slice(0, 3);
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center py-32 bg-white">
+        <div className="w-12 h-12 border-4 border-[#166534] border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -132,9 +165,9 @@ const CoursesSection = ({ isCoursesPage = false }) => {
                     {pkg.desc}
                   </p>
                   
-                  {pkg.coursesIncluded && (
+                  {pkg.curriculum && Array.isArray(pkg.curriculum) && (
                     <div className={`flex flex-wrap gap-2 mb-6 ${isEven ? '' : 'md:justify-end'}`}>
-                      {pkg.coursesIncluded.map((courseName, cIdx) => (
+                      {pkg.curriculum.map((courseName, cIdx) => (
                         <span key={cIdx} className="px-3 py-1 bg-[#166534]/5 text-[#166534] rounded-full text-[10px] font-bold uppercase tracking-wider border border-[#166534]/10">
                           {courseName}
                         </span>
@@ -145,7 +178,7 @@ const CoursesSection = ({ isCoursesPage = false }) => {
                   {/* Price replacing Explore Course */}
                   <div className={`inline-flex flex-wrap items-center gap-3 mt-2 ${isEven ? '' : 'md:justify-end'}`}>
                     <Link
-                      to={`/course/${pkg.id}`}
+                      to={`/course/${pkg.slug}`}
                       className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#166534] text-white text-xs md:text-sm font-bold uppercase tracking-widest rounded-full hover:bg-[#0f4523] hover:-translate-y-0.5 transition-all shadow-md w-fit"
                     >
                       View Package Details

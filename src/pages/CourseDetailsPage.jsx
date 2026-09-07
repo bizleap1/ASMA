@@ -12,36 +12,110 @@ import { serviceData, courseDetails, baseCourses, additionalCourses, coursePacka
 const CourseDetailsPage = () => {
   const { courseId } = useParams();
   const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isEnrolling, setIsEnrolling] = React.useState(false);
+  const [enrollSuccess, setEnrollSuccess] = React.useState(false);
+  const [course, setCourse] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const decodedId = decodeURIComponent(courseId || "");
-  const course = coursePackages.find(p => p.id === decodedId) || [...baseCourses, ...additionalCourses].find(c => c.title === decodedId);
 
-  const handleCourseSubmit = (e) => {
+  useEffect(() => {
+    const fetchCourse = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('courses')
+          .select('*')
+          .eq('slug', decodedId)
+          .single();
+        if (error) throw error;
+        setCourse(data);
+      } catch (error) {
+        console.error("Error fetching course:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchCourse();
+  }, [decodedId]);
+
+  const handleCourseSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const name = formData.get('name');
-    const email = formData.get('email');
-    const phone = formData.get('phone');
-    const msg = formData.get('message');
-    const text = `Hi Advait Academy! I want to enroll in ${course?.title || 'a course'}.\n\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\nMessage: ${msg}`;
-    window.open(`https://wa.me/919156953895?text=${encodeURIComponent(text)}`, '_blank');
-    setIsModalOpen(false);
+    setIsEnrolling(true);
+    setEnrollSuccess(false);
+
+    try {
+      const formData = new FormData(e.target);
+      const name = formData.get('name');
+      const email = formData.get('email');
+      const phone = formData.get('phone');
+      const msg = formData.get('message');
+      
+      const { data: authData } = await supabase.auth.getSession();
+      const user = authData?.session?.user;
+
+      // Always insert into DB
+      const { error: insertError } = await supabase
+        .from('enrollments')
+        .insert({
+          course_id: course.id,
+          course_name: course.title,
+          student_name: name,
+          email: email,
+          phone: phone,
+          notes: msg || null,
+          status: 'pending',
+          auth_user_id: user ? user.id : null
+        });
+
+      if (insertError) {
+        console.error("Error inserting enrollment:", insertError);
+        alert("Failed to submit request. Please try again.");
+        setIsEnrolling(false);
+        return;
+      }
+
+      if (user) {
+        // Logged in: show success message, no whatsapp
+        setEnrollSuccess(true);
+        setTimeout(() => {
+          setIsModalOpen(false);
+          setEnrollSuccess(false);
+        }, 3000);
+      } else {
+        // Guest: Redirect to WhatsApp
+        const text = `Hi Advait Academy! I want to enroll in ${course?.title || 'a course'}.\n\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\nMessage: ${msg}`;
+        window.open(`https://wa.me/919156953895?text=${encodeURIComponent(text)}`, '_blank');
+        setIsModalOpen(false);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("An unexpected error occurred.");
+    } finally {
+      if (!enrollSuccess) setIsEnrolling(false);
+    }
   };
 
-  if (!course) {
+  if (isLoading) {
     return (
-      <div className="py-20 text-center text-text-primary">
-        <h2 className="text-2xl font-bold mb-4">Course not found.</h2>
-        <Link to="/courses" className="text-accent-primary hover:underline">Return to Courses</Link>
+      <div className="flex justify-center items-center h-screen bg-bg-primary">
+        <div className="w-12 h-12 border-4 border-[#166534] border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
 
-  const details = courseDetails[course.title] || {
-    duration: "Flexible",
-    mode: "Online Live / Classroom",
-    curriculum: course.coursesIncluded ? course.coursesIncluded.map(c => `Complete module on ${c}`) : ["Course overview and basics", "Practical sessions", "Q&A support"],
-    benefits: ["Professional Mentorship", "Quality course materials", "Dedicated Support"]
-  };
+  if (!course) {
+    return (
+      <div className="py-20 text-center text-text-primary min-h-screen bg-bg-primary flex flex-col justify-center items-center">
+        <h2 className="text-2xl font-bold mb-4">Course not found.</h2>
+        <Link to="/courses" className="text-[#166534] hover:underline">Return to Courses</Link>
+      </div>
+    );
+  }
+
+  const curriculumList = course.curriculum && Array.isArray(course.curriculum) 
+    ? course.curriculum 
+    : ["Course overview and basics", "Practical sessions", "Q&A support"];
+
+  const benefitsList = ["Professional Mentorship", "Quality course materials", "Dedicated Support"];
 
   return (
     <div className="bg-bg-primary min-h-screen pb-20">
@@ -85,7 +159,7 @@ const CourseDetailsPage = () => {
               </div>
               <div>
                 <p className="text-xs text-text-secondary font-bold uppercase tracking-widest mb-1">Duration</p>
-                <p className="text-xl font-display font-black text-text-primary">{details.duration}</p>
+                <p className="text-xl font-display font-black text-text-primary">{course.duration || "Self Paced"}</p>
               </div>
             </div>
 
@@ -97,7 +171,7 @@ const CourseDetailsPage = () => {
               </div>
               <div>
                 <p className="text-xs text-text-secondary font-bold uppercase tracking-widest mb-1">Learning Mode</p>
-                <p className="text-xl font-display font-black text-text-primary">{details.mode}</p>
+                <p className="text-xl font-display font-black text-text-primary">{course.mode || "Online"}</p>
               </div>
             </div>
           </div>
@@ -124,7 +198,7 @@ const CourseDetailsPage = () => {
               </div>
 
               <div className="space-y-4">
-                {details.curriculum.map((item, idx) => (
+                {curriculumList.map((item, idx) => (
                   <div key={idx} className="group flex items-center gap-6 p-5 rounded-2xl border border-gray-50 bg-gray-50/50 hover:bg-white hover:border-[#166534]/20 hover:shadow-lg hover:shadow-[#166534]/5 transition-all duration-300">
                     <div className="w-10 h-10 rounded-xl bg-white text-gray-400 font-display font-black flex items-center justify-center shrink-0 border border-gray-100 group-hover:bg-[#166534] group-hover:text-white group-hover:border-[#166534] transition-colors">
                       {String(idx + 1).padStart(2, '0')}
@@ -149,7 +223,7 @@ const CourseDetailsPage = () => {
                 </h3>
 
                 <ul className="space-y-5 relative z-10">
-                  {details.benefits.map((benefit, idx) => (
+                  {benefitsList.map((benefit, idx) => (
                     <li key={idx} className="flex items-start gap-4">
                       <div className="w-6 h-6 rounded-full bg-[#166534]/20 flex items-center justify-center shrink-0 mt-0.5">
                         <svg className="w-3.5 h-3.5 text-[#4ade80]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
@@ -189,6 +263,16 @@ const CourseDetailsPage = () => {
               <h3 className="text-2xl font-display font-black text-text-primary mb-2">Request Information</h3>
               <p className="text-sm text-text-secondary">Please fill out the form below to inquire about <strong className="text-[#166534]">{course.title}</strong>. Our team will get back to you shortly.</p>
             </div>
+            
+            {enrollSuccess ? (
+              <div className="text-center py-6">
+                <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                </div>
+                <h4 className="text-xl font-bold text-text-primary mb-2">Request Submitted!</h4>
+                <p className="text-text-secondary">We have received your enrollment request. You can track its status in your dashboard.</p>
+              </div>
+            ) : (
             <form className="space-y-5" onSubmit={handleCourseSubmit}>
               <div>
                 <label className="block text-xs font-bold text-text-primary uppercase tracking-widest mb-2">Full Name</label>
@@ -208,10 +292,11 @@ const CourseDetailsPage = () => {
                 <label className="block text-xs font-bold text-text-primary uppercase tracking-widest mb-2">Message (Optional)</label>
                 <textarea name="message" rows="3" className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-[#166534] focus:ring-2 focus:ring-[#166534]/20 outline-none transition-all resize-none" placeholder="Any specific questions?"></textarea>
               </div>
-              <button type="submit" className="w-full py-4 bg-[#166534] text-white font-bold uppercase tracking-widest text-sm rounded-xl hover:bg-[#0f4523] shadow-lg shadow-[#166534]/30 transition-all hover:-translate-y-1 mt-4">
-                Submit Inquiry
+              <button type="submit" disabled={isEnrolling} className="w-full py-4 bg-[#166534] text-white font-bold uppercase tracking-widest text-sm rounded-xl hover:bg-[#0f4523] shadow-lg shadow-[#166534]/30 transition-all hover:-translate-y-1 mt-4 disabled:opacity-70 disabled:cursor-not-allowed">
+                {isEnrolling ? 'Submitting...' : 'Submit Inquiry'}
               </button>
             </form>
+            )}
           </div>
         </div>
       )}

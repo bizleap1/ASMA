@@ -50,19 +50,12 @@ const LatestUpdatesSection = () => {
               {/* Glass Container */}
               <div className="relative rounded-[1.2rem] p-2 bg-white/60 backdrop-blur-md border border-white/80 shadow-[0_10px_20px_-10px_rgba(0,0,0,0.1)] overflow-hidden">
                 <div className="relative rounded-lg overflow-hidden bg-[#0B2117]">
-                  <img
-                    src="/updates_poster.jpeg"
+                    <img
+                      src="/updates_poster_revamped.png"
                     alt="Latest Update - New Batch"
                     className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700 opacity-95 group-hover:opacity-100"
                   />
-                  {/* Floating Elements on Image */}
-                  <div className="absolute top-2 left-2 bg-white/90 backdrop-blur-sm text-[#0B2117] text-[9px] font-black px-2 py-0.5 rounded-full shadow-lg uppercase tracking-wider flex items-center gap-1">
-                    <svg className="w-2.5 h-2.5 text-[#D4AF37]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                    Starting Soon
-                  </div>
-                  <div className="absolute top-2 right-2 bg-red-500 text-white text-[9px] font-black px-2 py-0.5 rounded-full shadow-lg uppercase tracking-wider animate-bounce">
-                    New!
-                  </div>
+
                 </div>
               </div>
             </div>

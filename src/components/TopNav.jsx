@@ -17,6 +17,7 @@ const TopNav = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [lang, setLang] = React.useState('en');
   const [user, setUser] = React.useState(null);
+  const [isAdmin, setIsAdmin] = React.useState(false);
   const [profileOpen, setProfileOpen] = React.useState(false);
   const location = useLocation();
 
@@ -42,18 +43,32 @@ const TopNav = () => {
   }, []);
 
   React.useEffect(() => {
+    const checkAdmin = async (sessionUser) => {
+      if (!sessionUser) {
+        setIsAdmin(false);
+        return;
+      }
+      const { data } = await supabase.from('admins').select('email').eq('email', sessionUser.email).single();
+      setIsAdmin(!!data);
+    };
+
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
+      const isDemo = localStorage.getItem('demoStudent') === 'true';
+      setUser(session?.user ?? (isDemo ? { email: 'student@advaitacademy.com' } : null));
+      checkAdmin(session?.user);
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
+      const isDemo = localStorage.getItem('demoStudent') === 'true';
+      setUser(session?.user ?? (isDemo ? { email: 'student@advaitacademy.com' } : null));
+      checkAdmin(session?.user);
     });
 
     return () => subscription.unsubscribe();
   }, []);
 
   const handleLogout = async () => {
+    localStorage.removeItem('demoStudent');
     await supabase.auth.signOut();
   };
 
@@ -196,15 +211,15 @@ const TopNav = () => {
                 <div className={`absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-2xl border border-text-primary/5 overflow-hidden transition-all duration-300 origin-top-right ${profileOpen ? 'scale-100 opacity-100 visible translate-y-0' : 'scale-95 opacity-0 invisible -translate-y-2'}`}>
                   <div className="px-4 py-4 bg-bg-secondary/30 border-b border-text-primary/5">
                     <div className="text-xs font-bold text-text-primary truncate">{user.email || user.phone}</div>
-                    <div className="text-[10px] text-accent-primary uppercase tracking-widest font-black mt-1 flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-accent-primary animate-pulse"></span>
-                      Active Student
+                    <div className={`text-[10px] ${isAdmin ? 'text-blue-600' : 'text-accent-primary'} uppercase tracking-widest font-black mt-1 flex items-center gap-1.5`}>
+                      <span className={`w-1.5 h-1.5 rounded-full ${isAdmin ? 'bg-blue-600' : 'bg-accent-primary'} animate-pulse`}></span>
+                      {isAdmin ? 'ADMINISTRATOR' : 'ACTIVE STUDENT'}
                     </div>
                   </div>
                   <div className="p-2 flex flex-col gap-1">
-                    <Link to="/dashboard" onClick={() => setProfileOpen(false)} className="px-3 py-2.5 text-sm font-medium text-text-secondary hover:text-accent-primary hover:bg-accent-primary/5 rounded-xl transition-colors flex items-center gap-3">
+                    <Link to={isAdmin ? "/admin/courses" : "/dashboard"} onClick={() => setProfileOpen(false)} className="px-3 py-2.5 text-sm font-medium text-text-secondary hover:text-accent-primary hover:bg-accent-primary/5 rounded-xl transition-colors flex items-center gap-3">
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
-                      Dashboard
+                      {isAdmin ? 'Admin Dashboard' : 'Dashboard'}
                     </Link>
                     <button onClick={() => { handleLogout(); setProfileOpen(false); }} className="w-full text-left px-3 py-2.5 text-sm font-bold text-red-500 hover:bg-red-50 rounded-xl transition-colors flex items-center gap-3">
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
@@ -214,9 +229,14 @@ const TopNav = () => {
                 </div>
               </div>
             ) : (
-              <Link to="/login" className="hidden md:inline-flex px-4 py-2 md:px-6 md:py-3 bg-accent-primary text-text-primary rounded-full font-bold tracking-widest text-[10px] md:text-xs hover:bg-white transition-all shadow-lg shadow-accent-primary/20 whitespace-nowrap border border-accent-primary hover:border-text-primary/10 hover:shadow-xl hover:-translate-y-0.5">
-                Login
-              </Link>
+              <div className="flex gap-2">
+                <button onClick={() => { localStorage.setItem('demoStudent', 'true'); window.location.href = '/dashboard'; }} className="hidden md:inline-flex px-4 py-2 md:px-6 md:py-3 bg-white text-[#0B2117] rounded-full font-bold tracking-widest text-[10px] md:text-xs hover:bg-gray-100 transition-all shadow-lg shadow-black/5 whitespace-nowrap border border-gray-200 hover:shadow-xl hover:-translate-y-0.5">
+                  Student ID Login
+                </button>
+                <Link to="/login" className="hidden md:inline-flex px-4 py-2 md:px-6 md:py-3 bg-accent-primary text-text-primary rounded-full font-bold tracking-widest text-[10px] md:text-xs hover:bg-white transition-all shadow-lg shadow-accent-primary/20 whitespace-nowrap border border-accent-primary hover:border-text-primary/10 hover:shadow-xl hover:-translate-y-0.5">
+                  Login
+                </Link>
+              </div>
             )}
 
             <a href="tel:09156953895" className="hidden lg:block px-6 py-3 bg-text-primary text-bg-primary rounded-full font-bold tracking-widest text-xs hover:bg-accent-primary transition-all shadow-lg shadow-text-primary/10 whitespace-nowrap">
@@ -272,13 +292,13 @@ const TopNav = () => {
                   </div>
                   <div className="overflow-hidden">
                     <div className="text-sm font-bold text-text-primary truncate">{user.email || user.phone}</div>
-                    <div className="text-[10px] text-accent-primary uppercase tracking-widest font-black mt-0.5">Active Student</div>
+                    <div className={`text-[10px] ${isAdmin ? 'text-blue-600' : 'text-accent-primary'} uppercase tracking-widest font-black mt-0.5`}>{isAdmin ? 'ADMINISTRATOR' : 'ACTIVE STUDENT'}</div>
                   </div>
                 </div>
                 <div className="flex flex-col p-1">
-                  <Link to="/dashboard" onClick={() => setMobileMenuOpen(false)} className="px-4 py-3 text-sm font-medium text-text-secondary hover:text-accent-primary hover:bg-gray-50 rounded-lg transition-colors flex items-center gap-3">
+                  <Link to={isAdmin ? "/admin/courses" : "/dashboard"} onClick={() => setMobileMenuOpen(false)} className="px-4 py-3 text-sm font-medium text-text-secondary hover:text-accent-primary hover:bg-gray-50 rounded-lg transition-colors flex items-center gap-3">
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
-                    Dashboard
+                    {isAdmin ? 'Admin Dashboard' : 'Dashboard'}
                   </Link>
                   <button onClick={() => { handleLogout(); setMobileMenuOpen(false); }} className="px-4 py-3 text-sm font-bold text-red-500 hover:bg-red-50 rounded-lg transition-colors flex items-center gap-3 text-left">
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
@@ -287,9 +307,14 @@ const TopNav = () => {
                 </div>
               </div>
             ) : (
-              <Link to="/login" onClick={() => setMobileMenuOpen(false)} className="mt-2 w-full py-4 bg-accent-primary text-text-primary rounded-xl font-bold tracking-widest text-sm hover:bg-white transition-all text-center inline-block border border-accent-primary shadow-lg shadow-accent-primary/20 flex-shrink-0">
-                Login
-              </Link>
+              <div className="flex flex-col gap-2 mt-2 w-full flex-shrink-0">
+                <button onClick={() => { localStorage.setItem('demoStudent', 'true'); window.location.href = '/dashboard'; }} className="w-full py-4 bg-white text-[#0B2117] rounded-xl font-bold tracking-widest text-sm hover:bg-gray-100 transition-all text-center inline-block border border-gray-200 shadow-sm">
+                  Student ID Login
+                </button>
+                <Link to="/login" onClick={() => setMobileMenuOpen(false)} className="w-full py-4 bg-accent-primary text-text-primary rounded-xl font-bold tracking-widest text-sm hover:bg-white transition-all text-center inline-block border border-accent-primary shadow-lg shadow-accent-primary/20">
+                  Login
+                </Link>
+              </div>
             )}
 
             <a href="tel:09156953895" className="mt-2 mb-8 w-full py-4 bg-text-primary text-white rounded-xl font-bold tracking-widest text-sm hover:bg-accent-primary transition-colors text-center inline-block flex-shrink-0">

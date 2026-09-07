@@ -47,8 +47,19 @@ const LoginPageSection = () => {
     if (error) {
       setError(error.message);
     } else {
-      alert('Login Successful! Welcome to Advait Academy.');
-      window.location.href = '/';
+      // Check if admin
+      const { data: adminData } = await supabase
+        .from('admins')
+        .select('email')
+        .eq('email', email)
+        .single();
+        
+      if (adminData) {
+        window.location.href = '/admin/courses';
+      } else {
+        alert('Login Successful! Welcome to Advait Academy.');
+        window.location.href = '/';
+      }
     }
   };
 
