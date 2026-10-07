@@ -39,14 +39,24 @@ const AboutSection = ({ hideExploreButton = false }) => {
                 <img 
                   loading="lazy"
                   src="/asma founder.png" 
-                  alt="Advait Academy Leadership" 
+                  alt="Satish Bobade - Founder & Chief Mentor" 
                   className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
               </div>
               
+              {/* Founder Nameplate - Subtle, Premium Ivory Card */}
+              <div className="absolute bottom-20 sm:bottom-24 lg:bottom-28 left-3 sm:left-5 lg:left-6 z-20 bg-[#FAF8F5]/95 backdrop-blur-md rounded-[10px] px-4 sm:px-5 py-3 sm:py-3.5 shadow-[0_4px_20px_rgba(0,0,0,0.12)] border border-[#173D2B]/10 max-w-[85%] sm:max-w-none">
+                <div className="text-[18px] md:text-[20px] font-bold text-[#173D2B] leading-tight tracking-tight">
+                  Satish Bobade
+                </div>
+                <div className="text-[12px] md:text-[13px] font-medium text-[#173D2B]/75 uppercase tracking-wider mt-0.5">
+                  Founder & Chief Mentor, ASMA
+                </div>
+              </div>
+
               {/* Experience Badge overlay - Simple & Clean */}
-              <div className="absolute -bottom-6 lg:bottom-10 right-4 lg:-right-8 bg-white rounded-xl px-6 py-4 shadow-xl border border-black/5 flex items-center gap-5 z-20 w-max">
+              <div className="absolute -bottom-6 lg:bottom-6 right-3 sm:right-4 lg:-right-8 bg-white rounded-xl px-5 sm:px-6 py-3.5 sm:py-4 shadow-xl border border-black/5 flex items-center gap-4 sm:gap-5 z-20 w-max">
                 
                 <div className="text-4xl md:text-5xl font-black text-accent-secondary tracking-tighter">
                   20+
@@ -54,7 +64,7 @@ const AboutSection = ({ hideExploreButton = false }) => {
                 
                 <div className="w-px h-10 bg-black/10"></div>
 
-                <div className="text-text-primary font-bold text-sm md:text-base leading-snug">
+                <div className="text-text-primary font-bold text-xs sm:text-sm md:text-base leading-snug">
                   Years of Real <br/>Market Experience
                 </div>
 
