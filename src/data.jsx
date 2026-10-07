@@ -1,0 +1,798 @@
+import React from "react";
+import { Link } from "react-router-dom";
+import shareMarketImg from "./assets/ANU00469.JPG";
+import stockInvestmentImg from "./assets/ANU00455.JPG";
+
+export const serviceData = [
+  {
+    id: "share-market-training",
+    title: "Share Market Training",
+    category: "Training",
+    desc: "In-depth courses on stock market investing, trading strategies, technical analysis and financial planning for beginners and advanced learners.",
+    image: shareMarketImg,
+    fullDesc: "Our Share Market Training program is designed to equip you with the knowledge and skills needed to navigate the stock market confidently. Whether you are a beginner looking to understand the basics or an experienced trader seeking advanced strategies, this course covers everything from fundamental analysis to technical indicators and risk management.",
+    benefits: ["Comprehensive Curriculum", "Live Market Sessions", "Expert Mentorship", "Practical Trading Strategies"]
+  },
+  {
+    id: "stock-investment",
+    title: "Stock Investment",
+    category: "Investment",
+    desc: "Unlock your wealth potential with smart stock investments - guided strategies, expert insights and confident decisions for a secure financial future.",
+    image: stockInvestmentImg,
+    fullDesc: "Investing in stocks is one of the most effective ways to build long-term wealth. Our stock investment advisory service provides you with expert insights, carefully researched stock picks, and portfolio management strategies tailored to your financial goals and risk tolerance.",
+    benefits: ["Personalized Portfolio Advice", "In-depth Market Research", "Regular Performance Reviews", "Risk Mitigation Strategies"]
+  },
+  {
+    id: "mutual-fund-investment",
+    title: "Mutual Fund Investment",
+    category: "Investment",
+    desc: "Grow your wealth steadily with smart mutual fund investments - guided by experts for secure, diversified and goal-oriented financial success.",
+    image: "https://images.pexels.com/photos/6802049/pexels-photo-6802049.jpeg?auto=compress&cs=tinysrgb&w=800",
+    fullDesc: "Mutual funds offer a hassle-free way to invest in a diversified portfolio managed by professionals. We help you choose the right mix of equity, debt, and hybrid funds based on your financial objectives, investment horizon, and risk appetite.",
+    benefits: ["Diversified Investment", "Professional Fund Management", "Goal-Based Planning", "SIP and Lump Sum Options"]
+  },
+  {
+    id: "psychological-training",
+    title: "Psychological Training",
+    category: "Training",
+    desc: "Unlock your trading potential with strong market psychology—master emotional control, build discipline, and make confident, rational decisions for consistent success in the stock market",
+    image: "https://images.pexels.com/photos/3760067/pexels-photo-3760067.jpeg?auto=compress&cs=tinysrgb&w=800",
+    fullDesc: "Success in trading is 80% psychology and 20% strategy. Our psychological training program helps you overcome fear, greed, and emotional biases. Build the discipline and mental resilience required to execute trades confidently and consistently.",
+    benefits: ["Emotional Control", "Developing Discipline", "Overcoming Biases", "Consistent Execution"]
+  },
+  {
+    id: "derivatives-trading",
+    title: "Derivatives Trading",
+    category: "Training",
+    desc: "Master the art of Options and Futures trading with advanced strategies and risk management techniques for high-yield returns.",
+    image: "https://images.pexels.com/photos/730564/pexels-photo-730564.jpeg?auto=compress&cs=tinysrgb&w=800",
+    fullDesc: "Take your trading to the next level with our comprehensive Derivatives Trading course. Learn how to leverage options and futures to hedge your portfolio, generate consistent income, and speculate on market movements with calculated risks.",
+    benefits: ["Options Strategies", "Futures Hedging", "Risk Management", "High-Yield Techniques"]
+  },
+  {
+    id: "portfolio-management",
+    title: "Portfolio Management",
+    category: "Investment",
+    desc: "Expert portfolio management services to diversify your assets, minimize risks, and maximize long-term wealth creation.",
+    image: "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=800",
+    fullDesc: "Our Portfolio Management Services (PMS) cater to high-net-worth individuals and institutions. We create customized, diversified portfolios tailored to your specific financial goals, risk appetite, and investment horizon to ensure sustainable growth.",
+    benefits: ["Customized Portfolios", "Active Monitoring", "Risk Minimization", "Wealth Maximization"]
+  },
+    {
+    id: "algo-trading",
+    title: "Algorithmic Trading",
+    category: "Training",
+    desc: "Automate your trading with customized algorithms and systematic setups for consistent, emotion-free execution.",
+    image: "https://images.unsplash.com/photo-1605152276897-4f618f831968?auto=format&fit=crop&w=800",
+    fullDesc: "Take emotions out of your trading with our Algorithmic Trading service. We help you design, backtest, and deploy automated trading strategies using advanced technical indicators, ensuring precision and speed in your trade execution.",
+    benefits: ["Emotion-Free Trading", "High-Speed Execution", "Backtested Strategies", "Custom Strategy Development"]
+  },
+  {
+    id: "commodity-currency",
+    title: "Commodity & Currency",
+    category: "Training",
+    desc: "Diversify your portfolio by exploring opportunities in MCX and Forex markets with expert guidance.",
+    image: "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=800",
+    fullDesc: "Expand your trading horizon beyond equities. Learn the nuances of trading precious metals, energy, and global currency pairs. Our experts guide you on global macroeconomic factors and technical setups specific to these highly leveraged markets.",
+    benefits: ["Global Market Exposure", "Leveraged Trading", "Macro-Economic Insights", "Diversified Risk"]
+  },
+  {
+    id: "financial-planning",
+    title: "Financial Planning",
+    category: "Investment",
+    desc: "Comprehensive strategies for long-term wealth creation, goal-based investing, and smart asset allocation.",
+    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800",
+    fullDesc: "Achieve true financial freedom with our tailored financial planning services. We assess your current financial standing, define clear future goals, and create a roadmap involving mutual funds, stocks, insurance, and retirement planning to secure your future.",
+    benefits: ["Goal-Based Investing", "Retirement Planning", "Tax Optimization", "Emergency Fund Setup"]
+  },
+  {
+    id: "health-insurance",
+    title: "Health Insurance",
+    category: "Insurance",
+    desc: "Protect your health with plans from top insurers, offering medical coverage, hospitalization benefits and cashless treatment facilities nationwide.",
+    image: "https://images.pexels.com/photos/5327656/pexels-photo-5327656.jpeg?auto=compress&cs=tinysrgb&w=800",
+    fullDesc: "Medical emergencies can derail your financial planning. Our health insurance solutions offer comprehensive coverage against hospitalization expenses, critical illnesses, and pre/post-hospitalization care. We help you find policies with the best claim settlement ratios and extensive cashless hospital networks.",
+    benefits: ["Cashless Treatment", "Comprehensive Coverage", "Critical Illness Protection", "Tax Benefits under Section 80D"]
+  },
+  {
+    id: "term-insurance",
+    title: "Term Insurance",
+    category: "Insurance",
+    desc: "Affordable term plans providing high life cover for a fixed period, ensuring your loved ones are financially protected in your absence.",
+    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=400&q=80",
+    fullDesc: "Secure your family's future with affordable term insurance plans. A term plan provides substantial financial protection to your dependents in case of your untimely demise, ensuring that their living standard and financial goals are not compromised.",
+    benefits: ["High Life Cover at Low Premiums", "Financial Security for Dependents", "Optional Riders (Accidental/Critical)", "Tax Benefits under Section 80C"]
+  },
+  {
+    id: "motor-insurance",
+    title: "Motor Insurance",
+    category: "Insurance",
+    desc: "Get reliable motor insurance for bikes and cars, covering accidental damage, theft, third-party liability, and hassle-free claim processes.",
+    image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=800",
+    fullDesc: "Protect your vehicle against accidents, theft, natural disasters, and third-party liabilities with our reliable motor insurance plans. We assist you in choosing policies that offer comprehensive coverage, cashless repairs, and hassle-free claim settlements.",
+    benefits: ["Comprehensive and Third-Party Covers", "Cashless Garages Network", "No Claim Bonus (NCB) Protection", "Zero Depreciation Options"]
+  },
+  {
+    id: "life-insurance",
+    title: "Life Insurance",
+    category: "Insurance",
+    desc: "Lifelong protection and wealth-building investment benefits.",
+    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800",
+    fullDesc: "Life insurance offers lifelong financial protection to your family along with wealth-building investment benefits. We offer a range of endowment and unit-linked plans customized for your long-term goals like children's education and retirement planning.",
+    benefits: ["Lifelong Coverage", "Wealth Accumulation", "Guaranteed Returns Options", "Tax Benefits"]
+  },
+  {
+    id: "travel-insurance",
+    title: "Travel Insurance",
+    category: "Insurance",
+    desc: "Secure your trips against emergencies and baggage loss.",
+    image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800",
+    fullDesc: "Traveling abroad or domestically comes with uncertainties. Our travel insurance plans cover medical emergencies, trip cancellations, flight delays, and baggage loss, ensuring you have a worry-free journey anywhere in the world.",
+    benefits: ["Emergency Medical Cover", "Trip Cancellation Protection", "Loss of Baggage/Passport", "24x7 Global Assistance"]
+  },
+  {
+    id: "property-insurance",
+    title: "Property Insurance",
+    category: "Insurance",
+    desc: "Safeguard properties against fire, theft, and natural disasters.",
+    image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800",
+    fullDesc: "Your home or commercial property is your biggest asset. Property insurance protects your building and its contents against damages caused by fire, theft, earthquakes, floods, and other unforeseen events, providing peace of mind.",
+    benefits: ["Building and Content Cover", "Protection from Natural Calamities", "Burglary and Theft Protection", "Rent Loss Coverage"]
+  }
+];
+export const courseDetails = {
+  "Equity Market": {
+    duration: "2 Months",
+    mode: "Online Live & Offline Classroom",
+    curriculum: [
+      "Introduction to Indian Stock Market & Exchanges",
+      "Basics of Demat, Trading Accounts & Brokers",
+      "Understanding Market Structure & Order Types",
+      "Fundamental Analysis: Reading Balance Sheets & P/L",
+      "Analyzing Key Ratios: P/E, EPS, RoE, Debt-to-Equity",
+      "Identifying Multi-bagger Stocks & Value Investing",
+      "Live Market Practice & Interactive Q&A Sessions"
+    ],
+    benefits: ["Lifetime Mentorship Support", "Live Market Trading Practice", "Premium Telegram Community Access", "Exclusive Strategy Checklists"]
+  },
+  "Currency Market": {
+    duration: "1 Month",
+    mode: "Online Live Sessions",
+    curriculum: [
+      "Forex Market Basics, Pip Calculations & Leverage",
+      "Major, Minor & Exotic Currency Pairs (USDINR, EURINR, GBPINR)",
+      "Impact of Global Macro Economics & Central Bank Policies",
+      "Technical Analysis Specific to Currency Trends",
+      "Risk Mitigation & Hedging Strategies in Forex",
+      "Trading the News: NFP, CPI & Interest Rate Decisions"
+    ],
+    benefits: ["Daily Global Macro Updates", "Pre-Session Level Planning", "1-on-1 Strategy Doubt Solving", "Live News Trading Setup"]
+  },
+  "Dmat Account Operation": {
+    duration: "1 Week",
+    mode: "Self-Paced Video Course + 1 Live Session",
+    curriculum: [
+      "Navigating Demat & Trading Accounts Safely",
+      "Introduction to Modern Terminal Software (Kite, Groww, Upstox)",
+      "Placing Orders: Market, Limit, SL, SL-M, GTT",
+      "Advanced Orders: Bracket, Cover & Basket Orders",
+      "Setting up Custom Alerts, Watchlists & Scanners",
+      "Calculating Brokerage, Taxes (STT, GST) & DP Charges"
+    ],
+    benefits: ["Step-by-step Screen Recordings", "Interactive Software Checklists", "Lifetime Access to Video Guide", "Broker Selection Help"]
+  },
+  "Technical Analysis": {
+    duration: "1.5 Months",
+    mode: "Online Live & Offline Classroom",
+    curriculum: [
+      "Dow Theory, Market Cycles & Advanced Market Structure",
+      "Trend Continuation & Trend Reversal Strategies",
+      "Mastering Candlestick Patterns & Price Action",
+      "Volume Profile & Delivery Volume Analysis",
+      "Fibonacci Retracements, Extensions & Harmonic Patterns",
+      "Setting up Custom Scanners and Watchlist Rules",
+      "Multi-Timeframe Analysis for Perfect Entries"
+    ],
+    benefits: ["Proprietary Scanning Templates", "Access to Live Trading Room", "Weekly Strategy Review Session", "Chart Review Mentorship"]
+  },
+  "Mutual Fund": {
+    duration: "2 Weeks",
+    mode: "Online Live Sessions",
+    curriculum: [
+      "Understanding Mutual Funds, AMCs, & NAV",
+      "Types of Funds: Equity, Debt, Hybrid & Liquid",
+      "SIP vs Lumpsum: Power of Compounding",
+      "Analyzing Fund Performance: Alpha, Beta, Sharpe Ratio",
+      "Understanding Expense Ratios, Exit Loads & Taxation",
+      "How to Build a Passive Income Portfolio"
+    ],
+    benefits: ["Fund Selection Checklist", "Personalized Portfolio Planners", "Tax-Saving Investment Guides", "Retirement Corpus Calculator"]
+  },
+  "Portfolio Managment": {
+    duration: "1 Month",
+    mode: "Online Live Sessions",
+    curriculum: [
+      "Principles of Portfolio Management & Asset Allocation",
+      "Diversification Strategies across Equities, Debt, Gold & Real Estate",
+      "Risk Profiling & Assessing Investor Tolerance",
+      "Dynamic vs Strategic Asset Allocation",
+      "Portfolio Rebalancing Techniques & Timing",
+      "Managing Institutional-Grade Wealth for Long-Term Growth"
+    ],
+    benefits: ["Personalized Portfolio Reviews", "Long-term Wealth Building Roadmap", "Risk Assessment Tools", "Quarterly Rebalancing Alerts"]
+  },
+  "Financial Planning": {
+    duration: "3 Weeks",
+    mode: "Online Live Sessions",
+    curriculum: [
+      "Setting SMART Financial Goals & Budgeting Basics",
+      "Building Emergency Funds & Managing Debt Effectively",
+      "Life & Health Insurance: Securing Your Family's Future",
+      "Tax Planning Strategies & Saving Avenues (ELSS, NPS)",
+      "Calculations for Financial Freedom & Early Retirement",
+      "Estate Planning & Will Creation Basics"
+    ],
+    benefits: ["Personalized Financial Plan Draft", "Comprehensive Insurance Audits", "Retirement Excel Planners", "1-on-1 Consultation Session"]
+  },
+  "Trading Techniques": {
+    duration: "1 Month",
+    mode: "Online Live Sessions",
+    curriculum: [
+      "Mastering Scalping for Quick Intraday Profits",
+      "Intraday Setups: Opening Range Breakout, VWAP Reversals",
+      "Swing Trading Strategies holding for Days to Weeks",
+      "Positional Trades & Deep Value Investing",
+      "Adapting Techniques to Bull, Bear, and Sideways Markets",
+      "Identifying High-Probability Breakout Stocks"
+    ],
+    benefits: ["Proven Trade Setups", "Technique Manuals & Cheat Sheets", "Daily Pre-Market Analysis", "Live Execution Practice"]
+  },
+  "Trading Strategies": {
+    duration: "1 Month",
+    mode: "Online Live Sessions",
+    curriculum: [
+      "Introduction to Algorithmic & Systematic Trading",
+      "Backtesting and Forward-Testing Rule-Based Strategies",
+      "Advanced Options Spreads: Iron Condor, Butterflies, Straddles",
+      "Hedging Strategies to Protect Capital in Volatile Markets",
+      "Mean Reversion and Bollinger Band Trading Systems",
+      "Automating Alert Rules and Semi-Algo Execution"
+    ],
+    benefits: ["Vetted Code Snippets for Indicators", "Historical Strategy Backtest Reports", "Access to Strategy Coding Mentor", "Custom Trading Journal"]
+  },
+  "Risk Management": {
+    duration: "2 Weeks",
+    mode: "Online Live Sessions",
+    curriculum: [
+      "The Math of Trading: Probabilities, Expectancy, and Edge",
+      "Position Sizing Formulas: Kelly Criterion, Fixed Fractional",
+      "Setting Logical Stop-Losses and Trailing Stops",
+      "Managing Drawdowns and Strict Daily Loss Limits",
+      "Optimizing Risk-to-Reward Ratios for Consistency",
+      "Capital Preservation and Compounding Account Balance Safely"
+    ],
+    benefits: ["Custom Position Sizing Calculators", "Trading Journal Excel Templates", "1-on-1 Account Audit Session", "Risk Profiling Questionnaire"]
+  },
+  "Advanced Psychological Training": {
+    duration: "2 Weeks",
+    mode: "Online Live Sessions",
+    curriculum: [
+      "Understanding Trading Psychology & Emotional Control",
+      "Identifying Cognitive Biases: Loss Aversion, Confirmation Bias",
+      "Overcoming FOMO (Fear Of Missing Out) and Revenge Trading",
+      "Building the Discipline to Follow Trading Rules Strictly",
+      "Handling Greed during Winning Streaks & Fear during Drawdowns",
+      "Mental Rehearsal, Meditation & Visualization Techniques for Traders"
+    ],
+    benefits: ["Daily Mental Prep Checklist", "Stress Management Techniques", "Lifetime Mindset Audits", "Trading Routine Builder"]
+  },
+  "Advanced Foundation": {
+    duration: "~2 Months",
+    mode: "Online Live & Offline Classroom",
+    curriculum: [
+      "Equity Market",
+      "Commodity Market",
+      "Demat & Account Operations",
+      "Technical Analysis",
+      "Mindset Development",
+      "Mutual Funds & SIP",
+      "Portfolio Management",
+      "Risk Management",
+      "Financial Planning",
+      "Market Psychology"
+    ],
+    benefits: ["Lifetime Mentorship Support", "Live Market Trading Practice", "Premium Telegram Community Access", "Exclusive Strategy Checklists"]
+  },
+  "Professional Master Program": {
+    duration: "~4 Months",
+    mode: "Online Live & Offline Classroom",
+    curriculum: [
+      "Futures Market",
+      "Options Market",
+      "Advanced Trading Techniques",
+      "Master Trading Strategies",
+      "Fundamental Analysis",
+      "Portfolio Optimization",
+      "Advanced Psychological Training"
+    ],
+    benefits: ["Advanced Trading Setups", "Technique Manuals & Cheat Sheets", "Daily Pre-Market Analysis", "Live Execution Practice"]
+  }
+};
+export const testimonials = [
+  {
+    name: "Rahul Verma",
+    role: "Full-Time Trader",
+    image: "https://randomuser.me/api/portraits/men/32.jpg",
+    content: "The Professional Master Program changed my perspective completely. Advait's focus on risk management helped me turn profitable within 3 months.",
+    rating: 5
+  },
+  {
+    name: "Sneha Patil",
+    role: "IT Professional",
+    image: "https://randomuser.me/api/portraits/women/44.jpg",
+    content: "Balancing a job and trading felt impossible until I learned their swing trading strategies. The mentorship here is unparalleled.",
+    rating: 5
+  },
+  {
+    name: "Amit Deshmukh",
+    role: "Business Owner",
+    image: "https://randomuser.me/api/portraits/men/85.jpg",
+    content: "I've taken multiple courses before, but the practical live-market sessions at ASMA are what actually made the difference. Highly recommended.",
+    rating: 5
+  }
+];
+
+export const homeFaqs = [
+  {
+    question: "Is Advait Stock Market Academy a good stock market academy in Nagpur?",
+    answer: "Advait Stock Market Academy is a Nagpur-based stock market academy with 20+ years of market experience and practical live-market training."
+  },
+  {
+    question: "What courses does Advait Stock Market Academy offer?",
+    answer: "Advait Stock Market Academy offers practical stock market training covering equity, commodities, technical analysis, options, futures, fundamental analysis, risk management, portfolio management and market psychology."
+  },
+  {
+    question: "Why choose Advait Stock Market Academy for stock market training in Nagpur?",
+    answer: "Advait Stock Market Academy combines 20+ years of market experience with live-market practical training, technical analysis, trading strategies, risk management, personalized guidance and continued mentorship."
+  },
+  {
+    question: "Is trading in the stock market profitable for beginners?",
+    answer: "Yes, with the right guidance and strict risk management, beginners can learn to generate consistent returns in the stock market. Advait Stock Market Academy focuses on building strong foundations first."
+  },
+  {
+    question: "How long does it take to learn stock market trading?",
+    answer: "While you can learn the basics in a few weeks, mastering trading takes months of practice. Our Professional Master Program is designed to guide you through this journey efficiently."
+  },
+  {
+    question: "Do I need a finance background to join Advait Stock Market Academy?",
+    answer: "Not at all. Our courses are structured from scratch, making it easy for students from any background to grasp complex market concepts."
+  },
+  {
+    question: "Which is the best share market training institute in Nagpur?",
+    answer: "Advait Stock Market Academy is widely recognized as one of the best share market training institutes in Nagpur. With over 20 years of experience, we provide comprehensive stock market classes, live trading sessions, and expert mentorship for both beginners and advanced traders."
+  },
+  {
+    question: "What are the fees for stock market courses at Advait Stock Market Academy?",
+    answer: "Advait Stock Market Academy offers highly affordable stock market trading courses in Nagpur, starting from foundational classes to our complete Professional Master Program. We provide exceptional value through lifetime mentorship, premium community access, and practical live market sessions."
+  },
+  {
+    question: "Does Advait Stock Market Academy provide the best technical analysis course in Nagpur?",
+    answer: "Yes, our technical analysis course is considered among the best in Nagpur. Advait Stock Market Academy teaches advanced chart patterns, price action, and trading strategies, empowering students to confidently navigate the Indian stock market, MCX, and Forex."
+  },
+  {
+    question: "How can I join the share market classes at Advait Stock Market Academy, Nagpur?",
+    answer: "You can easily enroll in our top-rated share market classes by visiting our academy at Besa-Pipla Road, Nagpur, or contacting us online. Advait Stock Market Academy offers both offline classroom training and online live stock market courses to suit your schedule."
+  }
+];
+
+export const courseFaqs = [
+  {
+    question: "Does Advait Stock Market Academy provide live stock market training?",
+    answer: "Yes. Advait Stock Market Academy focuses on practical learning through live-market sessions where students can understand how market concepts are applied in real trading conditions."
+  },
+  {
+    question: "What is taught in Advait Stock Market Academy's Professional Master Program?",
+    answer: "The Professional Master Program covers futures, options, advanced trading techniques, trading strategies, fundamental analysis, portfolio optimization and advanced psychological training."
+  },
+  {
+    question: "Does Advait Stock Market Academy provide stock market courses for working professionals?",
+    answer: "Yes. The academy's courses are suitable for learners with different levels of market experience who want to develop practical trading and investing skills."
+  },
+  {
+    question: "Can beginners learn stock market trading at Advait Stock Market Academy?",
+    answer: "Yes. Advait Stock Market Academy's training is designed for beginners as well as experienced traders who want to improve their market knowledge and trading skills."
+  },
+  {
+    question: "Can I learn stock market investing at Advait Stock Market Academy?",
+    answer: "Yes. Advait Stock Market Academy provides education on stock market investing, portfolio management, fundamental analysis and long-term wealth-building concepts."
+  },
+  {
+    question: "Will I get practical live-market experience during the course?",
+    answer: "Absolutely. We strongly believe in practical learning. You will execute trades in the live market under the guidance of our expert mentors."
+  },
+  {
+    question: "What are the fees for stock market courses in Nagpur at Advait Academy?",
+    answer: "Advait Stock Market Academy offers affordable stock market courses in Nagpur. We provide structured training from foundational equity trading to our comprehensive Professional Master Program, ensuring the best value and lifetime mentorship."
+  },
+  {
+    question: "Which is the best stock market trading course for beginners in Nagpur?",
+    answer: "Advait Stock Market Academy offers the best stock market trading course for beginners in Nagpur. Our Advanced Foundation course takes you step-by-step through market basics, Demat account operations, and technical analysis."
+  },
+  {
+    question: "Can I learn options trading in Nagpur at Advait Stock Market Academy?",
+    answer: "Yes, our Professional Master Program includes extensive options trading classes in Nagpur. You will master options strategies, futures trading, and risk management through practical, live-market sessions."
+  },
+  {
+    question: "Does Advait Stock Market Academy offer online share market classes?",
+    answer: "Yes, we provide both online share market classes and offline training at our Nagpur institute. Our online live sessions are highly interactive and designed to give you the same practical experience as classroom learning."
+  }
+];
+
+export const analysisFaqs = [
+  {
+    question: "Does Advait Stock Market Academy teach technical analysis?",
+    answer: "Yes. Technical analysis is a core part of Advait Stock Market Academy's curriculum, including chart analysis, market trends and practical trading setups."
+  },
+  {
+    question: "Does Advait Stock Market Academy teach fundamental analysis?",
+    answer: "Yes. Fundamental analysis is included in the advanced curriculum to help students evaluate companies and understand investment decisions."
+  },
+  {
+    question: "Does Advait Stock Market Academy teach intraday trading?",
+    answer: "Yes. Students learn practical intraday trading concepts, market analysis, trade execution and risk-management techniques."
+  },
+  {
+    question: "Does Advait Stock Market Academy teach swing trading?",
+    answer: "Yes. Advait Stock Market Academy covers trading strategies that help students understand market trends and identify potential swing-trading opportunities."
+  },
+  {
+    question: "How accurate is technical analysis in the Indian stock market?",
+    answer: "Technical analysis is highly effective when combined with proper risk management and market psychology, which are core pillars of our teaching methodology."
+  },
+  {
+    question: "Which charting software do you teach at Advait Stock Market Academy?",
+    answer: "We train our students on industry-standard platforms like TradingView, helping them understand advanced indicators and smart money concepts."
+  },
+  {
+    question: "Where can I learn technical analysis of stocks in Nagpur?",
+    answer: "Advait Stock Market Academy is the premier institute to learn technical analysis of stocks in Nagpur. We cover advanced price action, chart patterns, volume analysis, and multi-timeframe analysis for precise entries and exits."
+  },
+  {
+    question: "What is the best fundamental analysis course in Nagpur?",
+    answer: "Our Professional Master Program includes the best fundamental analysis course in Nagpur, teaching you how to read balance sheets, analyze key financial ratios, and identify long-term value investing and multi-bagger stock opportunities."
+  },
+  {
+    question: "Does Advait Stock Market Academy teach algorithmic trading in Nagpur?",
+    answer: "Yes, Advait Stock Market Academy introduces algorithmic trading setups and rule-based systems. We teach you how to automate alerts, backtest trading strategies, and execute trades with strict risk management."
+  },
+  {
+    question: "Can I learn Forex and Commodity trading analysis at your institute?",
+    answer: "Absolutely. Advait Stock Market Academy provides specialized technical analysis training for the Currency (Forex) and Commodity (MCX) markets in Nagpur, helping you diversify your trading portfolio beyond equities."
+  }
+];
+
+export const servicesFaqs = [
+  {
+    question: "Does Advait Stock Market Academy provide stock market mentorship?",
+    answer: "Yes. Advait Stock Market Academy provides continued guidance and lifetime support to help students improve their understanding of markets and trading strategies."
+  },
+  {
+    question: "Does Advait Stock Market Academy provide mutual fund and SIP education?",
+    answer: "Yes. Advait Stock Market Academy's curriculum includes mutual funds, SIPs and portfolio-management concepts for learners interested in diversified investing."
+  },
+  {
+    question: "Does Advait Stock Market Academy offer options trading courses in Nagpur?",
+    answer: "Yes. Advait Stock Market Academy provides advanced training covering options markets, options strategies and practical trading techniques."
+  },
+  {
+    question: "Does Advait Stock Market Academy provide practical trading strategies?",
+    answer: "Yes. Advait Stock Market Academy focuses on practical strategies and market setups developed through years of market experience and research."
+  },
+  {
+    question: "What is included in the portfolio management guidance?",
+    answer: "We guide you on asset allocation, diversification, and risk profiling to help you build a resilient, long-term wealth portfolio."
+  },
+  {
+    question: "How does lifetime support and mentorship work?",
+    answer: "Even after your course finishes, you remain part of the Advait Stock Market Academy community with access to market updates, strategy reviews, and direct mentor support."
+  },
+  {
+    question: "What financial planning services does Advait Stock Market Academy provide in Nagpur?",
+    answer: "Advait Stock Market Academy offers expert financial planning services in Nagpur, including goal-based investing, retirement planning, tax optimization, and building emergency funds to secure your financial future."
+  },
+  {
+    question: "Can I get personalized portfolio management services in Nagpur?",
+    answer: "Yes, we provide highly customized portfolio management services in Nagpur for high-net-worth individuals. We focus on dynamic asset allocation, risk minimization, and long-term wealth maximization."
+  },
+  {
+    question: "Which is the best institute for mutual fund investment advice in Nagpur?",
+    answer: "Advait Stock Market Academy provides the best mutual fund investment advice and training in Nagpur. We guide you on selecting the right equity, debt, and hybrid funds for SIPs or lumpsum investments."
+  },
+  {
+    question: "Do you provide insurance planning and advisory in Nagpur?",
+    answer: "Yes, alongside our core stock market services, Advait Stock Market Academy helps clients in Nagpur navigate health, term, life, and motor insurance plans to ensure comprehensive protection for their families and assets."
+  }
+];
+
+export const aboutContactFaqs = [
+  {
+    question: "Where is Advait Stock Market Academy located in Nagpur?",
+    answer: "Advait Stock Market Academy is located at Besa–Pipla Road, Nagpur, Maharashtra, and provides stock market education for learners in Nagpur and surrounding areas."
+  },
+  {
+    question: "How can I join a stock market course in Nagpur?",
+    answer: "You can contact Advait Stock Market Academy to enquire about available courses, upcoming batches, training programs and admission details."
+  },
+  {
+    question: "Does Advait Stock Market Academy teach stock market psychology?",
+    answer: "Yes. Advait Stock Market Academy includes mindset development and market psychology to help traders understand the importance of discipline and emotional control."
+  },
+  {
+    question: "Does Advait Stock Market Academy teach risk management in trading?",
+    answer: "Yes. Risk management and capital protection are important parts of Advait Stock Market Academy's practical trading education."
+  },
+  {
+    question: "Who are the trainers at Advait Stock Market Academy?",
+    answer: "Our courses are led by seasoned market professionals with over 20+ years of cumulative experience in active trading and investing."
+  },
+  {
+    question: "Can I visit the academy for a face-to-face consultation?",
+    answer: "Yes, we welcome aspiring traders to visit our Nagpur center at Besa–Pipla Road for a personal career counseling session."
+  },
+  {
+    question: "Who is the best stock market trainer in Nagpur?",
+    answer: "Advait Stock Market Academy boasts some of the best stock market trainers in Nagpur, led by professionals with over 20 years of active trading and investing experience who are dedicated to your financial success."
+  },
+  {
+    question: "What are the contact details for Advait Stock Market Academy in Nagpur?",
+    answer: "You can visit Advait Stock Market Academy at our main branch on Besa-Pipla Road, Nagpur. You can also reach us via phone or through our website to book a personalized career counseling session."
+  },
+  {
+    question: "Is Advait Stock Market Academy a registered trading institute in Nagpur?",
+    answer: "Advait Stock Market Academy is a highly trusted and reputed trading institute in Nagpur with a track record of transforming beginners into consistently profitable traders through ethical and transparent teaching methods."
+  },
+  {
+    question: "Why is Advait Stock Market Academy rated as the top share market class in Nagpur?",
+    answer: "We are rated as the top share market class in Nagpur because of our student-first approach, practical live-market training, comprehensive curriculum, and unwavering commitment to post-course mentorship and support."
+  }
+];
+export const baseCourses = [
+  {
+    title: "Equity Market",
+    desc: "Master equity trading from scratch. Learn how to pick winning stocks with fundamental insights and pinpoint entries.",
+    image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=1200&auto=format&fit=crop",
+    price: "₹ 5,999.00"
+  },
+  {
+    title: "Currency Market",
+    desc: "Understand global currency pairs and maximize returns with expert forex trading strategies tailored for the global markets.",
+    image: "https://images.pexels.com/photos/259209/pexels-photo-259209.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    price: "₹ 4,999.00"
+  },
+  {
+    title: "Dmat Account Operation",
+    desc: "Learn to navigate demat accounts, use modern trading terminals, and place automated orders like a professional.",
+    image: "https://images.unsplash.com/photo-1616077168079-7e09a677fb2c?q=80&w=1200&auto=format&fit=crop",
+    price: "₹ 999.00"
+  }
+];
+export const additionalCourses = [
+  {
+    title: "Technical Analysis",
+    desc: "Master chart patterns, advanced indicators, price action, and volume analysis to perfectly time your entries and exits.",
+    image: "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?q=80&w=1200&auto=format&fit=crop",
+    price: "₹ 9,999.00"
+  },
+  {
+    title: "Mutual Fund",
+    desc: "Discover the best mutual funds, understand SIPs, and build a passive income portfolio for long-term growth.",
+    image: "https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?q=80&w=1200&auto=format&fit=crop",
+    price: "₹ 1,999.00"
+  },
+  {
+    title: "Portfolio Managment",
+    desc: "Learn advanced asset allocation, portfolio diversification, and dynamic rebalancing for institutional-grade wealth management.",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
+    price: "₹ 7,999.00"
+  },
+  {
+    title: "Financial Planning",
+    desc: "Comprehensive strategies for long-term wealth creation, goal-based investing, and smart asset allocation.",
+    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1200&auto=format&fit=crop",
+    price: "₹ 3,999.00"
+  },
+  {
+    title: "Trading Techniques",
+    desc: "Learn diverse trading styles including scalping, day trading, swing trading, and deep value investing.",
+    image: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?q=80&w=1200&auto=format&fit=crop",
+    price: "₹ 4,999.00"
+  },
+  {
+    title: "Trading Strategies",
+    desc: "Deploy proven, back-tested algorithmic setups for intraday, swing, and positional trading to maximize ROI.",
+    image: "https://images.unsplash.com/photo-1605152276897-4f618f831968?q=80&w=1200&auto=format&fit=crop",
+    price: "₹ 3,999.00"
+  },
+  {
+    title: "Risk Management",
+    desc: "Protect your capital. Learn advanced position sizing, stop-loss formulas, and portfolio balancing techniques.",
+    image: "https://images.unsplash.com/photo-1535320903710-d993d3d77d29?q=80&w=1200&auto=format&fit=crop",
+    price: "₹ 2,999.00"
+  },
+  {
+    title: "Advanced Psychological Training",
+    desc: "Conquer FOMO and fear. Develop a winning mindset to trade with discipline and emotional stability in volatile markets.",
+    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200&auto=format&fit=crop",
+    price: "₹ 4,999.00"
+  }
+];
+
+export const coursePackages = [
+  {
+    id: "advanced-foundation",
+    title: "Advanced Foundation",
+    desc: "A powerful path to financial freedom. Master the essentials and build a solid foundation.",
+    image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=1200&auto=format&fit=crop",
+    price: "₹29,999",
+    coursesIncluded: ["Equity Market", "Commodity Market", "Demat & Account Operations", "Technical Analysis", "Mindset Development", "Mutual Funds & SIP", "Portfolio Management", "Risk Management", "Financial Planning", "Market Psychology"]
+  },
+  {
+    id: "professional-master-program",
+    title: "Professional Master Program",
+    desc: "Advanced techniques for serious traders. Advanced Foundation builds on everything in Professional Master Program (cumulative, not standalone).",
+    image: "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?q=80&w=1200&auto=format&fit=crop",
+    price: "₹49,999",
+    coursesIncluded: ["Futures Market", "Options Market", "Advanced Trading Techniques", "Master Trading Strategies", "Fundamental Analysis", "Portfolio Optimization", "Advanced Psychological Training"]
+  }
+];
+
+export const FREE_NOTES = [
+  {
+    id: 1,
+    title: "Stock Market Reference Guide",
+    summary: "Quick reference guide for common trading terms, candlestick patterns, and formulas.",
+    actionUrl: "/stock-market-reference-guide.pdf"
+  },
+  {
+    id: 2,
+    title: "Technical Indicators Guide",
+    summary: "Detailed notes explaining RSI, MACD, Bollinger Bands and how to use them effectively.",
+    actionUrl: "/technical-indicators-guide.pdf"
+  },
+  {
+    id: 3,
+    title: "Options Trading Basics",
+    summary: "Understand Calls, Puts, Strike Prices, the Greeks, and vertical spreads in this essential introduction.",
+    content: (
+      <div className="space-y-6 text-text-secondary leading-relaxed">
+        <div>
+          <h4 className="text-lg font-bold text-text-primary mb-2 border-b pb-2">What is an Option?</h4>
+          <p>An option is a derivative contract that gives the buyer the right, but not the obligation, to buy or sell an underlying asset at a specific price (strike price) on or before a certain date (expiration date). Options allow traders to control 100 shares of stock for a fraction of the price, providing massive leverage.</p>
+        </div>
+        <div>
+          <h4 className="text-lg font-bold text-text-primary mb-2 border-b pb-2">Types of Options</h4>
+          <ul className="space-y-2 list-disc pl-5">
+            <li><strong className="text-text-primary">Call Option:</strong> Gives the buyer the right to BUY the underlying asset at the strike price. You buy a call if you are Bullish (expect the price to go UP).</li>
+            <li><strong className="text-text-primary">Put Option:</strong> Gives the buyer the right to SELL the underlying asset at the strike price. You buy a put if you are Bearish (expect the price to go DOWN).</li>
+          </ul>
+        </div>
+        <div>
+          <h4 className="text-lg font-bold text-text-primary mb-2 border-b pb-2">Moneyness (ITM, OTM, ATM)</h4>
+          <ul className="space-y-2 list-disc pl-5">
+            <li><strong className="text-text-primary">In the Money (ITM):</strong> A call option where the strike price is below the current market price, or a put option where the strike is above the market price. Has intrinsic value and is safer to trade.</li>
+            <li><strong className="text-text-primary">Out of the Money (OTM):</strong> A call option where the strike price is above the market price, or a put where the strike is below the market price. Cheaper, but highly risky as they expire worthless if the price doesn't move.</li>
+            <li><strong className="text-text-primary">At the Money (ATM):</strong> When the strike price equals the current market price of the underlying asset. Highest extrinsic value.</li>
+          </ul>
+        </div>
+        <div>
+          <h4 className="text-lg font-bold text-text-primary mb-2 border-b pb-2">The Options "Greeks"</h4>
+          <ul className="space-y-2 list-disc pl-5">
+            <li><strong className="text-text-primary">Delta:</strong> Measures the expected change in an option's price for a $1 change in the underlying asset's price. A delta of 0.50 means the option goes up $0.50 for every $1 the stock moves.</li>
+            <li><strong className="text-text-primary">Theta:</strong> Measures the rate of time decay. Options lose value every day they get closer to expiration. Theta is the enemy of the option buyer, and the best friend of the option seller.</li>
+            <li><strong className="text-text-primary">Vega:</strong> Measures sensitivity to implied volatility (IV). High IV drastically increases option premiums. Never buy options when IV is at historic highs!</li>
+            <li><strong className="text-text-primary">Gamma:</strong> The rate of change of Delta. Highest for At-the-Money options close to expiration (Gamma Risk).</li>
+          </ul>
+        </div>
+        <div>
+          <h4 className="text-lg font-bold text-text-primary mb-2 border-b pb-2">Advanced Option Strategies</h4>
+          <ul className="space-y-2 list-disc pl-5">
+            <li><strong className="text-text-primary">Covered Call:</strong> Holding 100 shares of the underlying stock and selling 1 call option against it to generate premium income.</li>
+            <li><strong className="text-text-primary">Protective Put:</strong> Holding the underlying stock and buying a put option as "insurance" against a market crash.</li>
+            <li><strong className="text-text-primary">Bull Call Spread:</strong> Buying a lower strike call and selling a higher strike call. Limits potential profit but massively reduces the cost of the trade and protects against Theta decay.</li>
+          </ul>
+        </div>
+      </div>
+    )
+  },
+  {
+    id: 4,
+    title: "Risk Management Strategies",
+    summary: "Learn how to protect your capital, calculate position sizing, and survive drawdown periods.",
+    content: (
+      <div className="space-y-6 text-text-secondary leading-relaxed">
+        <div>
+          <h4 className="text-lg font-bold text-text-primary mb-2 border-b pb-2">The Golden 1% Rule</h4>
+          <p>Never risk more than 1% of your total account capital on a single trade. If you have a ₹1,00,000 account, your maximum acceptable loss (if your stop-loss hits) should be ₹1,000. Professional traders understand that survival is more important than massive gains. The 1% rule ensures you can survive a losing streak of 10-20 trades without destroying your portfolio.</p>
+        </div>
+        <div>
+          <h4 className="text-lg font-bold text-text-primary mb-2 border-b pb-2">Risk/Reward Ratio (R:R)</h4>
+          <p>Always aim for a risk-to-reward ratio of at least 1:2. If you are risking ₹1,000 (your stop loss distance), your target profit should be at least ₹2,000. With a 1:2 R:R, you only need to win 33% of your trades to break even! If you take 10 trades, lose 6 (lose ₹6000), and win 4 (make ₹8000), you are still net profitable.</p>
+        </div>
+        <div>
+          <h4 className="text-lg font-bold text-text-primary mb-2 border-b pb-2">Position Sizing Formula</h4>
+          <p className="p-4 bg-bg-secondary/30 rounded-lg text-sm border border-gray-100 font-mono text-text-primary mb-3">Position Size = (Total Account Value * Risk %) / (Entry Price - Stop Loss Price)</p>
+          <div className="bg-gray-50 border-l-4 border-accent-primary p-3 rounded text-sm text-text-primary">
+            <strong>Example Calculation:</strong><br/>
+            Account = ₹1,00,000. Risk = 1% (₹1000).<br/>
+            Entry Price = ₹500. Stop Loss = ₹480. (Risk per share = ₹20)<br/>
+            Position Size = 1000 / 20 = <strong>50 Shares.</strong>
+          </div>
+        </div>
+        <div>
+          <h4 className="text-lg font-bold text-text-primary mb-2 border-b pb-2">Drawdowns & The Rule of Ruin</h4>
+          <p>A drawdown is the peak-to-trough decline during a specific record period of an investment. If you lose 50% of your account, you do not need 50% to recover—you need <strong>100%</strong> just to get back to breakeven! This is why cutting losses early is the most critical skill in trading.</p>
+        </div>
+        <div>
+          <h4 className="text-lg font-bold text-text-primary mb-2 border-b pb-2">Scaling In and Out</h4>
+          <p>You don't have to enter or exit a trade all at once. Professional traders use scaling to manage risk.<br/><strong>Scaling In:</strong> Buying 50% of your position at support, and the other 50% once the trend is confirmed.<br/><strong>Scaling Out:</strong> Selling half your position at your first profit target, moving your stop-loss to breakeven, and letting the rest "run" risk-free.</p>
+        </div>
+      </div>
+    )
+  },
+  {
+    id: 5,
+    title: "Psychology of Trading",
+    summary: "Master your mind, control your emotions, and develop the discipline of a consistently profitable trader.",
+    content: (
+      <div className="space-y-6 text-text-secondary leading-relaxed">
+        <div>
+          <h4 className="text-lg font-bold text-text-primary mb-2 border-b pb-2">The Role of Emotions</h4>
+          <p>Trading is 20% strategy and 80% psychology. The two biggest emotions that destroy trading accounts are Fear and Greed. Fear makes you sell at the absolute bottom, and Greed makes you buy at the absolute top. Learning to execute your trading plan flawlessly regardless of how you feel is the ultimate goal.</p>
+        </div>
+        <div>
+          <h4 className="text-lg font-bold text-text-primary mb-2 border-b pb-2">Common Psychological Pitfalls</h4>
+          <ul className="space-y-2 list-disc pl-5">
+            <li><strong className="text-text-primary">Overtrading:</strong> Taking sub-optimal trades out of boredom or a desire to "make money quickly". The best trades jump off the screen at you. If you have to squint to see the setup, don't take it.</li>
+            <li><strong className="text-text-primary">Moving Stop Losses:</strong> Refusing to accept a loss and moving your stop loss further away, turning a small manageable loss into an account-destroying disaster. Accept that losses are a business expense.</li>
+            <li><strong className="text-text-primary">Revenge Trading:</strong> Trying to immediately win back money after a loss by doubling your position size. If you hit your daily loss limit, close the laptop and walk away.</li>
+            <li><strong className="text-text-primary">FOMO (Fear Of Missing Out):</strong> Jumping into a trade late because it's already rocketing up. By the time it's obvious to everyone, you are providing exit liquidity for the smart money.</li>
+          </ul>
+        </div>
+        <div>
+          <h4 className="text-lg font-bold text-text-primary mb-2 border-b pb-2">Developing Discipline</h4>
+          <p>Treat trading like a business, not a casino. Keep a detailed trading journal that logs not just entries and exits, but your emotional state during the trade. Review your mistakes every weekend, and never, ever enter a trade without a predefined entry, stop loss, and take profit level.</p>
+        </div>
+      </div>
+    )
+  },
+  {
+    id: 6,
+    title: "Swing Trading Blueprint",
+    summary: "A complete step-by-step framework for capturing multi-day and multi-week market trends.",
+    content: (
+      <div className="space-y-6 text-text-secondary leading-relaxed">
+        <div>
+          <h4 className="text-lg font-bold text-text-primary mb-2 border-b pb-2">What is Swing Trading?</h4>
+          <p>Unlike day trading (holding trades for minutes/hours), swing trading involves holding positions for several days to a few weeks to capture larger macro market moves. It requires significantly less screen time, eliminates intraday noise, and is the ideal strategy for those balancing trading with a full-time job.</p>
+        </div>
+        <div>
+          <h4 className="text-lg font-bold text-text-primary mb-2 border-b pb-2">Top-Down Analysis Framework</h4>
+          <ul className="space-y-2 list-disc pl-5">
+            <li><strong className="text-text-primary">1. Broad Market Trend:</strong> Check the NIFTY/SENSEX (or SPY/QQQ) on the daily/weekly chart. 75% of stocks follow the broad market. Trade WITH the overall market trend, never against it.</li>
+            <li><strong className="text-text-primary">2. Sector Strength:</strong> Identify which sectors (e.g., IT, Banking, Auto, Pharma) are currently outperforming the broader market. Money rotates from sector to sector.</li>
+            <li><strong className="text-text-primary">3. Stock Selection:</strong> Pick the strongest 1-2 stocks within those outperforming sectors. You want the market leaders, not the laggards.</li>
+          </ul>
+        </div>
+        <div>
+          <h4 className="text-lg font-bold text-text-primary mb-2 border-b pb-2">The Moving Average Pullback Strategy</h4>
+          <p>The most reliable swing trading setup. Stocks don't go up in a straight line; they breathe in and out. Wait for a strong stock in a confirmed uptrend to "breathe out" (pull back) to a key moving average (like the 20 EMA or 50 SMA) or a previous resistance-turned-support level on light volume.</p>
+          <p className="mt-2">Look for a bullish reversal candlestick pattern (like a Hammer or Bullish Engulfing) at this support level as your entry trigger. Set your stop loss just below the swing low, and target the recent swing high for take-profit.</p>
+        </div>
+        <div>
+          <h4 className="text-lg font-bold text-text-primary mb-2 border-b pb-2">The Breakout Strategy</h4>
+          <p>Identify a stock that has been consolidating sideways in a tight range or forming a pattern like a Cup and Handle or Bull Flag. Enter the trade when the price aggressively breaks above the resistance line on higher-than-average volume. The volume confirms that institutional buyers are participating in the breakout.</p>
+        </div>
+      </div>
+    )
+  }
+];
