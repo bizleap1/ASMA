@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 import { Helmet } from 'react-helmet-async';
+import { toast } from '../utils/notification';
 
 const AdminVisitors = () => {
   const [visitors, setVisitors] = useState([]);
@@ -37,9 +38,10 @@ const AdminVisitors = () => {
         .eq('id', id);
         
       if (error) throw error;
+      toast.success("Inquiry status updated.");
       fetchVisitors();
     } catch (err) {
-      alert("Error updating status: " + err.message);
+      toast.error("Error updating status: " + err.message);
     }
   };
 

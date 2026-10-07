@@ -9,6 +9,7 @@ import krishnaImg from '../assets/krishna.png';
 import vrushaliImg from '../assets/vrushali.png';
 import { serviceData, courseDetails, baseCourses, additionalCourses, FREE_NOTES } from '../data';
 import AnimatedSection from '../components/AnimatedSection';
+import { toast } from '../utils/notification';
 
 const DashboardSection = () => {
   const [user, setUser] = React.useState(null);
@@ -131,9 +132,9 @@ const DashboardSection = () => {
       }
 
       setAccessRequests(prev => [...prev.filter(r => r.item_id !== String(note.id)), data]);
-      alert(`Access requested for "${note.title}". Admin will review and grant access soon!`);
+      toast.success(`Access requested for "${note.title}". Admin will review and grant access soon!`);
     } catch (err) {
-      alert("Error: " + err.message);
+      toast.error("Error: " + err.message);
     } finally {
       setRequestingItemId(null);
     }

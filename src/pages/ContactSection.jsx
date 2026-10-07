@@ -9,6 +9,7 @@ import krishnaImg from '../assets/krishna.png';
 import vrushaliImg from '../assets/vrushali.png';
 import { serviceData, courseDetails, baseCourses, additionalCourses, FREE_NOTES } from '../data';
 import AnimatedSection from '../components/AnimatedSection';
+import { toast } from '../utils/notification';
 
 const ContactSection = ({ isContactPage = false }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -38,9 +39,10 @@ const ContactSection = ({ isContactPage = false }) => {
       window.open(`https://wa.me/919156953895?text=${text}`, '_blank');
       
       e.target.reset();
+      toast.success("Message sent successfully! Opening WhatsApp...");
     } catch (error) {
       console.error(error);
-      alert("Error sending message: " + error.message);
+      toast.error("Error sending message: " + error.message);
     } finally {
       setIsSubmitting(false);
     }

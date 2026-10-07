@@ -9,6 +9,7 @@ import krishnaImg from '../assets/krishna.png';
 import vrushaliImg from '../assets/vrushali.png';
 import { serviceData, courseDetails, baseCourses, additionalCourses, coursePackages, FREE_NOTES, courseFaqs } from '../data';
 import FaqSection from '../components/FaqSection';
+import { toast } from '../utils/notification';
 const CourseDetailsPage = () => {
   const { courseId } = useParams();
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -68,7 +69,7 @@ const CourseDetailsPage = () => {
 
       if (insertError) {
         console.error("Error inserting enrollment:", insertError);
-        alert("Failed to submit request. Please try again.");
+        toast.error("Failed to submit request. Please try again.");
         setIsEnrolling(false);
         return;
       }
@@ -76,6 +77,7 @@ const CourseDetailsPage = () => {
       if (user) {
         // Logged in: show success message, no whatsapp
         setEnrollSuccess(true);
+        toast.success("Enrollment request submitted! Admin will review shortly.");
         setTimeout(() => {
           setIsModalOpen(false);
           setEnrollSuccess(false);
@@ -88,7 +90,7 @@ const CourseDetailsPage = () => {
       }
     } catch (err) {
       console.error(err);
-      alert("An unexpected error occurred.");
+      toast.error("An unexpected error occurred.");
     } finally {
       if (!enrollSuccess) setIsEnrolling(false);
     }

@@ -9,6 +9,7 @@ import krishnaImg from '../assets/krishna.png';
 import vrushaliImg from '../assets/vrushali.png';
 import { serviceData, courseDetails, baseCourses, additionalCourses, FREE_NOTES } from '../data';
 import AnimatedSection from '../components/AnimatedSection';
+import { toast } from '../utils/notification';
 
 const LoginPageSection = () => {
   const [view, setView] = React.useState('login'); // 'login', 'signup'
@@ -49,7 +50,7 @@ const LoginPageSection = () => {
       if (isSuperAdmin || adminData) {
         window.location.href = '/admin/courses';
       } else {
-        alert('Login Successful! Welcome to Advait Academy.');
+        toast.success('Login Successful! Welcome to Advait Academy.');
         window.location.href = '/dashboard';
       }
     }
@@ -80,7 +81,7 @@ const LoginPageSection = () => {
           course_name: 'General Registration'
         });
       }
-      alert('Registration successful! Your request is pending admin approval. You can log in to check your status.');
+      toast.success('Registration successful! Your request is pending admin approval. You can log in to check your status.');
       setView('login');
     }
   };

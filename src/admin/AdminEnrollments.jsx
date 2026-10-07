@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import { Helmet } from 'react-helmet-async';
+import { toast, showConfirm } from '../utils/notification';
 
 const AdminEnrollments = () => {
   const [enrollments, setEnrollments] = useState([]);
@@ -31,7 +32,13 @@ const AdminEnrollments = () => {
   };
 
   const handleApprove = async (id) => {
-    if (!window.confirm("Approve this enrollment? This will permanently assign a Student ID.")) return;
+    const confirmed = await showConfirm({
+      title: "Approve Enrollment",
+      message: "Approve this enrollment? This will permanently assign a Student ID.",
+      confirmText: "Approve"
+    });
+    if (!confirmed) return;
+
     try {
       // Call the secure RPC function to safely generate Student ID
       const { data, error } = await supabase.rpc('approve_enrollment', {
@@ -45,15 +52,22 @@ const AdminEnrollments = () => {
         throw error;
       }
       
-      alert(`Enrollment approved! Student ID generated: ${data}`);
+      toast.success(`Enrollment approved! Student ID: ${data}`);
       fetchEnrollments();
     } catch (err) {
-      alert("Error approving enrollment: " + err.message);
+      toast.error("Error approving enrollment: " + err.message);
     }
   };
 
   const handleReject = async (id) => {
-    if (!window.confirm("Reject this enrollment? It will remain in history.")) return;
+    const confirmed = await showConfirm({
+      title: "Reject Enrollment",
+      message: "Reject this enrollment? It will remain in history.",
+      confirmText: "Reject",
+      isDestructive: true
+    });
+    if (!confirmed) return;
+
     try {
       const { error } = await supabase
         .from('enrollments')
@@ -64,9 +78,10 @@ const AdminEnrollments = () => {
         .eq('id', id);
         
       if (error) throw error;
+      toast.info("Enrollment rejected.");
       fetchEnrollments();
     } catch (err) {
-      alert("Error rejecting enrollment: " + err.message);
+      toast.error("Error rejecting enrollment: " + err.message);
     }
   };
 
@@ -78,14 +93,21 @@ const AdminEnrollments = () => {
         .eq('id', id);
         
       if (error) throw error;
+      toast.success("Student ID removed.");
       fetchEnrollments();
     } catch (err) {
-      alert("Error removing Student ID: " + err.message);
+      toast.error("Error removing Student ID: " + err.message);
     }
   };
 
   const handleRegenerateStudentId = async (id) => {
-    if (!window.confirm("Generate a new Student ID for this enrollment?")) return;
+    const confirmed = await showConfirm({
+      title: "Generate Student ID",
+      message: "Generate a new Student ID for this enrollment?",
+      confirmText: "Generate"
+    });
+    if (!confirmed) return;
+
     try {
       // Temporarily set status to pending to bypass the RPC's "Already approved" check
       const { error: resetError } = await supabase
@@ -105,21 +127,21 @@ const AdminEnrollments = () => {
         throw error;
       }
       
-      alert(`New Student ID generated: ${data}`);
+      toast.success(`New Student ID generated: ${data}`);
       fetchEnrollments();
     } catch (err) {
-      alert("Error generating student ID: " + err.message);
+      toast.error("Error generating student ID: " + err.message);
     }
   };
 
   const handleDeleteEnrollment = async (id, studentName) => {
-    if (!window.confirm(`Are you sure you want to completely delete the enrollment for ${studentName}? This action cannot be undone.`)) return;
-    
-    const confirmText = window.prompt(`Please type DELETE to confirm the deletion of ${studentName}'s enrollment:`);
-    if (confirmText !== "DELETE") {
-      alert("Deletion cancelled. You didn't type DELETE.");
-      return;
-    }
+    const confirmed = await showConfirm({
+      title: "Delete Enrollment",
+      message: `Are you sure you want to completely delete the enrollment for ${studentName}? This action cannot be undone.`,
+      confirmText: "Delete",
+      isDestructive: true
+    });
+    if (!confirmed) return;
 
     try {
       const { error } = await supabase
@@ -128,9 +150,10 @@ const AdminEnrollments = () => {
         .eq('id', id);
         
       if (error) throw error;
+      toast.success("Enrollment deleted successfully.");
       fetchEnrollments();
     } catch (err) {
-      alert("Error deleting enrollment: " + err.message);
+      toast.error("Error deleting enrollment: " + err.message);
     }
   };
 

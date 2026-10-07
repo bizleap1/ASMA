@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 import { Helmet } from 'react-helmet-async';
+import { toast, showConfirm } from '../utils/notification';
 
 const AdminCourses = () => {
   const [courses, setCourses] = useState([]);
@@ -101,8 +102,9 @@ const AdminCourses = () => {
       }
       setIsModalOpen(false);
       fetchCourses();
+      toast.success(editingCourse ? "Course updated successfully!" : "Course created successfully!");
     } catch (err) {
-      alert("Error saving course: " + err.message);
+      toast.error("Error saving course: " + err.message);
     } finally {
       setLoading(false);
     }
@@ -134,16 +136,23 @@ const AdminCourses = () => {
 
       if (data && data.publicUrl) {
          setFormData(prev => ({ ...prev, image: data.publicUrl }));
+         toast.success("Image uploaded successfully!");
       }
     } catch (error) {
-      alert('Error uploading image: ' + error.message + '\n\nPlease ensure a public bucket named "course-images" is created in Supabase Storage.');
+      toast.error('Error uploading image: ' + error.message + '\n\nPlease ensure a public bucket named "course-images" is created in Supabase Storage.');
     } finally {
       setUploadingImage(false);
     }
   };
 
   const handleSoftDelete = async (courseId) => {
-    if (!window.confirm("Are you sure you want to deactivate this course? This ensures enrollment history is preserved.")) return;
+    const confirmed = await showConfirm({
+      title: "Deactivate Course",
+      message: "Are you sure you want to deactivate this course? This ensures enrollment history is preserved.",
+      confirmText: "Deactivate",
+      isDestructive: true
+    });
+    if (!confirmed) return;
     
     try {
       const { error } = await supabase
@@ -153,8 +162,9 @@ const AdminCourses = () => {
       
       if (error) throw error;
       fetchCourses();
+      toast.info("Course deactivated successfully.");
     } catch (err) {
-      alert("Error deactivating course: " + err.message);
+      toast.error("Error deactivating course: " + err.message);
     }
   };
 
@@ -171,8 +181,9 @@ const AdminCourses = () => {
       if (error) throw error;
       setCourseToDelete(null);
       fetchCourses();
+      toast.success("Course deleted successfully.");
     } catch (err) {
-      alert("Error deleting course: " + err.message);
+      toast.error("Error deleting course: " + err.message);
     } finally {
       setLoading(false);
     }

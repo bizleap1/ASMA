@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 import { Helmet } from 'react-helmet-async';
 import { AdminDropdown, AdminStudentSelect } from './AdminDropdown';
+import { toast, showConfirm } from '../utils/notification';
 
 const AdminNotes = () => {
   const [notes, setNotes] = useState([]);
@@ -101,8 +102,9 @@ const AdminNotes = () => {
       }
       setIsModalOpen(false);
       fetchData();
+      toast.success(editingNote ? "Note updated successfully!" : "Note created successfully!");
     } catch (err) {
-      alert("Error saving note: " + err.message);
+      toast.error("Error saving note: " + err.message);
     } finally {
       setLoading(false);
     }
@@ -134,22 +136,31 @@ const AdminNotes = () => {
 
       if (data && data.publicUrl) {
          setFormData(prev => ({ ...prev, file_url: data.publicUrl }));
+         toast.success("File uploaded successfully!");
       }
     } catch (error) {
-      alert('Error uploading file: ' + error.message + '\n\nPlease ensure a public bucket named "course-notes" is created in Supabase Storage.');
+      toast.error('Error uploading file: ' + error.message + '\n\nPlease ensure a public bucket named "course-notes" is created in Supabase Storage.');
     } finally {
       setUploadingFile(false);
     }
   };
 
   const handleDelete = async (noteId) => {
-    if (!window.confirm("Are you sure you want to completely delete this note? Be careful if it is linked publicly.")) return;
+    const confirmed = await showConfirm({
+      title: "Delete Note",
+      message: "Are you sure you want to completely delete this note? Be careful if it is linked publicly.",
+      confirmText: "Delete Note",
+      isDestructive: true
+    });
+    if (!confirmed) return;
+
     try {
       const { error } = await supabase.from('notes').delete().eq('id', noteId);
       if (error) throw error;
       fetchData();
+      toast.success("Note deleted successfully.");
     } catch (err) {
-      alert("Error deleting note: " + err.message);
+      toast.error("Error deleting note: " + err.message);
     }
   };
 
@@ -157,11 +168,11 @@ const AdminNotes = () => {
     e.preventDefault();
     const selectedIds = personalFormData.enrollment_ids || [];
     if (selectedIds.length === 0) {
-      alert("Please select at least one student or choose 'Select All'.");
+      toast.warning("Please select at least one student or choose 'Select All'.");
       return;
     }
     if (!personalFormData.text.trim() && !personalFormData.file_url) {
-      alert("Please enter a message or attach a file.");
+      toast.warning("Please enter a message or attach a file.");
       return;
     }
     
@@ -205,13 +216,13 @@ const AdminNotes = () => {
 
       setIsPersonalModalOpen(false);
       setPersonalFormData({ enrollment_ids: [], text: '', file_url: '' });
-      alert(
+      toast.success(
         selectedIds.length === 1
           ? "Note sent successfully to the student's personal dashboard!"
           : `Note sent successfully to all ${selectedIds.length} students!`
       );
     } catch (err) {
-      alert("Error sending personal note: " + err.message);
+      toast.error("Error sending personal note: " + err.message);
     } finally {
       setIsSendingPersonal(false);
     }
@@ -239,9 +250,10 @@ const AdminNotes = () => {
 
       if (data && data.publicUrl) {
          setPersonalFormData(prev => ({ ...prev, file_url: data.publicUrl }));
+         toast.success("File uploaded successfully!");
       }
     } catch (error) {
-      alert('Error uploading file: ' + error.message);
+      toast.error('Error uploading file: ' + error.message);
     } finally {
       setUploadingFile(false);
     }

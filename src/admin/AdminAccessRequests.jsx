@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 import { Helmet } from 'react-helmet-async';
+import { toast, showConfirm } from '../utils/notification';
 
 const AdminAccessRequests = () => {
   const [requests, setRequests] = useState([]);
@@ -42,17 +43,24 @@ const AdminAccessRequests = () => {
         .eq('id', id);
 
       if (error) throw error;
-      alert(`Access granted for "${itemTitle}" to ${studentName}! The student can now download/open this note.`);
+      toast.success(`Access granted for "${itemTitle}" to ${studentName}! The student can now download/open this note.`);
       fetchRequests();
     } catch (err) {
-      alert("Error approving request: " + err.message);
+      toast.error("Error approving request: " + err.message);
     } finally {
       setActionLoading(null);
     }
   };
 
   const handleReject = async (id) => {
-    if (!window.confirm("Reject this access request?")) return;
+    const confirmed = await showConfirm({
+      title: "Reject Request",
+      message: "Are you sure you want to reject this access request?",
+      confirmText: "Reject",
+      isDestructive: true
+    });
+    if (!confirmed) return;
+
     try {
       setActionLoading(id);
       const { error } = await supabase
@@ -61,16 +69,24 @@ const AdminAccessRequests = () => {
         .eq('id', id);
 
       if (error) throw error;
+      toast.info("Access request marked as rejected.");
       fetchRequests();
     } catch (err) {
-      alert("Error rejecting request: " + err.message);
+      toast.error("Error rejecting request: " + err.message);
     } finally {
       setActionLoading(null);
     }
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to permanently delete this request?")) return;
+    const confirmed = await showConfirm({
+      title: "Delete Request",
+      message: "Are you sure you want to permanently delete this request?",
+      confirmText: "Delete",
+      isDestructive: true
+    });
+    if (!confirmed) return;
+
     try {
       setActionLoading(id);
       const { error } = await supabase
@@ -79,9 +95,10 @@ const AdminAccessRequests = () => {
         .eq('id', id);
 
       if (error) throw error;
+      toast.success("Request deleted successfully.");
       fetchRequests();
     } catch (err) {
-      alert("Error deleting request: " + err.message);
+      toast.error("Error deleting request: " + err.message);
     } finally {
       setActionLoading(null);
     }

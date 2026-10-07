@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import { AdminDropdown } from './AdminDropdown';
+import { toast, showConfirm } from '../utils/notification';
 
 const AdminStudentPreview = () => {
   const { enrollmentId } = useParams();
@@ -122,9 +123,10 @@ const AdminStudentPreview = () => {
 
       if (data && data.publicUrl) {
          setPdfUrl(data.publicUrl);
+         toast.success('PDF uploaded successfully!');
       }
     } catch (error) {
-      alert('Error uploading file: ' + error.message);
+      toast.error('Error uploading file: ' + error.message);
     } finally {
       setUploadingFile(false);
     }
@@ -147,10 +149,10 @@ const AdminStudentPreview = () => {
       if (error) throw error;
       
       setEnrollment({ ...enrollment, course_id: selectedCourseId || null, course_name: courseName });
-      alert('Course updated successfully!');
+      toast.success('Course updated successfully!');
     } catch (err) {
       console.error(err);
-      alert('Error saving course: ' + err.message);
+      toast.error('Error saving course: ' + err.message);
     } finally {
       setIsSaving(false);
     }
@@ -158,7 +160,7 @@ const AdminStudentPreview = () => {
 
   const handleSendNote = async () => {
     if (!adminNote.trim() && !pdfUrl) {
-      alert("Please enter a message or attach a PDF before sending.");
+      toast.warning("Please enter a message or attach a PDF before sending.");
       return;
     }
 
@@ -185,17 +187,23 @@ const AdminStudentPreview = () => {
       setEnrollment({ ...enrollment, notes: notePayload });
       setAdminNote('');
       setPdfUrl('');
-      
+      toast.success('Note sent to student successfully!');
     } catch (err) {
       console.error(err);
-      alert('Error sending note: ' + err.message);
+      toast.error('Error sending note: ' + err.message);
     } finally {
       setIsSendingNote(false);
     }
   };
 
   const handleDeleteNote = async (indexToDelete) => {
-    if (!window.confirm("Are you sure you want to delete this note from the student's history?")) return;
+    const confirmed = await showConfirm({
+      title: "Delete Note",
+      message: "Are you sure you want to delete this note from the student's history?",
+      confirmText: "Delete Note",
+      isDestructive: true
+    });
+    if (!confirmed) return;
     
     setIsSendingNote(true);
     try {
@@ -213,9 +221,10 @@ const AdminStudentPreview = () => {
       
       setNotesHistory(updatedHistory);
       setEnrollment({ ...enrollment, notes: notePayload });
+      toast.success('Note removed from history.');
     } catch (err) {
       console.error(err);
-      alert('Error deleting note: ' + err.message);
+      toast.error('Error deleting note: ' + err.message);
     } finally {
       setIsSendingNote(false);
     }
