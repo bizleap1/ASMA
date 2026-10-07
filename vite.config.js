@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [
     react(),
     Sitemap({
-      hostname: 'https://advaitacademy.in', // Replace with actual domain
+      hostname: 'https://www.asmaonline.in',
       dynamicRoutes: [
         '/',
         '/about',
