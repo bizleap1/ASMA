@@ -45,16 +45,6 @@ const AboutSection = ({ hideExploreButton = false }) => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
               </div>
               
-              {/* Founder Nameplate - Subtle, Premium Ivory Card */}
-              <div className="absolute bottom-20 sm:bottom-24 lg:bottom-28 left-3 sm:left-5 lg:left-6 z-20 bg-[#FAF8F5]/95 backdrop-blur-md rounded-[10px] px-4 sm:px-5 py-3 sm:py-3.5 shadow-[0_4px_20px_rgba(0,0,0,0.12)] border border-[#173D2B]/10 max-w-[85%] sm:max-w-none">
-                <div className="text-[18px] md:text-[20px] font-bold text-[#173D2B] leading-tight tracking-tight">
-                  Satish Bobade
-                </div>
-                <div className="text-[12px] md:text-[13px] font-medium text-[#173D2B]/75 uppercase tracking-wider mt-0.5">
-                  Founder & Chief Mentor, ASMA
-                </div>
-              </div>
-
               {/* Experience Badge overlay - Simple & Clean */}
               <div className="absolute -bottom-6 lg:bottom-6 right-3 sm:right-4 lg:-right-8 bg-white rounded-xl px-5 sm:px-6 py-3.5 sm:py-4 shadow-xl border border-black/5 flex items-center gap-4 sm:gap-5 z-20 w-max">
                 
@@ -78,9 +68,22 @@ const AboutSection = ({ hideExploreButton = false }) => {
               Live Market Trading Education
             </div>
             
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-text-primary leading-tight mb-8">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-text-primary leading-tight mb-6">
               Master the Market with <span className="text-accent-primary">Confidence</span>
             </h2>
+
+            {/* Founder Credit - Minimal & Premium */}
+            <div className="flex items-center gap-3.5 mb-8">
+              <div className="w-1 h-8 bg-[#D4AF37] rounded-full shrink-0"></div>
+              <div>
+                <div className="text-[15px] md:text-[16px] font-semibold text-[#173D2B] tracking-wider uppercase leading-tight">
+                  Satish Bobade
+                </div>
+                <div className="text-[11px] md:text-[12px] font-medium text-[#173D2B]/70 uppercase tracking-[0.16em] mt-0.5">
+                  Founder & Chief Mentor, ASMA
+                </div>
+              </div>
+            </div>
             
             <div className="mb-10 border-l-4 border-accent-primary pl-6 py-2">
               <h3 className="text-xl md:text-2xl font-bold text-text-primary mb-3 leading-snug">
