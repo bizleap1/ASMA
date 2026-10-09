@@ -1,17 +1,58 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
-const SEO = ({ title, description, keywords, url, image, schema }) => {
-  const siteTitle = 'Advait Share Market Academy - #1 Stock Market Training in Nagpur';
-  const defaultTitle = 'ASMA Nagpur | Advait Stock Market & Trading Academy Nagpur';
-  const fullTitle = title === 'Home' ? 'ASMA Nagpur | Advait Stock Market & Trading Academy Nagpur' : title ? `${title} | ${siteTitle}` : defaultTitle;
-  const defaultDesc = 'Master the stock market with Advait Stock Market Academy (ASMA) in Nagpur. We offer premium trading courses on technical analysis, options trading, and financial freedom in India. Best trading classes in Nagpur.';
+const SITE_URL = 'https://www.asmaonline.in';
+const DEFAULT_OG_IMAGE = `${SITE_URL}/logo-dark.png`;
+
+const SEO = ({
+  title,
+  description,
+  keywords,
+  url,
+  path,
+  image,
+  type = 'website',
+  noindex = false,
+  schema
+}) => {
+  // 1. Dynamic Canonical URL Resolution
+  let canonicalUrl = url;
+  if (!canonicalUrl) {
+    const cleanPath = path ? (path === '/' ? '' : path.replace(/\/$/, '')) : '';
+    canonicalUrl = `${SITE_URL}${cleanPath}`;
+  }
+
+  // 2. Clean Title Resolution (≤ 60 chars target)
+  let fullTitle = title;
+  if (!title || title === 'Home') {
+    fullTitle = 'Stock Market Classes in Nagpur | Advait Stock Market Academy';
+  } else if (!title.includes('ASMA') && !title.includes('Advait')) {
+    fullTitle = `${title} | ASMA Nagpur`;
+  }
+
+  // 3. Meta Description (≤ 155 chars target)
+  const defaultDesc = 'Learn stock market trading and technical analysis in Nagpur with Advait Stock Market Academy (ASMA). Live market training, beginner to advanced courses.';
   const metaDesc = description || defaultDesc;
-  const defaultKeywords = 'asma nagpur, trading nagpur, ASMA Nagpur, best stock market academy, best stock market academy in nagpur, Advait Stock Market Academy, stock market academy nagpur, best share market classes in nagpur, trading courses nagpur, options trading, technical analysis, stock market India, learn trading';
-  const metaKeywords = keywords || defaultKeywords;
-  const defaultImage = 'https://raw.githubusercontent.com/bizleap1/ASMA/main/public/logo-dark.png';
-  const metaImage = image || defaultImage;
-  const canonicalUrl = url || 'https://www.asmaonline.in';
+
+  // 4. Social Image Resolution
+  const metaImage = image ? (image.startsWith('http') ? image : `${SITE_URL}${image}`) : DEFAULT_OG_IMAGE;
+
+  // On client-side navigation, dynamically synchronize page JSON-LD schema into head
+  React.useEffect(() => {
+    if (typeof document === 'undefined') return;
+    let scriptTag = document.querySelector('script[data-schema-page="true"]');
+    if (!schema) {
+      if (scriptTag) scriptTag.remove();
+      return;
+    }
+    if (!scriptTag) {
+      scriptTag = document.createElement('script');
+      scriptTag.type = 'application/ld+json';
+      scriptTag.setAttribute('data-schema-page', 'true');
+      document.head.appendChild(scriptTag);
+    }
+    scriptTag.textContent = JSON.stringify(schema);
+  }, [schema]);
 
   return (
     <Helmet>
@@ -19,31 +60,33 @@ const SEO = ({ title, description, keywords, url, image, schema }) => {
       <title>{fullTitle}</title>
       <meta name="title" content={fullTitle} />
       <meta name="description" content={metaDesc} />
-      <meta name="keywords" content={metaKeywords} />
+      {keywords && <meta name="keywords" content={keywords} />}
 
       {/* Canonical Link */}
       <link rel="canonical" href={canonicalUrl} />
 
+      {/* Robots Directive */}
+      {noindex ? (
+        <meta name="robots" content="noindex, follow" />
+      ) : (
+        <meta name="robots" content="index, follow" />
+      )}
+
       {/* Open Graph / Facebook */}
-      <meta property="og:type" content="website" />
+      <meta property="og:type" content={type} />
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={metaDesc} />
       <meta property="og:image" content={metaImage} />
+      <meta property="og:locale" content="en_IN" />
+      <meta property="og:site_name" content="Advait Stock Market Academy" />
 
       {/* Twitter */}
-      <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:url" content={canonicalUrl} />
-      <meta property="twitter:title" content={fullTitle} />
-      <meta property="twitter:description" content={metaDesc} />
-      <meta property="twitter:image" content={metaImage} />
-
-      {/* Schema Markup */}
-      {schema && (
-        <script type="application/ld+json">
-          {JSON.stringify(schema)}
-        </script>
-      )}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:url" content={canonicalUrl} />
+      <meta name="twitter:title" content={fullTitle} />
+      <meta name="twitter:description" content={metaDesc} />
+      <meta name="twitter:image" content={metaImage} />
     </Helmet>
   );
 };

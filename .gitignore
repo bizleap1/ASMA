@@ -32,3 +32,5 @@ dist-ssr
 # Deployment & Temporary
 .vercel
 scratch/
+browser-test-output/
+docs/

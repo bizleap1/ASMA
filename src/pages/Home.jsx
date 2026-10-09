@@ -22,10 +22,41 @@ import ReviewsSection from '../components/ReviewsSection';
 import FaqSection from '../components/FaqSection';
 import ContactSection from './ContactSection';
 import VideoHero from '../components/VideoHero';
-const Home = () => (
-  <main className="flex-grow">
-    <SEO title="Home" description="Advait Stock Market Academy - The best place to learn technical analysis, options trading, and fundamental analysis in India." keywords="stock market academy, trading classes, learn trading India, best stock market courses" />
-    <VideoHero />
+const Home = () => {
+  const homeSchema = {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "Advait Stock Market Academy",
+    "alternateName": "ASMA",
+    "url": "https://www.asmaonline.in",
+    "logo": "https://www.asmaonline.in/logo-dark.png",
+    "description": "Stock market and trading institute in Nagpur founded by Satish Bobade, offering practical live-market training, technical analysis, and derivatives courses.",
+    "founder": {
+      "@type": "Person",
+      "name": "Satish Bobade",
+      "jobTitle": "Founder"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Plot No. 20, Near Pipla Fata, Besa-Pipla Road",
+      "addressLocality": "Nagpur",
+      "addressRegion": "Maharashtra",
+      "postalCode": "440034",
+      "addressCountry": "IN"
+    },
+    "telephone": "+919156953895"
+  };
+
+  return (
+    <main className="flex-grow">
+      <SEO
+        title="Stock Market Classes in Nagpur | Advait Stock Market Academy"
+        description="Learn trading with live-market practice at ASMA, Besa–Pipla Road, Nagpur. Beginner to advanced courses, offline & online batches. Book a free demo."
+        path="/"
+        keywords="stock market classes in Nagpur, share market institute Nagpur, trading courses Nagpur, ASMA Nagpur, technical analysis classes"
+        schema={homeSchema}
+      />
+      <VideoHero />
     <AboutSection />
     <AchievementsSection />
     <FeaturedCoursesSection />
@@ -39,6 +70,7 @@ const Home = () => (
     <FaqSection faqs={homeFaqs} />
     <ContactSection />
   </main>
-);
+  );
+};
 
 export default Home;

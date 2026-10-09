@@ -39,7 +39,7 @@ const AboutSection = ({ hideExploreButton = false }) => {
                 <img 
                   loading="lazy"
                   src="/asma founder.png" 
-                  alt="Satish Bobade - Founder & Chief Mentor" 
+                  alt="Satish Bobade — Founder"
                   className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
@@ -80,7 +80,7 @@ const AboutSection = ({ hideExploreButton = false }) => {
                   Satish Bobade
                 </div>
                 <div className="text-[11px] md:text-[12px] font-medium text-[#173D2B]/70 uppercase tracking-[0.16em] mt-0.5">
-                  Founder & Chief Mentor, ASMA
+                  Founder, ASMA
                 </div>
               </div>
             </div>

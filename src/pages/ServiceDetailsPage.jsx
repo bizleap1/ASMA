@@ -8,6 +8,7 @@ import shubhangiImg from '../assets/shubhangi.png';
 import krishnaImg from '../assets/krishna.png';
 import vrushaliImg from '../assets/vrushali.png';
 import { serviceData, courseDetails, baseCourses, additionalCourses, FREE_NOTES } from '../data';
+import SEO from '../components/SEO';
 
 const ServiceDetailsPage = () => {
   const { serviceId } = useParams();
@@ -26,11 +27,21 @@ const ServiceDetailsPage = () => {
   };
 
   if (!service) {
-    return <div className="text-center py-20 text-2xl font-bold">Service not found.</div>;
+    return (
+      <div className="text-center py-20 text-2xl font-bold">
+        <SEO title="Service Not Found | ASMA" noindex={true} path={`/service/${serviceId || ''}`} />
+        Service not found.
+      </div>
+    );
   }
 
   return (
     <div className="bg-bg-primary min-h-screen pb-20">
+      <SEO
+        title={`${service.title} in Nagpur | ASMA`}
+        description={service.desc || service.fullDesc}
+        path={`/service/${service.id}`}
+      />
       {/* Premium Hero Section */}
       <div className="relative w-full h-[500px] lg:h-[600px] flex items-center justify-center overflow-hidden">
         {/* Background Image with Parallax Effect */}

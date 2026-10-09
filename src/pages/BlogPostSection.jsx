@@ -8,6 +8,7 @@ import shubhangiImg from '../assets/shubhangi.png';
 import krishnaImg from '../assets/krishna.png';
 import vrushaliImg from '../assets/vrushali.png';
 import { serviceData, courseDetails, baseCourses, additionalCourses, FREE_NOTES } from '../data';
+import SEO from '../components/SEO';
 
 const BlogPostSection = () => {
   const { id } = useParams();
@@ -16,6 +17,7 @@ const BlogPostSection = () => {
   if (!post) {
     return (
       <div className="container mx-auto px-4 py-20 text-center">
+        <SEO title="Article Not Found | ASMA" noindex={true} path={`/blog/${id || ''}`} />
         <h2 className="text-3xl font-bold text-text-primary mb-4">Article Not Found</h2>
         <p className="text-text-secondary mb-8">The blog article you are looking for does not exist or has been moved.</p>
         <Link to="/blog" className="px-6 py-3 bg-accent-primary text-white rounded-full font-bold uppercase tracking-wider text-xs hover:bg-text-primary transition-all">
@@ -30,6 +32,35 @@ const BlogPostSection = () => {
 
   return (
     <article className="py-12 md:py-20 bg-bg-primary relative overflow-hidden">
+      <SEO
+        title={post.title}
+        description={post.excerpt}
+        path={`/blog/${post.id}`}
+        image={post.image}
+        type="article"
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "headline": post.title,
+          "description": post.excerpt,
+          "image": post.image?.startsWith('http') ? post.image : `https://www.asmaonline.in${post.image}`,
+          "author": {
+            "@type": "Person",
+            "name": post.author?.name || "ASMA Academy",
+            "jobTitle": post.author?.role || "Trainer"
+          },
+          "publisher": {
+            "@type": "EducationalOrganization",
+            "name": "Advait Stock Market Academy",
+            "url": "https://www.asmaonline.in",
+            "founder": {
+              "@type": "Person",
+              "name": "Satish Bobade",
+              "jobTitle": "Founder"
+            }
+          }
+        }}
+      />
       <div className="container mx-auto px-4 md:px-8 lg:px-12 relative z-10">
 
         {/* Breadcrumb / Category Row */}

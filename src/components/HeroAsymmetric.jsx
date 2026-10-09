@@ -76,7 +76,7 @@ const HeroAsymmetric = () => (
 
           {/* Main Image */}
           <div className="relative z-10 p-2 bg-gradient-to-br from-white/40 to-white/10 backdrop-blur-md rounded-full shadow-[0_0_40px_rgba(0,0,0,0.1)] border border-white/50 group-hover:shadow-[0_0_60px_rgba(0,0,0,0.15)] transition-all duration-700 hover:scale-[1.02]">
-            <img loading="lazy" src="/founder.jpg?v=2" alt="Advait Stock Market Academy Founder" className="w-[280px] h-[280px] sm:w-[350px] sm:h-[350px] md:w-[500px] md:h-[500px] object-cover rounded-full border-4 border-bg-primary bg-bg-secondary object-center" />
+            <img loading="lazy" src="/founder.jpg?v=2" alt="Satish Bobade — Founder" className="w-[280px] h-[280px] sm:w-[350px] sm:h-[350px] md:w-[500px] md:h-[500px] object-cover rounded-full border-4 border-bg-primary bg-bg-secondary object-center" />
           </div>
 
           {/* Floating Card 1: Experience Badge */}
