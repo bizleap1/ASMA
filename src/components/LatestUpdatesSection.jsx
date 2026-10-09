@@ -9,7 +9,7 @@ const LatestUpdatesSection = () => {
       date: "Sept 10th",
       title: "New Offline Batch Commencing!",
       desc: "We are thrilled to announce our next comprehensive batch covering Technical Analysis and Options Strategies. Seats are highly limited to ensure personalized attention.",
-      image: "/updates_poster_revamped.png",
+      image: "/updates_poster_revamped.webp",
       features: [
         "Live Market Practical Sessions",
         "Proprietary Trading Setups & Strategies",
@@ -20,7 +20,7 @@ const LatestUpdatesSection = () => {
       date: "Sept 15th",
       title: "Upcoming Online & Offline Batch!",
       desc: "Join our intensive program starting mid-September. Master the stock market with expert guidance and proven strategies to start your journey towards financial freedom.",
-      image: "/updates_poster.png",
+      image: "/updates_poster.webp",
       features: [
         "Live Interactive Classes",
         "Learn From Anywhere",
@@ -113,6 +113,10 @@ const LatestUpdatesSection = () => {
                       <img
                         src={item.image}
                         alt={`Update - ${item.title}`}
+                        width="304"
+                        height="430"
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700 opacity-95 group-hover:opacity-100"
                       />
                     </div>

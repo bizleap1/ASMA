@@ -75,9 +75,18 @@ const HeroAsymmetric = () => (
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[500px] h-[350px] sm:h-[500px] bg-gradient-to-tr from-accent-primary to-accent-secondary rounded-full blur-[100px] opacity-20 group-hover:opacity-40 transition-opacity duration-700 z-0 animate-pulse" style={{ animationDuration: '4s' }}></div>
 
           {/* Main Image */}
-          <div className="relative z-10 p-2 bg-gradient-to-br from-white/40 to-white/10 backdrop-blur-md rounded-full shadow-[0_0_40px_rgba(0,0,0,0.1)] border border-white/50 group-hover:shadow-[0_0_60px_rgba(0,0,0,0.15)] transition-all duration-700 hover:scale-[1.02]">
-            <img loading="lazy" src="/founder.jpg?v=2" alt="Satish Bobade — Founder" className="w-[280px] h-[280px] sm:w-[350px] sm:h-[350px] md:w-[500px] md:h-[500px] object-cover rounded-full border-4 border-bg-primary bg-bg-secondary object-center" />
-          </div>
+            <picture>
+              <source srcSet="/founder.webp" type="image/webp" />
+              <img
+                src="/founder.jpg"
+                alt="Satish Bobade — Founder"
+                width="500"
+                height="500"
+                loading="lazy"
+                decoding="async"
+                className="w-[280px] h-[280px] sm:w-[350px] sm:h-[350px] md:w-[500px] md:h-[500px] object-cover rounded-full border-4 border-bg-primary bg-bg-secondary object-center"
+              />
+            </picture>
 
           {/* Floating Card 1: Experience Badge */}
           <div className="absolute top-0 sm:top-10 right-0 sm:right-4 md:-right-8 w-48 sm:w-64 bg-white/60 backdrop-blur-xl border border-white/80 rounded-[20px] sm:rounded-3xl shadow-2xl p-4 sm:p-6 z-20 transform translate-y-4 group-hover:-translate-y-2 transition-transform duration-700 delay-100 hover:scale-105">

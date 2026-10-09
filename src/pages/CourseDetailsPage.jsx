@@ -152,6 +152,18 @@ const CourseDetailsPage = () => {
     ? 'Futures & options, advanced strategies, fundamental analysis and trading psychology. Syllabus, batch dates and fees for ASMA Professional Master Program.'
     : (course.description || course.desc || `Enroll in ${course.title} at Advait Stock Market Academy, Nagpur.`);
 
+  const courseSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    'name': course.title,
+    'description': seoDesc,
+    'provider': {
+      '@type': 'EducationalOrganization',
+      'name': 'Advait Stock Market Academy',
+      'sameAs': 'https://www.asmaonline.in'
+    }
+  };
+
   return (
     <div className="bg-bg-primary min-h-screen pb-20">
       <SEO
@@ -159,6 +171,7 @@ const CourseDetailsPage = () => {
         description={seoDesc}
         path={`/course/${course.slug || decodedId}`}
         image={course.image}
+        schema={courseSchema}
       />
       {/* Premium Hero Section */}
       <div className="relative w-full h-[500px] lg:h-[600px] flex items-center justify-center overflow-hidden">

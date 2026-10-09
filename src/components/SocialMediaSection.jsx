@@ -156,7 +156,7 @@ const PhoneMockup = ({ type }) => {
         {type === 'youtube' && (
            <div className="w-full flex flex-col mt-2 space-y-4">
              <div className="w-full h-24 bg-gray-800 rounded-lg relative overflow-hidden flex items-center justify-center">
-                 <div className="absolute inset-0 bg-[url('/hero_analysis_bg.png')] bg-cover opacity-50"></div>
+                 <div className="absolute inset-0 bg-[url('/hero_analysis_bg.webp')] bg-cover opacity-50"></div>
                  <div className="w-10 h-10 bg-red-600 rounded-full flex items-center justify-center text-white z-10"><svg className="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4l12 6-12 6V4z" /></svg></div>
              </div>
              <div className="flex items-center gap-3 w-full">

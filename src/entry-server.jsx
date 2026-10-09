@@ -128,7 +128,37 @@ export function getMetadata(pathname) {
       title: 'Contact ASMA Nagpur – Class Location, Phone & Timings',
       description: 'Visit Advait Stock Market Academy near Pipla Fata, Besa-Pipla Road, Nagpur. Call +91 91569 53895 or send an enquiry to book your free demo session.',
       canonical: 'https://www.asmaonline.in/contact',
-      keywords: 'stock market classes near me, trading institute nagpur address, contact ASMA'
+      keywords: 'stock market classes near me, trading institute nagpur address, contact ASMA',
+      schema: {
+        '@context': 'https://schema.org',
+        '@type': 'LocalBusiness',
+        'name': 'Advait Stock Market Academy',
+        'url': 'https://www.asmaonline.in/contact',
+        'telephone': '+919156953895',
+        'image': 'https://www.asmaonline.in/logo-dark.png',
+        'address': {
+          '@type': 'PostalAddress',
+          'streetAddress': 'Plot No. 20, Near Pipla Fata, Besa-Pipla Road',
+          'addressLocality': 'Nagpur',
+          'addressRegion': 'Maharashtra',
+          'postalCode': '440034',
+          'addressCountry': 'IN'
+        },
+        'openingHoursSpecification': {
+          '@type': 'OpeningHoursSpecification',
+          'dayOfWeek': [
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+            'Saturday',
+            'Sunday'
+          ],
+          'opens': '08:00',
+          'closes': '22:00'
+        }
+      }
     };
   }
 

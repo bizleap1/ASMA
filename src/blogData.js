@@ -5,7 +5,7 @@ export const blogPosts = [
     excerpt: "Most people's introduction to the stock market is a tip. By the time they ask to be taught properly, they've usually lost money. Discover why ASMA focuses on education over shortcuts.",
     category: "About Us",
     readTime: "4 min read",
-    image: "/asma-philosophy.jpeg",
+    image: "/asma-philosophy.webp",
     content: [
       { type: "paragraph", text: "Most people's introduction to the stock market is not a lesson. It's a tip — a relative who made it big in a penny stock, a colleague chasing an options trade he doesn't fully understand, a video promising ten percent a month. By the time someone actually asks to be taught properly, they've usually already lost money, confidence, or both." },
       { type: "paragraph", text: "That's the gap Advait Stock Market Academy was built to close — not with shortcuts, but by treating the market as what it really is: a skill that rewards discipline and punishes guesswork." },
@@ -38,7 +38,7 @@ export const blogPosts = [
     excerpt: "Discover why live-market training matters for beginners and how practical education, risk management and trading psychology can improve stock market learning in Nagpur.",
     category: "Training",
     readTime: "5 min read",
-    image: "/live-market-training.jpeg",
+    image: "/live-market-training.webp",
     content: [
       { type: "paragraph", text: "Learning the stock market from books and videos can build a strong theoretical foundation. But understanding how to make decisions when prices are moving in real time requires a different kind of experience." },
       { type: "paragraph", text: "This is where **live-market stock market training** becomes valuable." },
@@ -75,7 +75,7 @@ export const blogPosts = [
     excerpt: "Learn how to start your stock market journey in Nagpur with a structured roadmap covering market basics, technical analysis, risk management and practical training.",
     category: "Education",
     readTime: "6 min read",
-    image: "/beginner-roadmap.jpeg",
+    image: "/beginner-roadmap.webp",
     content: [
       { type: "paragraph", text: "The stock market can look complicated when you are starting out. Terms like **NIFTY, technical analysis, mutual funds, options, candlesticks and stop-losses** can make beginners feel that investing or trading requires a finance background." },
       { type: "paragraph", text: "It does not." },
@@ -115,7 +115,7 @@ export const blogPosts = [
     excerpt: "Understand the 1% Risk Rule, position sizing, stop losses and risk-to-reward ratios—and why disciplined risk management matters in stock market trading.",
     category: "Risk Management",
     readTime: "7 min read",
-    image: "/1-percent-rule.jpeg",
+    image: "/1-percent-rule.webp",
     content: [
       { type: "paragraph", text: "Most beginners enter the stock market with one question:" },
       { type: "blockquote", text: "“How much can I make?”" },

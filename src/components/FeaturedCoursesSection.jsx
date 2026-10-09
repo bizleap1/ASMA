@@ -10,8 +10,9 @@ const FeaturedCoursesSection = () => {
       title: "Advanced Foundation",
       desc: "A complete beginner-to-intermediate program to help you understand markets, build core skills and develop the right trading mindset.",
       image: "/e80ee201-5e4e-4806-b5bc-9434216dc4d4.png",
+      webpImage: "/e80ee201-5e4e-4806-b5bc-9434216dc4d4.webp",
       rating: "4.9",
-      reviews: "15.2K reviews",
+      badge: "Foundation Level",
       duration: "2 Months"
     },
     {
@@ -19,8 +20,9 @@ const FeaturedCoursesSection = () => {
       title: "Professional Master Program",
       desc: "An advanced program for serious learners who want to master trading strategies, analyze markets deeply and trade with confidence.",
       image: "/prof.master program.png",
+      webpImage: "/prof.master program.webp",
       rating: "5.0",
-      reviews: "9.8K reviews",
+      badge: "Mastery Level",
       duration: "4 Months"
     }
   ];
@@ -54,11 +56,18 @@ const FeaturedCoursesSection = () => {
             >
               {/* Image Box */}
               <div className="relative w-full rounded-[16px] overflow-hidden shadow-sm border border-black/5 bg-[#f8f9fa]">
-                <img 
-                  src={course.image} 
-                  alt={course.title}
-                  className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700"
-                />
+                <picture>
+                  <source srcSet={course.webpImage} type="image/webp" />
+                  <img
+                    src={course.image}
+                    alt={course.title}
+                    width="600"
+                    height="600"
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                </picture>
               </div>
 
               {/* Text Content */}
@@ -70,7 +79,7 @@ const FeaturedCoursesSection = () => {
                     {course.rating}
                   </span>
                   <span className="bg-[#166534]/10 text-[#166534] px-3 py-1 rounded-full text-[10px] font-bold border border-[#166534]/20 tracking-wider">
-                    {course.reviews}
+                    {course.badge}
                   </span>
                   <span className="bg-[#b59a56]/10 text-[#b59a56] px-3 py-1 rounded-full text-[10px] font-bold border border-[#b59a56]/20 tracking-wider">
                     {course.duration}

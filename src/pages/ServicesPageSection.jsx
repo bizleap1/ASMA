@@ -67,7 +67,7 @@ const ServicesPageSection = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
             {filteredServices.map((service, idx) => (
               <div key={idx} className="relative rounded-[32px] overflow-hidden group cursor-pointer shadow-lg hover:shadow-2xl transition-all duration-500 border border-text-primary/5 min-h-[350px] md:min-h-[420px]">
-                <img loading="lazy" src={service.image} alt={service.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out" />
+                <img loading="lazy" decoding="async" width="400" height="420" src={service.image} alt={service.title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/10 opacity-80 group-hover:opacity-90 transition-opacity duration-500"></div>
 
                 <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-between">

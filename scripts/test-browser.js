@@ -2,6 +2,8 @@ import path from 'node:path';
 import fs from 'node:fs';
 import { createRequire } from 'node:module';
 
+import { spawn } from 'node:child_process';
+
 const require = createRequire(import.meta.url);
 const pw = require('C:\\Users\\SHREYA\\AppData\\Local\\ms-playwright-go\\1.57.0\\package');
 
@@ -27,6 +29,10 @@ async function runBrowserTests() {
   console.log('====================================================');
   console.log('   ASMA Playwright Real Browser Verification');
   console.log('====================================================\n');
+
+  console.log('Starting local simulation server on port 4173...');
+  const serverProcess = spawn('node', ['scripts/test-server.js'], { stdio: 'ignore' });
+  await new Promise(r => setTimeout(r, 1000));
 
   console.log('Launching Playwright Chromium headless browser...');
   const browser = await pw.chromium.launch({ headless: true });
@@ -134,6 +140,9 @@ async function runBrowserTests() {
   }
 
   await browser.close();
+  if (serverProcess) {
+    serverProcess.kill();
+  }
 
   console.log('\n----------------------------------------------------');
   console.log(`Browser Verification Summary: ${passedTests}/${totalTests} routes passed`);

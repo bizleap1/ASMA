@@ -87,7 +87,16 @@ const BlogPostSection = () => {
 
         {/* Featured Image */}
         <div className="relative h-[250px] sm:h-[400px] md:h-[550px] w-full rounded-[32px] overflow-hidden shadow-2xl mb-12 md:mb-16 border border-text-primary/10">
-          <img loading="lazy" src={post.image} alt={post.title} className="w-full h-full object-cover" />
+          <img
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+            width="1200"
+            height="630"
+            src={post.image}
+            alt={post.title}
+            className="w-full h-full object-cover"
+          />
         </div>
 
         {/* Layout Grid: Content + Sidebar */}
@@ -166,7 +175,15 @@ const BlogPostSection = () => {
               <div className="space-y-6">
                 {relatedPosts.map((related) => (
                   <Link key={related.id} to={`/blog/${related.id}`} className="group flex items-start gap-4">
-                    <img loading="lazy" src={related.image} alt={related.title} className="w-16 h-16 rounded-xl object-cover border border-text-primary/5 flex-shrink-0" />
+                    <img
+                      loading="lazy"
+                      decoding="async"
+                      width="64"
+                      height="64"
+                      src={related.image}
+                      alt={related.title}
+                      className="w-16 h-16 rounded-xl object-cover border border-text-primary/5 flex-shrink-0"
+                    />
                     <div>
                       <div className="text-[10px] font-bold text-accent-primary tracking-wider uppercase mb-1">{related.category}</div>
                       <h5 className="text-sm font-bold text-text-primary leading-snug group-hover:text-accent-primary transition-colors line-clamp-2">
