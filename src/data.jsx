@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import shareMarketImg from "./assets/ANU00469.JPG";
-import stockInvestmentImg from "./assets/ANU00455.JPG";
+import shareMarketImg from "./assets/ANU00469.webp";
+import stockInvestmentImg from "./assets/ANU00455.webp";
 
 export const serviceData = [
   {

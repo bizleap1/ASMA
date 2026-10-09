@@ -10,14 +10,31 @@ import vrushaliImg from '../assets/vrushali.png';
 import { serviceData, courseDetails, baseCourses, additionalCourses, coursePackages, FREE_NOTES, courseFaqs } from '../data';
 import FaqSection from '../components/FaqSection';
 import { toast } from '../utils/notification';
+import SEO from '../components/SEO';
+
 const CourseDetailsPage = () => {
   const { courseId } = useParams();
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [isEnrolling, setIsEnrolling] = React.useState(false);
   const [enrollSuccess, setEnrollSuccess] = React.useState(false);
-  const [course, setCourse] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
   const decodedId = decodeURIComponent(courseId || "");
+
+  // Safe fallback to bundled static course packages if available
+  const staticFallback = coursePackages.find((p) => p.id === decodedId);
+  const initialCourse = staticFallback
+    ? {
+        ...staticFallback,
+        description: staticFallback.desc,
+        curriculum: courseDetails[staticFallback.title]?.curriculum || staticFallback.coursesIncluded,
+        benefits: courseDetails[staticFallback.title]?.benefits || ["Lifetime Mentorship Support", "Live Market Trading Practice"],
+        duration: courseDetails[staticFallback.title]?.duration || "2 Months",
+        mode: courseDetails[staticFallback.title]?.mode || "Online Live & Offline Classroom",
+        slug: staticFallback.id
+      }
+    : null;
+
+  const [course, setCourse] = useState(initialCourse);
+  const [isLoading, setIsLoading] = useState(!initialCourse);
 
   useEffect(() => {
     const fetchCourse = async () => {
@@ -27,8 +44,11 @@ const CourseDetailsPage = () => {
           .select('*')
           .eq('slug', decodedId)
           .single();
-        if (error) throw error;
-        setCourse(data);
+        if (error) {
+          if (!initialCourse) throw error;
+        } else if (data) {
+          setCourse(data);
+        }
       } catch (error) {
         console.error("Error fetching course:", error);
       } finally {
@@ -36,7 +56,7 @@ const CourseDetailsPage = () => {
       }
     };
     fetchCourse();
-  }, [decodedId]);
+  }, [decodedId, initialCourse]);
 
   const handleCourseSubmit = async (e) => {
     e.preventDefault();
@@ -107,6 +127,7 @@ const CourseDetailsPage = () => {
   if (!course) {
     return (
       <div className="py-20 text-center text-text-primary min-h-screen bg-bg-primary flex flex-col justify-center items-center">
+        <SEO title="Course Not Found | ASMA" noindex={true} path={`/course/${decodedId}`} />
         <h2 className="text-2xl font-bold mb-4">Course not found.</h2>
         <Link to="/courses" className="text-[#166534] hover:underline">Return to Courses</Link>
       </div>
@@ -119,8 +140,39 @@ const CourseDetailsPage = () => {
 
   const benefitsList = ["Professional Mentorship", "Quality course materials", "Dedicated Support"];
 
+  const seoTitle = course.slug === 'advanced-foundation'
+    ? 'Beginner Stock Market Course in Nagpur | ASMA'
+    : course.slug === 'professional-master-program'
+    ? 'Options Trading Course in Nagpur – Master Program | ASMA'
+    : `${course.title} | Stock Market Course in Nagpur`;
+
+  const seoDesc = course.slug === 'advanced-foundation'
+    ? 'Advanced Foundation: technical analysis, candlesticks, risk management and live-market practice for beginners. Syllabus, duration and fees.'
+    : course.slug === 'professional-master-program'
+    ? 'Futures & options, advanced strategies, fundamental analysis and trading psychology. Syllabus, batch dates and fees for ASMA Professional Master Program.'
+    : (course.description || course.desc || `Enroll in ${course.title} at Advait Stock Market Academy, Nagpur.`);
+
+  const courseSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    'name': course.title,
+    'description': seoDesc,
+    'provider': {
+      '@type': 'EducationalOrganization',
+      'name': 'Advait Stock Market Academy',
+      'sameAs': 'https://www.asmaonline.in'
+    }
+  };
+
   return (
     <div className="bg-bg-primary min-h-screen pb-20">
+      <SEO
+        title={seoTitle}
+        description={seoDesc}
+        path={`/course/${course.slug || decodedId}`}
+        image={course.image}
+        schema={courseSchema}
+      />
       {/* Premium Hero Section */}
       <div className="relative w-full h-[500px] lg:h-[600px] flex items-center justify-center overflow-hidden">
         {/* Background Image with Parallax Effect */}

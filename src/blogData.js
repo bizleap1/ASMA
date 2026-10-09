@@ -5,13 +5,17 @@ export const blogPosts = [
     excerpt: "Most people's introduction to the stock market is a tip. By the time they ask to be taught properly, they've usually lost money. Discover why ASMA focuses on education over shortcuts.",
     category: "About Us",
     readTime: "4 min read",
-    image: "/asma-philosophy.jpeg",
+    image: "/asma-philosophy.webp",
     content: [
       { type: "paragraph", text: "Most people's introduction to the stock market is not a lesson. It's a tip — a relative who made it big in a penny stock, a colleague chasing an options trade he doesn't fully understand, a video promising ten percent a month. By the time someone actually asks to be taught properly, they've usually already lost money, confidence, or both." },
       { type: "paragraph", text: "That's the gap Advait Stock Market Academy was built to close — not with shortcuts, but by treating the market as what it really is: a skill that rewards discipline and punishes guesswork." },
       { type: "heading", text: "Education first, predictions never" },
       { type: "paragraph", text: "We are not in the business of stock tips. Anyone who has spent real time in the market — as a trader, an investor, or a mentor to both — knows that the person who hands you a \"sure thing\" is either wrong or lying. What we teach instead is the process behind good decisions: how to read a chart without superstition, how to size a position so one bad trade doesn't undo a month of good ones, and how to tell the difference between a business worth owning for years and a stock worth avoiding altogether. Markets change every day. A sound process doesn't have to." },
-      { type: "blockquote", text: "\"The market does not reward the person who predicts correctly once. It rewards the person who follows a process correctly, again and again.\" — Devendra Meshram, Founder, ASMA" },
+      // [DISPUTED QUOTE - PENDING VERIFICATION]:
+      // Originally attributed to "Devendra Meshram, Founder, ASMA".
+      // "Founder" title removed per ASMA confirmation (Satish Bobade is the sole confirmed founder).
+      // Retained original trainer name pending client verification on quote authorship.
+      { type: "blockquote", text: "\"The market does not reward the person who predicts correctly once. It rewards the person who follows a process correctly, again and again.\" — Devendra Meshram, ASMA" },
       { type: "heading", text: "How we actually work with you" },
       { type: "paragraph", text: "Learning the market isn't a single event, so we didn't build ASMA around one. Everything we do sits under three connected pillars." },
       { type: "heading", text: "Courses" },
@@ -34,7 +38,7 @@ export const blogPosts = [
     excerpt: "Discover why live-market training matters for beginners and how practical education, risk management and trading psychology can improve stock market learning in Nagpur.",
     category: "Training",
     readTime: "5 min read",
-    image: "/live-market-training.jpeg",
+    image: "/live-market-training.webp",
     content: [
       { type: "paragraph", text: "Learning the stock market from books and videos can build a strong theoretical foundation. But understanding how to make decisions when prices are moving in real time requires a different kind of experience." },
       { type: "paragraph", text: "This is where **live-market stock market training** becomes valuable." },
@@ -71,7 +75,7 @@ export const blogPosts = [
     excerpt: "Learn how to start your stock market journey in Nagpur with a structured roadmap covering market basics, technical analysis, risk management and practical training.",
     category: "Education",
     readTime: "6 min read",
-    image: "/beginner-roadmap.jpeg",
+    image: "/beginner-roadmap.webp",
     content: [
       { type: "paragraph", text: "The stock market can look complicated when you are starting out. Terms like **NIFTY, technical analysis, mutual funds, options, candlesticks and stop-losses** can make beginners feel that investing or trading requires a finance background." },
       { type: "paragraph", text: "It does not." },
@@ -111,7 +115,7 @@ export const blogPosts = [
     excerpt: "Understand the 1% Risk Rule, position sizing, stop losses and risk-to-reward ratios—and why disciplined risk management matters in stock market trading.",
     category: "Risk Management",
     readTime: "7 min read",
-    image: "/1-percent-rule.jpeg",
+    image: "/1-percent-rule.webp",
     content: [
       { type: "paragraph", text: "Most beginners enter the stock market with one question:" },
       { type: "blockquote", text: "“How much can I make?”" },
@@ -164,9 +168,13 @@ export const blogPosts = [
 
     readTime: "6 min read",
     image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=800&auto=format&fit=crop",
+    // [AUTHORSHIP - PENDING CLIENT VERIFICATION]:
+    // Originally listed as Devendra Meshram ("Founder & Chief Mentor").
+    // "Founder" and unverified leadership title removed per ASMA confirmation (Satish Bobade is Founder).
+    // Retained original trainer name pending client verification on article authorship.
     author: {
       name: "Devendra Meshram",
-      role: "Founder & Chief Mentor",
+      role: "Trainer",
       avatar: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=256&h=256&auto=format&fit=crop"
     },
     content: [
@@ -218,9 +226,13 @@ export const blogPosts = [
 
     readTime: "7 min read",
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop",
+    // [AUTHORSHIP - PENDING CLIENT VERIFICATION]:
+    // Originally listed as Devendra Meshram ("Founder & Chief Mentor").
+    // "Founder" and unverified leadership title removed per ASMA confirmation (Satish Bobade is Founder).
+    // Retained original trainer name pending client verification on article authorship.
     author: {
       name: "Devendra Meshram",
-      role: "Founder & Chief Mentor",
+      role: "Trainer",
       avatar: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=256&h=256&auto=format&fit=crop"
     },
     content: [
@@ -265,9 +277,13 @@ export const blogPosts = [
 
     readTime: "6 min read",
     image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=800&auto=format&fit=crop",
+    // [AUTHORSHIP - PENDING CLIENT VERIFICATION]:
+    // Originally listed as Devendra Meshram ("Founder & Chief Mentor").
+    // "Founder" and unverified leadership title removed per ASMA confirmation (Satish Bobade is Founder).
+    // Retained original trainer name pending client verification on article authorship.
     author: {
       name: "Devendra Meshram",
-      role: "Founder & Chief Mentor",
+      role: "Trainer",
       avatar: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=256&h=256&auto=format&fit=crop"
     },
     content: [
@@ -308,9 +324,13 @@ export const blogPosts = [
     category: "Trading",
     readTime: "10 min read",
     image: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?q=80&w=800&auto=format&fit=crop",
+    // [AUTHORSHIP - PENDING CLIENT VERIFICATION]:
+    // Originally listed as Devendra Meshram ("Founder & Chief Mentor").
+    // "Founder" and unverified leadership title removed per ASMA confirmation (Satish Bobade is Founder).
+    // Retained original trainer name pending client verification on article authorship.
     author: {
       name: "Devendra Meshram",
-      role: "Founder & Chief Mentor",
+      role: "Trainer",
       avatar: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=256&h=256&auto=format&fit=crop"
     },
     content: [

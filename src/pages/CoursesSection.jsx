@@ -15,9 +15,15 @@ import SocialLearningHub from '../components/SocialLearningHub';
 import FaqSection from '../components/FaqSection';
 import { courseFaqs } from '../data';
 
+const defaultCourses = (coursePackages || []).map(p => ({
+  ...p,
+  slug: p.id,
+  curriculum: p.coursesIncluded
+}));
+
 const CoursesSection = ({ isCoursesPage = false }) => {
-  const [courses, setCourses] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [courses, setCourses] = useState(defaultCourses);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -29,11 +35,12 @@ const CoursesSection = ({ isCoursesPage = false }) => {
           .order('display_order', { ascending: true });
 
         if (error) throw error;
-        setCourses(data || []);
+        if (data && data.length > 0) {
+          setCourses(data);
+        }
       } catch (err) {
         console.error("Error fetching courses:", err);
-        // Fallback to static data if DB fails during dev
-        setCourses(coursePackages);
+        setCourses(defaultCourses);
       } finally {
         setIsLoading(false);
       }

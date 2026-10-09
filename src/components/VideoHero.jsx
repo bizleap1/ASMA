@@ -28,6 +28,7 @@ const VideoHero = () => (
       <div className="relative z-20 flex-grow flex flex-col justify-start mt-16 md:mt-20 lg:mt-24 items-start text-left px-6 md:px-16 lg:px-24 w-full space-y-6">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-sans font-black leading-tight text-white drop-shadow-[0_5px_15px_rgba(0,0,0,0.6)] animate-fadeInUp will-change-transform-opacity">
           Advait Stock <br /> Market Academy
+          <span className="sr-only"> – Stock Market Classes in Nagpur</span>
         </h1>
         <div className="pl-6 md:pl-8 border-l-[6px] border-accent-primary ml-1 md:ml-2 animate-fadeInUp delay-200 will-change-transform-opacity">
           <p className="text-base md:text-lg lg:text-xl text-white/95 font-medium tracking-wide font-sans max-w-sm drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] leading-relaxed">

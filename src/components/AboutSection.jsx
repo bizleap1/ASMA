@@ -35,15 +35,18 @@ const AboutSection = ({ hideExploreButton = false }) => {
           <div className="w-full lg:w-5/12 relative pb-8 lg:pb-0 pr-0 lg:pr-8">
             <div className="relative rounded-2xl shadow-2xl aspect-[4/5] max-w-md mx-auto lg:mx-0 lg:ml-auto group">
               {/* Image Container with overflow hidden */}
-              <div className="absolute inset-0 rounded-2xl overflow-hidden border border-text-primary/10">
-                <img 
-                  loading="lazy"
-                  src="/asma founder.png" 
-                  alt="Satish Bobade - Founder & Chief Mentor" 
-                  className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-              </div>
+                <picture>
+                  <source srcSet="/asma founder.webp" type="image/webp" />
+                  <img
+                    loading="lazy"
+                    decoding="async"
+                    src="/asma founder.png"
+                    alt="Satish Bobade — Founder"
+                    width="448"
+                    height="560"
+                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+                </picture>
               
               {/* Experience Badge overlay - Simple & Clean */}
               <div className="absolute -bottom-6 lg:bottom-6 right-3 sm:right-4 lg:-right-8 bg-white rounded-xl px-5 sm:px-6 py-3.5 sm:py-4 shadow-xl border border-black/5 flex items-center gap-4 sm:gap-5 z-20 w-max">
@@ -80,7 +83,7 @@ const AboutSection = ({ hideExploreButton = false }) => {
                   Satish Bobade
                 </div>
                 <div className="text-[11px] md:text-[12px] font-medium text-[#173D2B]/70 uppercase tracking-[0.16em] mt-0.5">
-                  Founder & Chief Mentor, ASMA
+                  Founder, ASMA
                 </div>
               </div>
             </div>

@@ -8,6 +8,7 @@ import shubhangiImg from '../assets/shubhangi.png';
 import krishnaImg from '../assets/krishna.png';
 import vrushaliImg from '../assets/vrushali.png';
 import { serviceData, courseDetails, baseCourses, additionalCourses, FREE_NOTES } from '../data';
+import SEO from '../components/SEO';
 
 const BlogPostSection = () => {
   const { id } = useParams();
@@ -16,6 +17,7 @@ const BlogPostSection = () => {
   if (!post) {
     return (
       <div className="container mx-auto px-4 py-20 text-center">
+        <SEO title="Article Not Found | ASMA" noindex={true} path={`/blog/${id || ''}`} />
         <h2 className="text-3xl font-bold text-text-primary mb-4">Article Not Found</h2>
         <p className="text-text-secondary mb-8">The blog article you are looking for does not exist or has been moved.</p>
         <Link to="/blog" className="px-6 py-3 bg-accent-primary text-white rounded-full font-bold uppercase tracking-wider text-xs hover:bg-text-primary transition-all">
@@ -30,6 +32,35 @@ const BlogPostSection = () => {
 
   return (
     <article className="py-12 md:py-20 bg-bg-primary relative overflow-hidden">
+      <SEO
+        title={post.title}
+        description={post.excerpt}
+        path={`/blog/${post.id}`}
+        image={post.image}
+        type="article"
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "headline": post.title,
+          "description": post.excerpt,
+          "image": post.image?.startsWith('http') ? post.image : `https://www.asmaonline.in${post.image}`,
+          "author": {
+            "@type": "Person",
+            "name": post.author?.name || "ASMA Academy",
+            "jobTitle": post.author?.role || "Trainer"
+          },
+          "publisher": {
+            "@type": "EducationalOrganization",
+            "name": "Advait Stock Market Academy",
+            "url": "https://www.asmaonline.in",
+            "founder": {
+              "@type": "Person",
+              "name": "Satish Bobade",
+              "jobTitle": "Founder"
+            }
+          }
+        }}
+      />
       <div className="container mx-auto px-4 md:px-8 lg:px-12 relative z-10">
 
         {/* Breadcrumb / Category Row */}
@@ -56,7 +87,16 @@ const BlogPostSection = () => {
 
         {/* Featured Image */}
         <div className="relative h-[250px] sm:h-[400px] md:h-[550px] w-full rounded-[32px] overflow-hidden shadow-2xl mb-12 md:mb-16 border border-text-primary/10">
-          <img loading="lazy" src={post.image} alt={post.title} className="w-full h-full object-cover" />
+          <img
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+            width="1200"
+            height="630"
+            src={post.image}
+            alt={post.title}
+            className="w-full h-full object-cover"
+          />
         </div>
 
         {/* Layout Grid: Content + Sidebar */}
@@ -135,7 +175,15 @@ const BlogPostSection = () => {
               <div className="space-y-6">
                 {relatedPosts.map((related) => (
                   <Link key={related.id} to={`/blog/${related.id}`} className="group flex items-start gap-4">
-                    <img loading="lazy" src={related.image} alt={related.title} className="w-16 h-16 rounded-xl object-cover border border-text-primary/5 flex-shrink-0" />
+                    <img
+                      loading="lazy"
+                      decoding="async"
+                      width="64"
+                      height="64"
+                      src={related.image}
+                      alt={related.title}
+                      className="w-16 h-16 rounded-xl object-cover border border-text-primary/5 flex-shrink-0"
+                    />
                     <div>
                       <div className="text-[10px] font-bold text-accent-primary tracking-wider uppercase mb-1">{related.category}</div>
                       <h5 className="text-sm font-bold text-text-primary leading-snug group-hover:text-accent-primary transition-colors line-clamp-2">

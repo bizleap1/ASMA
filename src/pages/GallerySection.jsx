@@ -36,29 +36,29 @@ const GallerySection = ({ isGalleryPage = false }) => {
   ];
 
   const homeGalleryItems = [
-    { url: "/Home/new2.png", title: "Student Classroom", desc: "Our dedicated students focusing during intense trading sessions." },
-    { url: "/Home/new3.png", title: "Faculty Mentorship", desc: "Guidance from our lead mentor on the trading floor." },
-    { url: "/Home/new5.png", title: "Interactive Discussions", desc: "Group discussions and doubt clearing sessions with faculty." },
-    { url: "/Home/1.png", title: "Live Trading Floor", desc: "Experience the pulse of the market in our state-of-the-art facility." },
-    { url: "/Home/2.png", title: "Mentorship Sessions", desc: "Get one-on-one guidance from experienced market professionals." },
-    { url: "/Home/3.png", title: "Analysis Workshops", desc: "Deep dive into technical charts and fundamental data." },
-    { url: "/Home/4.png", title: "Student Community", desc: "Collaborate, learn, and grow your wealth together." },
+    { url: "/Home/new2.webp", title: "Student Classroom", desc: "Our dedicated students focusing during intense trading sessions." },
+    { url: "/Home/new3.webp", title: "Faculty Mentorship", desc: "Guidance from our lead mentor on the trading floor." },
+    { url: "/Home/new5.webp", title: "Interactive Discussions", desc: "Group discussions and doubt clearing sessions with faculty." },
+    { url: "/Home/1.webp", title: "Live Trading Floor", desc: "Experience the pulse of the market in our state-of-the-art facility." },
+    { url: "/Home/2.webp", title: "Mentorship Sessions", desc: "Get one-on-one guidance from experienced market professionals." },
+    { url: "/Home/3.webp", title: "Analysis Workshops", desc: "Deep dive into technical charts and fundamental data." },
+    { url: "/Home/4.webp", title: "Student Community", desc: "Collaborate, learn, and grow your wealth together." },
   ];
 
   const additionalGalleryItems = [
-    { url: "/Home/17.jpg", title: "Live Trading Execution", desc: "Students actively executing real-time trades and managing portfolios using advanced trading terminals." },
-    { url: "/Home/16.jpg", title: "Interactive Technical Workshops", desc: "Faculty actively monitoring and guiding students as they analyze live market charts and spot breakout patterns." },
-    { url: "/Home/15.jpg", title: "Student Support & Onboarding", desc: "Our dedicated support team ensuring seamless onboarding, query resolution, and administrative assistance for all our traders." },
-    { url: "/Home/14.jpg", title: "Live Market Mentorship", desc: "Students gaining hands-on experience under the expert guidance of our research analysts in the live trading environment." },
-    { url: "/Home/13.jpg", title: "Dedicated Market Research", desc: "Continuous market analysis and strategy formulation by our experienced faculty to ensure top-tier education." },
-    { url: "/Home/12.jpg", title: "Focused Learning Environment", desc: "Immersive classroom sessions designed to master the fundamentals of technical and fundamental analysis." },
-    { url: "/Home/11.png", title: "Next Generation of Traders", desc: "Empowering eager minds with the knowledge and discipline required to thrive in the competitive stock market." },
-    { url: "/Home/10.jpg", title: "Advanced Trading Concepts", desc: "In-depth lectures on complex market dynamics, risk management, and proprietary trading setups." },
-    { url: "/Home/9.png", title: "Mastering Reversal Strategies", desc: "Learn to identify trend ends and pinpoint exact reversal points with volume analysis in our live classrooms." },
-    { url: "/Home/8.jpg", title: "Personalized Trade Counseling", desc: "Get one-on-one portfolio reviews and trading psychology guidance from our veteran analysts." },
-    { url: "/Home/7.jpg", title: "Expert Market Leadership", desc: "Guided by Prof. Satish A. Bobade, bringing decades of research analysis and institutional trading experience." },
-    { url: "/Home/6.jpg", title: "Advait Stock Market Academy", desc: "Our premium campus dedicated exclusively to cultivating top-tier stock market traders and financial professionals." },
-    { url: "/Home/5.png", title: "Engineering Trading Success", desc: "Celebrating the analytical minds that approach the stock market with precision, logic, and calculated strategy." },
+    { url: "/Home/17.webp", title: "Live Trading Execution", desc: "Students actively executing real-time trades and managing portfolios using advanced trading terminals." },
+    { url: "/Home/16.webp", title: "Interactive Technical Workshops", desc: "Faculty actively monitoring and guiding students as they analyze live market charts and spot breakout patterns." },
+    { url: "/Home/15.webp", title: "Student Support & Onboarding", desc: "Our dedicated support team ensuring seamless onboarding, query resolution, and administrative assistance for all our traders." },
+    { url: "/Home/14.webp", title: "Live Market Mentorship", desc: "Students gaining hands-on experience under the expert guidance of our research analysts in the live trading environment." },
+    { url: "/Home/13.webp", title: "Dedicated Market Research", desc: "Continuous market analysis and strategy formulation by our experienced faculty to ensure top-tier education." },
+    { url: "/Home/12.webp", title: "Focused Learning Environment", desc: "Immersive classroom sessions designed to master the fundamentals of technical and fundamental analysis." },
+    { url: "/Home/11.webp", title: "Next Generation of Traders", desc: "Empowering eager minds with the knowledge and discipline required to thrive in the competitive stock market." },
+    { url: "/Home/10.webp", title: "Advanced Trading Concepts", desc: "In-depth lectures on complex market dynamics, risk management, and proprietary trading setups." },
+    { url: "/Home/9.webp", title: "Mastering Reversal Strategies", desc: "Learn to identify trend ends and pinpoint exact reversal points with volume analysis in our live classrooms." },
+    { url: "/Home/8.webp", title: "Personalized Trade Counseling", desc: "Get one-on-one portfolio reviews and trading psychology guidance from our veteran analysts." },
+    { url: "/Home/7.webp", title: "Expert Market Leadership", desc: "Guided by Prof. Satish A. Bobade, bringing decades of research analysis and institutional trading experience." },
+    { url: "/Home/6.webp", title: "Advait Stock Market Academy", desc: "Our premium campus dedicated exclusively to cultivating top-tier stock market traders and financial professionals." },
+    { url: "/Home/5.webp", title: "Engineering Trading Success", desc: "Celebrating the analytical minds that approach the stock market with precision, logic, and calculated strategy." },
   ];
 
   const galleryItems = isGalleryPage ? [...newGalleryItems, ...homeGalleryItems, ...additionalGalleryItems] : homeGalleryItems;
@@ -185,30 +185,30 @@ const GallerySection = ({ isGalleryPage = false }) => {
               <div className="flex gap-4 md:gap-6 lg:w-[32%] h-[600px] lg:h-full">
                 {/* Sub-col 1 */}
                 <div className="flex flex-col gap-4 md:gap-6 w-1/2 h-full">
-                  <img src={displayItems[0].url} className="w-full flex-grow-[1.6] object-cover rounded-[24px] shadow-md hover:scale-[1.02] transition-transform duration-500 cursor-pointer" alt={displayItems[0].title} onClick={() => { setActiveImg(galleryItems.indexOf(displayItems[0])); setIsLightboxOpen(true); }} />
-                  <img src={displayItems[1].url} className="w-full flex-grow-[1] object-cover rounded-[24px] shadow-md hover:scale-[1.02] transition-transform duration-500 cursor-pointer" alt={displayItems[1].title} onClick={() => { setActiveImg(galleryItems.indexOf(displayItems[1])); setIsLightboxOpen(true); }} />
+                  <img loading="lazy" decoding="async" width="200" height="300" src={displayItems[0].url} className="w-full flex-grow-[1.6] object-cover rounded-[24px] shadow-md hover:scale-[1.02] transition-transform duration-500 cursor-pointer" alt={displayItems[0].title} onClick={() => { setActiveImg(galleryItems.indexOf(displayItems[0])); setIsLightboxOpen(true); }} />
+                  <img loading="lazy" decoding="async" width="200" height="200" src={displayItems[1].url} className="w-full flex-grow-[1] object-cover rounded-[24px] shadow-md hover:scale-[1.02] transition-transform duration-500 cursor-pointer" alt={displayItems[1].title} onClick={() => { setActiveImg(galleryItems.indexOf(displayItems[1])); setIsLightboxOpen(true); }} />
                 </div>
                 {/* Sub-col 2 */}
                 <div className="flex flex-col justify-center w-1/2 h-full py-8 md:py-16">
-                  <img src={displayItems[2].url} className="w-full h-full object-cover rounded-[24px] shadow-md hover:scale-[1.02] transition-transform duration-500 cursor-pointer" alt={displayItems[2].title} onClick={() => { setActiveImg(galleryItems.indexOf(displayItems[2])); setIsLightboxOpen(true); }} />
+                  <img loading="lazy" decoding="async" width="200" height="400" src={displayItems[2].url} className="w-full h-full object-cover rounded-[24px] shadow-md hover:scale-[1.02] transition-transform duration-500 cursor-pointer" alt={displayItems[2].title} onClick={() => { setActiveImg(galleryItems.indexOf(displayItems[2])); setIsLightboxOpen(true); }} />
                 </div>
               </div>
 
               {/* Center Main Column */}
               <div className="lg:w-[36%] h-[400px] lg:h-full flex flex-col justify-center py-4 md:py-8">
-                <img src={displayItems[3].url} className="w-full h-full object-cover rounded-[24px] shadow-xl hover:scale-[1.02] transition-transform duration-500 cursor-pointer" alt={displayItems[3].title} onClick={() => { setActiveImg(galleryItems.indexOf(displayItems[3])); setIsLightboxOpen(true); }} />
+                <img loading="lazy" decoding="async" width="450" height="500" src={displayItems[3].url} className="w-full h-full object-cover rounded-[24px] shadow-xl hover:scale-[1.02] transition-transform duration-500 cursor-pointer" alt={displayItems[3].title} onClick={() => { setActiveImg(galleryItems.indexOf(displayItems[3])); setIsLightboxOpen(true); }} />
               </div>
 
               {/* Right Main Column */}
               <div className="flex gap-4 md:gap-6 lg:w-[32%] h-[600px] lg:h-full">
                 {/* Sub-col 1 */}
                 <div className="flex flex-col justify-center w-1/2 h-full py-8 md:py-16">
-                  <img src={displayItems[4].url} className="w-full h-full object-cover rounded-[24px] shadow-md hover:scale-[1.02] transition-transform duration-500 cursor-pointer" alt={displayItems[4].title} onClick={() => { setActiveImg(galleryItems.indexOf(displayItems[4])); setIsLightboxOpen(true); }} />
+                  <img loading="lazy" decoding="async" width="200" height="400" src={displayItems[4].url} className="w-full h-full object-cover rounded-[24px] shadow-md hover:scale-[1.02] transition-transform duration-500 cursor-pointer" alt={displayItems[4].title} onClick={() => { setActiveImg(galleryItems.indexOf(displayItems[4])); setIsLightboxOpen(true); }} />
                 </div>
                 {/* Sub-col 2 */}
                 <div className="flex flex-col gap-4 md:gap-6 w-1/2 h-full">
-                  <img src={displayItems[5].url} className="w-full flex-grow-[1.6] object-cover rounded-[24px] shadow-md hover:scale-[1.02] transition-transform duration-500 cursor-pointer" alt={displayItems[5].title} onClick={() => { setActiveImg(galleryItems.indexOf(displayItems[5])); setIsLightboxOpen(true); }} />
-                  <img src={displayItems[6].url} className="w-full flex-grow-[1] object-cover rounded-[24px] shadow-md hover:scale-[1.02] transition-transform duration-500 cursor-pointer" alt={displayItems[6].title} onClick={() => { setActiveImg(galleryItems.indexOf(displayItems[6])); setIsLightboxOpen(true); }} />
+                  <img loading="lazy" decoding="async" width="200" height="300" src={displayItems[5].url} className="w-full flex-grow-[1.6] object-cover rounded-[24px] shadow-md hover:scale-[1.02] transition-transform duration-500 cursor-pointer" alt={displayItems[5].title} onClick={() => { setActiveImg(galleryItems.indexOf(displayItems[5])); setIsLightboxOpen(true); }} />
+                  <img loading="lazy" decoding="async" width="200" height="200" src={displayItems[6].url} className="w-full flex-grow-[1] object-cover rounded-[24px] shadow-md hover:scale-[1.02] transition-transform duration-500 cursor-pointer" alt={displayItems[6].title} onClick={() => { setActiveImg(galleryItems.indexOf(displayItems[6])); setIsLightboxOpen(true); }} />
                 </div>
               </div>
             </div>
