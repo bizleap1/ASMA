@@ -25,7 +25,7 @@ const HeroAsymmetric = () => (
       <div className="space-y-8 md:space-y-10 relative z-20">
 
         {/* Floating Interactive Badge */}
-        <div className="inline-flex items-center gap-3 px-5 py-2.5 border border-accent-primary/30 rounded-full text-accent-primary text-xs font-bold tracking-widest uppercase bg-white/40 backdrop-blur-md shadow-lg shadow-accent-primary/10 hover:shadow-accent-primary/30 hover:-translate-y-1 transition-all cursor-default group">
+        <div className="inline-flex items-center gap-3 px-5 py-2.5 border border-accent-primary/30 rounded-[4px] text-accent-primary text-xs font-bold tracking-widest uppercase bg-white/40 backdrop-blur-md shadow-lg shadow-accent-primary/10 hover:shadow-accent-primary/30 hover:-translate-y-1 transition-all cursor-default group">
           <span className="relative flex h-3 w-3">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-primary opacity-75"></span>
             <span className="relative inline-flex rounded-full h-3 w-3 bg-accent-primary group-hover:bg-accent-secondary transition-colors"></span>
@@ -52,7 +52,7 @@ const HeroAsymmetric = () => (
 
         {/* Interactive Button Group */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 pt-4">
-          <a href="#contact-form" className="relative group px-8 sm:px-10 py-4 sm:py-5 bg-text-primary text-bg-primary font-bold uppercase tracking-widest text-sm rounded-2xl overflow-hidden shadow-2xl hover:shadow-text-primary/40 transition-all hover:-translate-y-1 w-full sm:w-auto text-center">
+          <a href="#contact-form" className="relative group px-8 sm:px-10 py-4 sm:py-5 bg-text-primary text-bg-primary font-bold uppercase tracking-widest text-sm rounded-[4px] overflow-hidden shadow-2xl hover:shadow-text-primary/40 transition-all hover:-translate-y-1 w-full sm:w-auto text-center">
             <span className="absolute inset-0 w-full h-full bg-gradient-to-br from-accent-primary to-accent-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
             <span className="relative flex items-center justify-center gap-3">
               Contact Us

@@ -87,7 +87,7 @@ export const blogPosts = [
       { type: "paragraph", text: "This foundation helps prevent beginners from making decisions based purely on social-media tips or market rumours." },
       { type: "heading", text: "2. Learn How to Read the Market" },
       { type: "paragraph", text: "Once the basics are clear, the next step is analysis." },
-      { type: "paragraph", text: "Technical analysis can introduce concepts such as **candlestick patterns, support and resistance, trendlines, moving averages, RSI and VWAP**. ASMA’s Advanced Foundation programme includes these concepts alongside market psychology, risk management, mutual funds, portfolio management and financial planning." },
+        { type: "paragraph", text: "Technical analysis can introduce concepts such as **candlestick patterns, support and resistance, trendlines, moving averages, RSI and VWAP**. ASMA’s Advanced Foundation programme includes these concepts alongside market psychology, risk management, mutual funds & SIP investments, portfolio management and financial planning." },
       { type: "paragraph", text: "The objective should not be memorising indicators. It should be understanding why a setup may or may not make sense in a particular market context." },
       { type: "heading", text: "3. Learn Risk Management Before Increasing Complexity" },
       { type: "paragraph", text: "A trading strategy is only one part of the process." },
@@ -242,7 +242,7 @@ export const blogPosts = [
       { type: "blockquote", text: "The stock market is a device for transferring money from the active to the patient. — Warren Buffett" },
       { type: "heading", text: "Time in the Market beats Timing the Market" },
       { type: "paragraph", text: "Many investors try to buy at the absolute bottom and sell at the absolute top. This is mathematically and practically impossible to do consistently. By attempting to time the market, you risk missing the market's best-performing days, which usually occur right after major sell-offs. A long-term buy-and-hold strategy eliminates the stress of timing and delivers reliable returns." },
-      { type: "paragraph", text: "To start, focus on identifying businesses with strong competitive advantages (moats), clean management, low debt, and consistent earnings growth. When you find them, invest regularly and let time take care of the rest." }
+      { type: "paragraph", text: "To start, focus on identifying businesses with strong competitive advantages (moats), clean management, low debt, and consistent earnings growth. When you find them, invest regularly through disciplined systematic investment planning (SIP) or staggered buying, and let compounding take care of the rest." }
     ]
   },
   {

@@ -200,7 +200,7 @@ const SocialMediaSection = () => {
           <div className="bg-[#166534] rounded-[2rem] pt-10 px-6 flex flex-col items-center text-center overflow-hidden h-[450px] relative shadow-xl border border-[#166534]/20 group">
             <h3 className="text-white/90 font-bold uppercase tracking-widest text-xs md:text-sm mb-2 drop-shadow-sm">INSTAGRAM</h3>
             <p className="text-white font-black text-3xl md:text-4xl mb-8 drop-shadow-md">32 POSTS</p>
-            <a href="https://instagram.com/asma_stockmarket" target="_blank" rel="noopener noreferrer" className="bg-[#d4af37] text-[#166534] font-black uppercase tracking-widest text-sm px-12 py-4 rounded-full hover:bg-white transition-all z-10 hover:-translate-y-1 shadow-lg">
+            <a href="https://instagram.com/asma_stockmarket" target="_blank" rel="noopener noreferrer" className="bg-[#d4af37] text-[#166534] font-black uppercase tracking-widest text-sm px-12 py-4 rounded-[4px] hover:bg-white transition-all z-10 hover:-translate-y-1 shadow-lg">
               FOLLOW
             </a>
             <div className="group-hover:translate-y-4 transition-transform duration-500 ease-out absolute bottom-0 w-full h-[75%] flex justify-center">
@@ -212,7 +212,7 @@ const SocialMediaSection = () => {
           <div className="bg-[#166534] rounded-[2rem] pt-10 px-6 flex flex-col items-center text-center overflow-hidden h-[450px] relative shadow-xl border border-[#166534]/20 group">
             <h3 className="text-white/90 font-bold uppercase tracking-widest text-xs md:text-sm mb-2 drop-shadow-sm">YOUTUBE</h3>
             <p className="text-white font-black text-3xl md:text-4xl mb-8 drop-shadow-md">22 VIDEOS</p>
-            <a href="https://youtube.com/@advaitsharemarketacademy-x5p" target="_blank" rel="noopener noreferrer" className="bg-[#d4af37] text-[#166534] font-black uppercase tracking-widest text-sm px-12 py-4 rounded-full hover:bg-white transition-all z-10 hover:-translate-y-1 shadow-lg">
+            <a href="https://youtube.com/@advaitsharemarketacademy-x5p" target="_blank" rel="noopener noreferrer" className="bg-[#d4af37] text-[#166534] font-black uppercase tracking-widest text-sm px-12 py-4 rounded-[4px] hover:bg-white transition-all z-10 hover:-translate-y-1 shadow-lg">
               SUBSCRIBE
             </a>
             <div className="group-hover:translate-y-4 transition-transform duration-500 ease-out absolute bottom-0 w-full h-[75%] flex justify-center">

@@ -1,7 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import shareMarketImg from "./assets/ANU00469.webp";
-import stockInvestmentImg from "./assets/ANU00455.webp";
 
 export const serviceData = [
   {
@@ -9,7 +7,7 @@ export const serviceData = [
     title: "Share Market Training",
     category: "Training",
     desc: "In-depth courses on stock market investing, trading strategies, technical analysis and financial planning for beginners and advanced learners.",
-    image: shareMarketImg,
+    image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80",
     fullDesc: "Our Share Market Training program is designed to equip you with the knowledge and skills needed to navigate the stock market confidently. Whether you are a beginner looking to understand the basics or an experienced trader seeking advanced strategies, this course covers everything from fundamental analysis to technical indicators and risk management.",
     benefits: ["Comprehensive Curriculum", "Live Market Sessions", "Expert Mentorship", "Practical Trading Strategies"]
   },
@@ -18,7 +16,7 @@ export const serviceData = [
     title: "Stock Investment",
     category: "Investment",
     desc: "Unlock your wealth potential with smart stock investments - guided strategies, expert insights and confident decisions for a secure financial future.",
-    image: stockInvestmentImg,
+    image: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=800&q=80",
     fullDesc: "Investing in stocks is one of the most effective ways to build long-term wealth. Our stock investment advisory service provides you with expert insights, carefully researched stock picks, and portfolio management strategies tailored to your financial goals and risk tolerance.",
     benefits: ["Personalized Portfolio Advice", "In-depth Market Research", "Regular Performance Reviews", "Risk Mitigation Strategies"]
   },
@@ -27,7 +25,7 @@ export const serviceData = [
     title: "Mutual Fund Investment",
     category: "Investment",
     desc: "Grow your wealth steadily with smart mutual fund investments - guided by experts for secure, diversified and goal-oriented financial success.",
-    image: "https://images.pexels.com/photos/6802049/pexels-photo-6802049.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "https://images.unsplash.com/photo-1579532537598-459ecdaf39cc?auto=format&fit=crop&w=800&q=80",
     fullDesc: "Mutual funds offer a hassle-free way to invest in a diversified portfolio managed by professionals. We help you choose the right mix of equity, debt, and hybrid funds based on your financial objectives, investment horizon, and risk appetite.",
     benefits: ["Diversified Investment", "Professional Fund Management", "Goal-Based Planning", "SIP and Lump Sum Options"]
   },
@@ -36,7 +34,7 @@ export const serviceData = [
     title: "Psychological Training",
     category: "Training",
     desc: "Unlock your trading potential with strong market psychology—master emotional control, build discipline, and make confident, rational decisions for consistent success in the stock market",
-    image: "https://images.pexels.com/photos/3760067/pexels-photo-3760067.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=800&q=80",
     fullDesc: "Success in trading is 80% psychology and 20% strategy. Our psychological training program helps you overcome fear, greed, and emotional biases. Build the discipline and mental resilience required to execute trades confidently and consistently.",
     benefits: ["Emotional Control", "Developing Discipline", "Overcoming Biases", "Consistent Execution"]
   },
@@ -45,7 +43,7 @@ export const serviceData = [
     title: "Derivatives Trading",
     category: "Training",
     desc: "Master the art of Options and Futures trading with advanced strategies and risk management techniques for high-yield returns.",
-    image: "https://images.pexels.com/photos/730564/pexels-photo-730564.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "https://images.unsplash.com/photo-1642790106117-e829e14a795f?auto=format&fit=crop&w=800&q=80",
     fullDesc: "Take your trading to the next level with our comprehensive Derivatives Trading course. Learn how to leverage options and futures to hedge your portfolio, generate consistent income, and speculate on market movements with calculated risks.",
     benefits: ["Options Strategies", "Futures Hedging", "Risk Management", "High-Yield Techniques"]
   },
@@ -54,11 +52,11 @@ export const serviceData = [
     title: "Portfolio Management",
     category: "Investment",
     desc: "Expert portfolio management services to diversify your assets, minimize risks, and maximize long-term wealth creation.",
-    image: "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80",
     fullDesc: "Our Portfolio Management Services (PMS) cater to high-net-worth individuals and institutions. We create customized, diversified portfolios tailored to your specific financial goals, risk appetite, and investment horizon to ensure sustainable growth.",
     benefits: ["Customized Portfolios", "Active Monitoring", "Risk Minimization", "Wealth Maximization"]
   },
-    {
+  {
     id: "algo-trading",
     title: "Algorithmic Trading",
     category: "Training",
@@ -72,7 +70,7 @@ export const serviceData = [
     title: "Commodity & Currency",
     category: "Training",
     desc: "Diversify your portfolio by exploring opportunities in MCX and Forex markets with expert guidance.",
-    image: "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=800",
+    image: "https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&w=800&q=80",
     fullDesc: "Expand your trading horizon beyond equities. Learn the nuances of trading precious metals, energy, and global currency pairs. Our experts guide you on global macroeconomic factors and technical setups specific to these highly leveraged markets.",
     benefits: ["Global Market Exposure", "Leveraged Trading", "Macro-Economic Insights", "Diversified Risk"]
   },
@@ -90,7 +88,7 @@ export const serviceData = [
     title: "Health Insurance",
     category: "Insurance",
     desc: "Protect your health with plans from top insurers, offering medical coverage, hospitalization benefits and cashless treatment facilities nationwide.",
-    image: "https://images.pexels.com/photos/5327656/pexels-photo-5327656.jpeg?auto=compress&cs=tinysrgb&w=800",
+    image: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80",
     fullDesc: "Medical emergencies can derail your financial planning. Our health insurance solutions offer comprehensive coverage against hospitalization expenses, critical illnesses, and pre/post-hospitalization care. We help you find policies with the best claim settlement ratios and extensive cashless hospital networks.",
     benefits: ["Cashless Treatment", "Comprehensive Coverage", "Critical Illness Protection", "Tax Benefits under Section 80D"]
   },
@@ -99,7 +97,7 @@ export const serviceData = [
     title: "Term Insurance",
     category: "Insurance",
     desc: "Affordable term plans providing high life cover for a fixed period, ensuring your loved ones are financially protected in your absence.",
-    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=400&q=80",
+    image: "https://images.unsplash.com/photo-1609220136736-443140cffec6?auto=format&fit=crop&w=800&q=80",
     fullDesc: "Secure your family's future with affordable term insurance plans. A term plan provides substantial financial protection to your dependents in case of your untimely demise, ensuring that their living standard and financial goals are not compromised.",
     benefits: ["High Life Cover at Low Premiums", "Financial Security for Dependents", "Optional Riders (Accidental/Critical)", "Tax Benefits under Section 80C"]
   },
@@ -117,7 +115,7 @@ export const serviceData = [
     title: "Life Insurance",
     category: "Insurance",
     desc: "Lifelong protection and wealth-building investment benefits.",
-    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800",
+    image: "https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=800&q=80",
     fullDesc: "Life insurance offers lifelong financial protection to your family along with wealth-building investment benefits. We offer a range of endowment and unit-linked plans customized for your long-term goals like children's education and retirement planning.",
     benefits: ["Lifelong Coverage", "Wealth Accumulation", "Guaranteed Returns Options", "Tax Benefits"]
   },
@@ -639,7 +637,7 @@ export const coursePackages = [
   {
     id: "professional-master-program",
     title: "Professional Master Program",
-    desc: "Advanced techniques for serious traders. Advanced Foundation builds on everything in Professional Master Program (cumulative, not standalone).",
+    desc: "Advanced trading techniques for serious market practitioners. Professional Master Program builds upon the Advanced Foundation curriculum to master derivatives, institutional strategies, and portfolio optimization.",
     image: "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?q=80&w=1200&auto=format&fit=crop",
     price: "₹49,999",
     coursesIncluded: ["Futures Market", "Options Market", "Advanced Trading Techniques", "Master Trading Strategies", "Fundamental Analysis", "Portfolio Optimization", "Advanced Psychological Training"]

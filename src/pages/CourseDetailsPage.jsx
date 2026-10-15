@@ -1,42 +1,129 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Routes, Route, useLocation, Link, useParams, useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { supabase } from '../supabaseClient';
-import { blogPosts } from '../blogData';
-import shubhangiImg from '../assets/shubhangi.png';
-import krishnaImg from '../assets/krishna.png';
-import vrushaliImg from '../assets/vrushali.png';
-import { serviceData, courseDetails, baseCourses, additionalCourses, coursePackages, FREE_NOTES, courseFaqs } from '../data';
-import FaqSection from '../components/FaqSection';
+import { courseFaqs } from '../data';
 import { toast } from '../utils/notification';
 import SEO from '../components/SEO';
 
+// Genuine Course Database with fact-checked curriculum, durations & posters
+const COURSE_CATALOG = {
+  'advanced-foundation': {
+    slug: 'advanced-foundation',
+    id: 'advanced-foundation',
+    title: 'Advanced Foundation',
+    badge: 'Beginner to Intermediate',
+    duration: '~2 Months',
+    learningMode: 'Online Live & Offline Classroom',
+    center: 'Besa–Pipla Road, Nagpur',
+    description:
+      'Build a solid, practical understanding of financial markets, technical analysis, Demat operations, and disciplined risk management. Designed for individuals starting their journey towards financial literacy and confident market execution.',
+    poster: '/advanced foundtation course.webp',
+    posterFallback: '/e80ee201-5e4e-4806-b5bc-9434216dc4d4.png',
+    curriculum: [
+      'Equity Market',
+      'Commodity Market',
+      'Demat & Account Operations',
+      'Technical Analysis',
+      'Mindset Development',
+      'Mutual Funds & SIP',
+      'Portfolio Management',
+      'Risk Management',
+      'Financial Planning',
+      'Market Psychology'
+    ],
+    benefits: [
+      {
+        title: 'Professional Mentorship',
+        description: 'Direct guidance from Satish Bobade and senior market mentors at our Nagpur academy.'
+      },
+      {
+        title: 'Quality Course Materials',
+        description: 'Structured reference handbooks, candlestick cheat sheets, and practical scanning templates.'
+      },
+      {
+        title: 'Dedicated Query Support',
+        description: 'Post-batch doubt-solving assistance, chart reviews, and active community interaction.'
+      },
+      {
+        title: 'Live Market Training Access',
+        description: 'Practical trading desk access during market hours (9:15 AM – 3:30 PM) to practice live chart analysis alongside mentors.'
+      }
+    ]
+  },
+  'professional-master-program': {
+    slug: 'professional-master-program',
+    id: 'professional-master-program',
+    title: 'Professional Master Program',
+    badge: 'Advanced Mastery',
+    duration: '~4 Months',
+    learningMode: 'Online Live & Offline Classroom',
+    center: 'Besa–Pipla Road, Nagpur',
+    description:
+      'Advanced trading techniques for serious market practitioners. Professional Master Program builds upon foundational market principles to master derivatives, institutional strategies, fundamental valuation, and portfolio optimization.',
+    poster: '/prof.master program.webp',
+    posterFallback: '/prof.master program.png',
+    curriculum: [
+      'Futures Market',
+      'Options Market',
+      'Advanced Trading Techniques',
+      'Master Trading Strategies',
+      'Fundamental Analysis',
+      'Portfolio Optimization',
+      'Advanced Psychological Training'
+    ],
+    benefits: [
+      {
+        title: 'Professional Mentorship',
+        description: 'Direct 1-on-1 strategy formulation with Satish Bobade and senior options practitioners.'
+      },
+      {
+        title: 'Quality Course Materials',
+        description: 'Institutional-grade derivatives manuals, Option Greeks formulas, and multi-leg spread playbooks.'
+      },
+      {
+        title: 'Dedicated Query Support',
+        description: 'Continuous trade log audits, risk management checks, and lifetime peer trader network.'
+      },
+      {
+        title: 'Live Market Training Access',
+        description: 'Multi-screen terminal access at our Nagpur campus during market hours (9:15 AM – 3:30 PM) for real-time live market execution.'
+      }
+    ]
+  }
+};
+
 const CourseDetailsPage = () => {
   const { courseId } = useParams();
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
-  const [isEnrolling, setIsEnrolling] = React.useState(false);
-  const [enrollSuccess, setEnrollSuccess] = React.useState(false);
-  const decodedId = decodeURIComponent(courseId || "");
+  const decodedId = decodeURIComponent(courseId || '').toLowerCase().trim();
 
-  // Safe fallback to bundled static course packages if available
-  const staticFallback = coursePackages.find((p) => p.id === decodedId);
-  const initialCourse = staticFallback
-    ? {
-        ...staticFallback,
-        description: staticFallback.desc,
-        curriculum: courseDetails[staticFallback.title]?.curriculum || staticFallback.coursesIncluded,
-        benefits: courseDetails[staticFallback.title]?.benefits || ["Lifetime Mentorship Support", "Live Market Trading Practice"],
-        duration: courseDetails[staticFallback.title]?.duration || "2 Months",
-        mode: courseDetails[staticFallback.title]?.mode || "Online Live & Offline Classroom",
-        slug: staticFallback.id
-      }
-    : null;
+  // State management
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEnrolling, setIsEnrolling] = useState(false);
+  const [enrollSuccess, setEnrollSuccess] = useState(false);
+  const [openFaqIndex, setOpenFaqIndex] = useState(0);
 
-  const [course, setCourse] = useState(initialCourse);
-  const [isLoading, setIsLoading] = useState(!initialCourse);
+  const shouldReduceMotion = useReducedMotion();
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const easeOut = [0.16, 1, 0.3, 1];
+
+  // Resolve static data or fallback
+  const staticData = COURSE_CATALOG[decodedId] || null;
+  const [course, setCourse] = useState(staticData);
+  const [isLoading, setIsLoading] = useState(!staticData);
+
+  useEffect(() => {
+    // Scroll to top on course change
+    window.scrollTo({ top: 0, behavior: 'instant' });
+
     const fetchCourse = async () => {
       try {
         const { data, error } = await supabase
@@ -44,20 +131,32 @@ const CourseDetailsPage = () => {
           .select('*')
           .eq('slug', decodedId)
           .single();
+
         if (error) {
-          if (!initialCourse) throw error;
+          if (!staticData) throw error;
         } else if (data) {
-          setCourse(data);
+          setCourse(prev => ({
+            ...prev,
+            ...data,
+            description: staticData?.description || data.description || data.desc,
+            duration: staticData?.duration || data.duration,
+            learningMode: staticData?.learningMode || data.learningMode,
+            poster: staticData?.poster || data.image,
+            curriculum: staticData?.curriculum || data.curriculum || [],
+            benefits: staticData?.benefits || prev?.benefits || []
+          }));
         }
       } catch (error) {
-        console.error("Error fetching course:", error);
+        console.error('Error fetching course:', error);
       } finally {
         setIsLoading(false);
       }
     };
-    fetchCourse();
-  }, [decodedId, initialCourse]);
 
+    fetchCourse();
+  }, [decodedId]);
+
+  // Form submission: Saves to Supabase 'enrollments' table & triggers WhatsApp for guests
   const handleCourseSubmit = async (e) => {
     e.preventDefault();
     setIsEnrolling(true);
@@ -65,20 +164,25 @@ const CourseDetailsPage = () => {
 
     try {
       const formData = new FormData(e.target);
-      const name = formData.get('name');
-      const email = formData.get('email');
-      const phone = formData.get('phone');
-      const msg = formData.get('message');
-      
+      const name = formData.get('name')?.toString().trim();
+      const email = formData.get('email')?.toString().trim();
+      const phone = formData.get('phone')?.toString().trim();
+      const msg = formData.get('message')?.toString().trim();
+
+      if (!name || !email || !phone) {
+        toast.error('Please fill in all required fields.');
+        setIsEnrolling(false);
+        return;
+      }
+
       const { data: authData } = await supabase.auth.getSession();
       const user = authData?.session?.user;
 
-      // Always insert into DB
       const { error: insertError } = await supabase
         .from('enrollments')
         .insert({
-          course_id: course.id,
-          course_name: course.title,
+          course_id: course?.id || decodedId,
+          course_name: course?.title || 'Stock Market Course',
           student_name: name,
           email: email,
           phone: phone,
@@ -88,58 +192,63 @@ const CourseDetailsPage = () => {
         });
 
       if (insertError) {
-        console.error("Error inserting enrollment:", insertError);
-        toast.error("Failed to submit request. Please try again.");
+        console.error('Error inserting enrollment:', insertError);
+        toast.error('Failed to submit request. Please try again.');
         setIsEnrolling(false);
         return;
       }
 
       if (user) {
-        // Logged in: show success message, no whatsapp
         setEnrollSuccess(true);
-        toast.success("Enrollment request submitted! Admin will review shortly.");
+        toast.success('Enrollment request submitted! Our admissions desk will review shortly.');
         setTimeout(() => {
           setIsModalOpen(false);
           setEnrollSuccess(false);
-        }, 3000);
+        }, 2500);
       } else {
-        // Guest: Redirect to WhatsApp
-        const text = `Hi Advait Academy! I want to enroll in ${course?.title || 'a course'}.\n\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\nMessage: ${msg}`;
+        const text = `Hi Advait Academy! I would like to enroll in ${course?.title || 'the course'}.\n\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\nNotes: ${msg || 'Interested in upcoming batch timings and fee structure.'}`;
         window.open(`https://wa.me/919156953895?text=${encodeURIComponent(text)}`, '_blank');
         setIsModalOpen(false);
+        toast.success('Application received! Connecting via WhatsApp...');
       }
     } catch (err) {
       console.error(err);
-      toast.error("An unexpected error occurred.");
+      toast.error('An unexpected error occurred. Please try again.');
     } finally {
-      if (!enrollSuccess) setIsEnrolling(false);
+      setIsEnrolling(false);
     }
   };
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-screen bg-bg-primary">
-        <div className="w-12 h-12 border-4 border-[#166534] border-t-transparent rounded-full animate-spin"></div>
+      <div className="flex justify-center items-center h-screen bg-[#FAF9F6]">
+        <div className="w-9 h-9 border-2 border-[#063925] border-t-[#D4AF37] rounded-full animate-spin" />
       </div>
     );
   }
 
   if (!course) {
     return (
-      <div className="py-20 text-center text-text-primary min-h-screen bg-bg-primary flex flex-col justify-center items-center">
+      <div className="py-32 text-center text-[#1A3326] min-h-screen bg-[#FAF9F6] flex flex-col justify-center items-center px-4">
         <SEO title="Course Not Found | ASMA" noindex={true} path={`/course/${decodedId}`} />
-        <h2 className="text-2xl font-bold mb-4">Course not found.</h2>
-        <Link to="/courses" className="text-[#166534] hover:underline">Return to Courses</Link>
+        <span className="text-xs uppercase tracking-widest text-[#D4AF37] font-semibold mb-2 font-['Inter']">
+          Advait Stock Market Academy
+        </span>
+        <h2 className="text-2xl sm:text-3xl font-['Manrope'] font-semibold mb-3">Course Not Found.</h2>
+        <p className="text-sm text-[#4A6356] max-w-md mb-6 font-['Inter']">
+          The requested course could not be located. Please check our course directory for our current educational programs in Nagpur.
+        </p>
+        <Link
+          to="/courses"
+          className="inline-flex items-center gap-2 px-6 py-2.5 bg-[#063925] hover:bg-[#0B2117] text-white text-xs font-semibold uppercase tracking-wider rounded-[2px] transition-colors font-['Inter']"
+        >
+          ← Return to Courses
+        </Link>
       </div>
     );
   }
 
-  const curriculumList = course.curriculum && Array.isArray(course.curriculum) 
-    ? course.curriculum 
-    : ["Course overview and basics", "Practical sessions", "Q&A support"];
-
-  const benefitsList = ["Professional Mentorship", "Quality course materials", "Dedicated Support"];
-
+  // SEO metadata & Structured Data
   const seoTitle = course.slug === 'advanced-foundation'
     ? 'Beginner Stock Market Course in Nagpur | ASMA'
     : course.slug === 'professional-master-program'
@@ -150,7 +259,7 @@ const CourseDetailsPage = () => {
     ? 'Advanced Foundation: technical analysis, candlesticks, risk management and live-market practice for beginners. Syllabus, duration and fees.'
     : course.slug === 'professional-master-program'
     ? 'Futures & options, advanced strategies, fundamental analysis and trading psychology. Syllabus, batch dates and fees for ASMA Professional Master Program.'
-    : (course.description || course.desc || `Enroll in ${course.title} at Advait Stock Market Academy, Nagpur.`);
+    : (course.description || `Enroll in ${course.title} at Advait Stock Market Academy, Nagpur.`);
 
   const courseSchema = {
     '@context': 'https://schema.org',
@@ -164,199 +273,517 @@ const CourseDetailsPage = () => {
     }
   };
 
+  // Prioritize course-specific FAQs first
+  const sortedFaqs = [...courseFaqs].sort((a, b) => {
+    if (course.slug === 'advanced-foundation') {
+      const aIsBeginner = a.question.toLowerCase().includes('beginner');
+      const bIsBeginner = b.question.toLowerCase().includes('beginner');
+      if (aIsBeginner && !bIsBeginner) return -1;
+      if (!aIsBeginner && bIsBeginner) return 1;
+    } else if (course.slug === 'professional-master-program') {
+      const aIsMaster = a.question.toLowerCase().includes('master program') || a.question.toLowerCase().includes('options trading');
+      const bIsMaster = b.question.toLowerCase().includes('master program') || b.question.toLowerCase().includes('options trading');
+      if (aIsMaster && !bIsMaster) return -1;
+      if (!aIsMaster && bIsMaster) return 1;
+    }
+    return 0;
+  });
+
   return (
-    <div className="bg-bg-primary min-h-screen pb-20">
+    <div className="bg-[#FAF9F6] min-h-screen text-[#1A3326]">
       <SEO
         title={seoTitle}
         description={seoDesc}
         path={`/course/${course.slug || decodedId}`}
-        image={course.image}
+        image={course.poster}
         schema={courseSchema}
       />
-      {/* Premium Hero Section */}
-      <div className="relative w-full h-[500px] lg:h-[600px] flex items-center justify-center overflow-hidden">
-        {/* Background Image with Parallax Effect */}
-        <div
-          className="absolute inset-0 bg-cover bg-center transform scale-105"
-          style={{ backgroundImage: `url(${course.image})` }}
-        />
-        {/* Gradient Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/80 to-bg-primary"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(22,101,52,0.15)_0%,transparent_70%)]"></div>
 
-        {/* Hero Content */}
-        <div className="relative z-10 container mx-auto px-6 text-center max-w-4xl mt-20">
-          <div className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-bold tracking-[0.2em] uppercase text-xs mb-6 shadow-2xl">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            Premium Academy Course
-          </div>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-black text-white tracking-tight leading-[1.1] mb-6 drop-shadow-2xl">
-            {course.title}
-          </h1>
-          <p className="text-lg md:text-xl text-gray-300 font-light max-w-2xl mx-auto leading-relaxed">
-            {course.desc || "Master the markets with our comprehensive curriculum designed by industry veterans."}
-          </p>
-        </div>
-      </div>
+      {/* =========================================================================
+          SECTION 01 — COURSE HERO (Warm Off-White Editorial 55/45 Split)
+          ========================================================================= */}
+      <section className="relative pt-[120px] sm:pt-[140px] md:pt-[160px] lg:pt-[175px] pb-10 sm:pb-14 lg:pb-16 bg-[#FAF9F6] w-full px-4 sm:px-6 md:px-8 lg:px-12">
+        <div className="container mx-auto px-0 w-full max-w-7xl">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-16 items-center">
+            
+            {/* LEFT COLUMN (approx 55%): Title, Description, Duration, Mode & CTA */}
+            <div className="lg:col-span-7 text-left">
+              {/* Eyebrow: subtle gold line + COURSE PROGRAM */}
+              <motion.div
+                initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.4, ease: easeOut }}
+                className="flex items-center gap-2 mb-3 sm:mb-3.5"
+              >
+                <motion.span
+                  initial={shouldReduceMotion ? { scaleX: 1, opacity: 1 } : { scaleX: 0, opacity: 0 }}
+                  animate={{ scaleX: 1, opacity: 1 }}
+                  transition={{ duration: 0.4, ease: easeOut }}
+                  className="w-4 h-[1.5px] bg-[#D4AF37] origin-left shrink-0"
+                />
+                <span className="text-[11px] sm:text-[11.5px] font-semibold tracking-[0.16em] uppercase text-[#063925] font-['Inter']">
+                  COURSE PROGRAM
+                </span>
+                <span className="text-[11px] text-[#4A6356] font-['Inter'] hidden sm:inline">•</span>
+                <span className="text-[11px] text-[#4A6356] font-['Inter'] hidden sm:inline">
+                  {course.badge}
+                </span>
+              </motion.div>
 
-      {/* Main Content Layout */}
-      <div className="container mx-auto px-4 md:px-8 max-w-6xl relative z-20 -mt-24 md:-mt-32">
+              {/* Dynamic H1 */}
+              <motion.h1
+                initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: isMobile ? 8 : 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, ease: easeOut }}
+                className="text-[30px] sm:text-[38px] md:text-[44px] lg:text-[48px] xl:text-[52px] font-semibold text-[#1A3326] tracking-tight leading-[1.12] mb-4 sm:mb-5 font-['Manrope']"
+              >
+                {course.title}
+              </motion.h1>
 
-        {/* Floating Info Bar */}
-        <div className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-white p-6 md:p-10 mb-12 flex flex-col md:flex-row justify-between items-center gap-8 md:gap-4 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#166534]/5 to-transparent rounded-full blur-3xl pointer-events-none"></div>
+              {/* Short Meaningful Description */}
+              <motion.p
+                initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.45, delay: 0.08, ease: easeOut }}
+                className="text-[14.5px] sm:text-[15.5px] text-[#4A6356] font-normal leading-relaxed mb-6 sm:mb-8 font-['Inter'] max-w-2xl"
+              >
+                {course.description}
+              </motion.p>
 
-          <div className="flex flex-col md:flex-row gap-8 md:gap-16 w-full md:w-auto relative z-10">
-            <div className="flex items-center gap-5">
-              <div className="w-14 h-14 rounded-2xl bg-[#166534]/10 flex items-center justify-center text-[#166534]">
-                <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              </div>
-              <div>
-                <p className="text-xs text-text-secondary font-bold uppercase tracking-widest mb-1">Duration</p>
-                <p className="text-xl font-display font-black text-text-primary">{course.duration || "Self Paced"}</p>
-              </div>
-            </div>
-
-            <div className="w-full md:w-px h-px md:h-16 bg-gray-200"></div>
-
-            <div className="flex items-center gap-5">
-              <div className="w-14 h-14 rounded-2xl bg-[#166534]/10 flex items-center justify-center text-[#166534]">
-                <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-              </div>
-              <div>
-                <p className="text-xs text-text-secondary font-bold uppercase tracking-widest mb-1">Learning Mode</p>
-                <p className="text-xl font-display font-black text-text-primary">{course.mode || "Online"}</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="w-full md:w-auto relative z-10">
-            <button onClick={() => setIsModalOpen(true)} className="w-full md:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#166534] text-white font-bold uppercase tracking-widest text-sm rounded-xl shadow-[0_10px_30px_rgba(22,101,52,0.3)] hover:bg-[#0f4523] hover:shadow-[0_15px_40px_rgba(22,101,52,0.4)] transition-all hover:-translate-y-1">
-              Enroll Now
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-            </button>
-          </div>
-        </div>
-
-        {/* Course Details Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-
-          {/* Left Column - Curriculum */}
-          <div className="lg:col-span-8 space-y-8">
-            <div className="bg-white rounded-3xl p-8 md:p-10 shadow-sm border border-gray-100">
-              <div className="flex items-center gap-4 mb-8">
-                <div className="w-12 h-12 rounded-full bg-[#166534] text-white flex items-center justify-center shadow-lg shadow-[#166534]/30">
-                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+              {/* Clean Text Metadata Bar (Separated by Thin Dividers, No Badges) */}
+              <motion.div
+                initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.45, delay: 0.12, ease: easeOut }}
+                className="py-4 border-t border-b border-[#063925]/10 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 mb-7 sm:mb-8"
+              >
+                <div>
+                  <span className="text-[10.5px] uppercase tracking-wider text-[#4A6356] font-medium font-['Inter'] block mb-0.5">
+                    Duration
+                  </span>
+                  <span className="text-[14.5px] sm:text-[15px] font-semibold text-[#1A3326] font-['Manrope']">
+                    {course.duration}
+                  </span>
                 </div>
-                <h2 className="text-2xl md:text-3xl font-display font-black text-text-primary">Comprehensive Curriculum</h2>
-              </div>
 
-              <div className="space-y-4">
-                {curriculumList.map((item, idx) => (
-                  <div key={idx} className="group flex items-center gap-6 p-5 rounded-2xl border border-gray-50 bg-gray-50/50 hover:bg-white hover:border-[#166534]/20 hover:shadow-lg hover:shadow-[#166534]/5 transition-all duration-300">
-                    <div className="w-10 h-10 rounded-xl bg-white text-gray-400 font-display font-black flex items-center justify-center shrink-0 border border-gray-100 group-hover:bg-[#166534] group-hover:text-white group-hover:border-[#166534] transition-colors">
-                      {String(idx + 1).padStart(2, '0')}
-                    </div>
-                    <p className="text-text-primary font-medium text-base md:text-lg">{item}</p>
+                <div className="hidden sm:block w-[1px] h-8 bg-[#063925]/10" />
+
+                <div>
+                  <span className="text-[10.5px] uppercase tracking-wider text-[#4A6356] font-medium font-['Inter'] block mb-0.5">
+                    Learning Mode
+                  </span>
+                  <span className="text-[14.5px] sm:text-[15px] font-semibold text-[#1A3326] font-['Manrope']">
+                    {course.learningMode}
+                  </span>
+                </div>
+
+                <div className="hidden sm:block w-[1px] h-8 bg-[#063925]/10" />
+
+                <div>
+                  <span className="text-[10.5px] uppercase tracking-wider text-[#4A6356] font-medium font-['Inter'] block mb-0.5">
+                    Training Desk
+                  </span>
+                  <span className="text-[14.5px] sm:text-[15px] font-semibold text-[#1A3326] font-['Manrope']">
+                    {course.center}
+                  </span>
+                </div>
+              </motion.div>
+
+              {/* Primary "Enroll Now" CTA Button */}
+              <motion.div
+                initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.45, delay: 0.16, ease: easeOut }}
+                className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5"
+              >
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(true)}
+                  className="px-8 py-3.5 bg-[#063925] hover:bg-[#0B2117] text-white rounded-[2px] font-['Inter'] font-semibold uppercase tracking-wider text-xs transition-colors duration-200 flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+                >
+                  <span>Enroll in Program</span>
+                  <span className="text-[#D4AF37] font-bold">→</span>
+                </button>
+                <a
+                  href="https://wa.me/919156953895?text=Hi%20Advait%20Academy!%20I%20have%20an%20enquiry%20regarding%20the%20course."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-6 py-3.5 bg-[#063925]/5 hover:bg-[#063925]/10 text-[#063925] rounded-[2px] border border-[#063925]/20 font-['Inter'] font-semibold uppercase tracking-wider text-xs transition-colors duration-200 text-center"
+                >
+                  Chat with Admissions
+                </a>
+              </motion.div>
+            </div>
+
+            {/* RIGHT COLUMN (approx 45%): Original Course Poster */}
+            <motion.div
+              initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: isMobile ? 8 : 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, delay: 0.1, ease: easeOut }}
+              className="lg:col-span-5 flex justify-center lg:justify-end"
+            >
+              <div className="relative w-full max-w-[420px] sm:max-w-[440px] rounded-[2px] overflow-hidden border border-[#063925]/12 bg-white shadow-xs">
+                <picture>
+                  <source srcSet={course.poster} type="image/webp" />
+                  <img
+                    src={course.posterFallback || course.poster}
+                    alt={`${course.title} Program Poster – Advait Stock Market Academy`}
+                    className="w-full h-auto object-cover block"
+                    loading="eager"
+                    width={800}
+                    height={800}
+                  />
+                </picture>
+              </div>
+            </motion.div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          SECTION 02 — COMPREHENSIVE CURRICULUM (Numbered Two-Column Editorial Grid)
+          ========================================================================= */}
+      <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 lg:px-12 w-full bg-white border-t border-[#063925]/10">
+        <div className="container mx-auto max-w-7xl">
+          {/* Section Header */}
+          <div className="mb-8 sm:mb-12 text-left">
+            <span className="text-[11px] font-semibold tracking-[0.16em] uppercase text-[#063925] font-['Inter'] block mb-1.5">
+              WHAT YOU WILL LEARN
+            </span>
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-[#1A3326] font-['Manrope'] tracking-tight">
+                Explore the Curriculum.
+              </h2>
+              <span className="text-xs sm:text-[13px] text-[#4A6356] font-['Inter'] font-medium">
+                {course.curriculum.length} Core Curriculum Modules
+              </span>
+            </div>
+          </div>
+
+          {/* Two-Column Numbered Editorial Topic Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 md:gap-x-12 lg:gap-x-16 border-t border-[#063925]/10">
+            {course.curriculum.map((topic, idx) => (
+              <motion.div
+                key={idx}
+                initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: isMobile ? 6 : 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{ duration: 0.4, delay: Math.min(idx * 0.04, 0.35), ease: easeOut }}
+                className="py-4 sm:py-4.5 border-b border-[#063925]/10 flex items-start gap-4 text-left group hover:bg-[#FAF9F6]/60 transition-colors px-1"
+              >
+                <span className="font-['Manrope'] font-semibold text-[#D4AF37] text-sm sm:text-base tabular-nums shrink-0 mt-0.5">
+                  {String(idx + 1).padStart(2, '0')}
+                </span>
+                <div className="flex-1">
+                  <h3 className="font-['Manrope'] font-semibold text-[15px] sm:text-[16px] text-[#1A3326] group-hover:text-[#063925] transition-colors leading-snug">
+                    {topic}
+                  </h3>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          SECTION 03 — LEARNING EXPERIENCE & BENEFITS (Genuine Mentorship & Classroom)
+          ========================================================================= */}
+      <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 lg:px-12 w-full bg-[#FAF9F6]">
+        <div className="container mx-auto max-w-7xl">
+          {/* Section Header */}
+          <div className="mb-8 sm:mb-12 text-left">
+            <span className="text-[11px] font-semibold tracking-[0.16em] uppercase text-[#063925] font-['Inter'] block mb-1.5">
+              THE LEARNING EXPERIENCE
+            </span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-[#1A3326] font-['Manrope'] tracking-tight mb-2">
+              Learn Through Practical Experience.
+            </h2>
+            <p className="text-[14px] text-[#4A6356] font-['Inter'] leading-relaxed max-w-2xl">
+              We focus on practical execution rather than textbook theory. Students learn to navigate real-market dynamics alongside experienced mentors at our Nagpur campus.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+            
+            {/* Left: Authentic Classroom Live-Market Photo */}
+            <motion.div
+              initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: isMobile ? 8 : 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.5, ease: easeOut }}
+              className="lg:col-span-6"
+            >
+              <div className="rounded-[2px] overflow-hidden border border-[#063925]/12 bg-white shadow-xs">
+                <picture>
+                  <source srcSet="/live-market-training.webp" type="image/webp" />
+                  <img
+                    src="/new photos/live-market-training.jpeg"
+                    alt="Satish Bobade mentoring students on live market trading desk at Advait Stock Market Academy Nagpur"
+                    className="w-full h-auto aspect-video sm:aspect-[4/3] object-cover block"
+                    loading="lazy"
+                    width={800}
+                    height={600}
+                  />
+                </picture>
+                <div className="p-4 bg-white border-t border-[#063925]/10 text-left">
+                  <div className="text-xs sm:text-sm font-semibold text-[#1A3326] font-['Manrope'] mb-0.5">
+                    Live Market Trading Desk • Nagpur Campus
                   </div>
-                ))}
+                  <div className="text-[12px] text-[#4A6356] font-['Inter']">
+                    Mentors guide students through live charting, multi-timeframe analysis, and disciplined trade execution during market hours.
+                  </div>
+                </div>
               </div>
+            </motion.div>
+
+            {/* Right: Editorial Benefits List */}
+            <div className="lg:col-span-6 space-y-0 divide-y divide-[#063925]/10 border-t border-b border-[#063925]/10 text-left">
+              {course.benefits.map((benefit, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: isMobile ? 6 : 8 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.15 }}
+                  transition={{ duration: 0.45, delay: idx * 0.08, ease: easeOut }}
+                  className="py-5"
+                >
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] shrink-0" />
+                    <h3 className="text-[16px] font-semibold text-[#1A3326] font-['Manrope']">
+                      {benefit.title}
+                    </h3>
+                  </div>
+                  <p className="text-[13.5px] sm:text-[14px] text-[#4A6356] font-['Inter'] leading-relaxed pl-3.5">
+                    {benefit.description}
+                  </p>
+                </motion.div>
+              ))}
             </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          SECTION 04 — COURSE FAQS (Minimal Full-Width Editorial Accordion)
+          ========================================================================= */}
+      <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 lg:px-12 w-full bg-white border-t border-[#063925]/10">
+        <div className="container mx-auto max-w-4xl text-left">
+          
+          <div className="mb-8 sm:mb-10 text-left">
+            <span className="text-[11px] font-semibold tracking-[0.16em] uppercase text-[#063925] font-['Inter'] block mb-1.5">
+              FREQUENTLY ASKED QUESTIONS
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-semibold text-[#1A3326] font-['Manrope'] tracking-tight mb-2">
+              Questions About {course.title}.
+            </h2>
+            <p className="text-[14px] text-[#4A6356] font-['Inter'] leading-relaxed">
+              Find answers regarding admissions, batch timings, offline training at Besa–Pipla Road, and course outcomes.
+            </p>
           </div>
 
-          {/* Right Column - Benefits & Sticky Sidebar */}
-          <div className="lg:col-span-4 space-y-8 relative">
-            <div className="sticky top-24 space-y-8">
-
-              {/* Academy Benefits Card */}
-              <div className="bg-gradient-to-br from-[#111827] to-[#1f2937] rounded-3xl p-8 shadow-2xl relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl pointer-events-none"></div>
-                <h3 className="text-xl font-display font-black text-white mb-6 flex items-center gap-3">
-                  <svg className="w-6 h-6 text-[#166534]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
-                  Exclusive Benefits
-                </h3>
-
-                <ul className="space-y-5 relative z-10">
-                  {benefitsList.map((benefit, idx) => (
-                    <li key={idx} className="flex items-start gap-4">
-                      <div className="w-6 h-6 rounded-full bg-[#166534]/20 flex items-center justify-center shrink-0 mt-0.5">
-                        <svg className="w-3.5 h-3.5 text-[#4ade80]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
+          {/* Minimal Editorial Accordion */}
+          <div className="divide-y divide-[#063925]/10 border-t border-b border-[#063925]/10">
+            {sortedFaqs.map((faq, index) => {
+              const isOpen = openFaqIndex === index;
+              return (
+                <div key={index} className="py-4 sm:py-4.5">
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaqIndex(isOpen ? -1 : index)}
+                    aria-expanded={isOpen}
+                    className="w-full text-left flex justify-between items-start gap-4 group cursor-pointer focus:outline-none select-none"
+                  >
+                    <h3 className="text-[15px] sm:text-[16px] font-semibold text-[#1A3326] group-hover:text-[#063925] transition-colors leading-snug font-['Manrope'] pr-2">
+                      {faq.question}
+                    </h3>
+                    <span className="flex-shrink-0 text-[#1A3326] group-hover:text-[#063925] mt-0.5 transition-colors">
+                      <div className="w-5 h-5 flex items-center justify-center">
+                        {isOpen ? (
+                          <svg className="w-4 h-4 text-[#D4AF37] transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
+                          </svg>
+                        ) : (
+                          <svg className="w-4 h-4 text-[#063925]/70 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 5v14m7-7H5" />
+                          </svg>
+                        )}
                       </div>
-                      <span className="text-gray-300 font-medium leading-relaxed">{benefit}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                    </span>
+                  </button>
 
-              {/* Live Trading Banner */}
-              <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 flex flex-col items-center text-center group">
-                <div className="w-16 h-16 rounded-full bg-emerald-50 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <svg className="w-8 h-8 text-[#166534]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        initial={shouldReduceMotion ? { opacity: 1 } : { height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={shouldReduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
+                        transition={{ duration: 0.22, ease: easeOut }}
+                        className="overflow-hidden"
+                      >
+                        <p className="pt-2 pb-1 pr-4 sm:pr-8 text-[#4A6356] text-[13.5px] sm:text-[14px] font-normal leading-relaxed font-['Inter']">
+                          {faq.answer}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
-                <h4 className="text-lg font-bold text-text-primary mb-2">Live Trading Access</h4>
-                <p className="text-text-secondary text-sm leading-relaxed">
-                  Gain exclusive access to our live trading sessions where you can apply concepts and trade alongside expert mentors in real-time.
-                </p>
-              </div>
-
-            </div>
+              );
+            })}
           </div>
 
         </div>
-      </div>
+      </section>
 
-      {/* Enroll Modal */}
+      {/* =========================================================================
+          SECTION 05 — COMPACT ADMISSIONS CTA (Dark Forest-Green Banner)
+          ========================================================================= */}
+      <section className="py-12 sm:py-14 md:py-16 px-4 sm:px-6 md:px-8 lg:px-12 w-full bg-[#063925] text-white">
+        <div className="container mx-auto max-w-7xl flex flex-col md:flex-row md:items-center justify-between gap-6 sm:gap-8 text-left">
+          <div className="max-w-2xl">
+            <span className="text-[11px] font-semibold tracking-[0.16em] uppercase text-[#D4AF37] font-['Inter'] block mb-2">
+              ADMISSIONS & BATCH SCHEDULES
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-semibold text-white font-['Manrope'] tracking-tight mb-2">
+              Interested in {course.title}?
+            </h2>
+            <p className="text-[14px] text-white/80 font-['Inter'] font-normal leading-relaxed">
+              Connect directly with our admissions desk in Nagpur for syllabus details, upcoming batch schedules, and classroom seat availability.
+            </p>
+          </div>
+
+          <div className="shrink-0 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setIsModalOpen(true)}
+              className="px-8 py-3.5 bg-[#D4AF37] hover:bg-[#C5A059] text-[#063925] font-['Inter'] font-semibold uppercase tracking-wider text-xs rounded-[2px] transition-colors duration-200 flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+            >
+              <span>Enroll Now</span>
+              <span className="font-bold">→</span>
+            </button>
+            <Link
+              to="/contact"
+              className="px-6 py-3.5 bg-white/5 hover:bg-white/10 text-white border border-white/20 font-['Inter'] font-semibold uppercase tracking-wider text-xs rounded-[2px] transition-colors duration-200 text-center"
+            >
+              Contact Desk
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          WORKING ENROLLMENT MODAL (Supabase + WhatsApp guest fallback)
+          ========================================================================= */}
       {isModalOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsModalOpen(false)}></div>
-          <div className="relative bg-white rounded-3xl p-8 md:p-10 w-full max-w-lg shadow-2xl animate-in fade-in zoom-in duration-300">
-            <button onClick={() => setIsModalOpen(false)} className="absolute top-6 right-6 text-gray-400 hover:text-gray-900 transition-colors">
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+          <div
+            className="absolute inset-0 bg-[#063925]/75 backdrop-blur-xs transition-opacity"
+            onClick={() => setIsModalOpen(false)}
+          />
+          <div className="relative bg-white rounded-[2px] p-6 sm:p-8 md:p-9 w-full max-w-lg border border-[#063925]/15 shadow-xl text-left">
+            <button
+              type="button"
+              onClick={() => setIsModalOpen(false)}
+              className="absolute top-5 right-5 text-[#4A6356] hover:text-[#1A3326] transition-colors cursor-pointer"
+              aria-label="Close modal"
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M6 18L18 6M6 6l12 12" />
+              </svg>
             </button>
-            <div className="mb-8">
-              <h3 className="text-2xl font-display font-black text-text-primary mb-2">Request Information</h3>
-              <p className="text-sm text-text-secondary">Please fill out the form below to inquire about <strong className="text-[#166534]">{course.title}</strong>. Our team will get back to you shortly.</p>
+
+            <div className="mb-6">
+              <span className="text-[10.5px] font-semibold tracking-[0.16em] uppercase text-[#063925] font-['Inter'] block mb-1">
+                ADMISSION REGISTRATION
+              </span>
+              <h3 className="text-xl sm:text-2xl font-semibold text-[#1A3326] font-['Manrope'] tracking-tight mb-1.5">
+                Inquire for {course.title}
+              </h3>
+              <p className="text-[13px] text-[#4A6356] font-['Inter'] leading-relaxed">
+                Submit your contact details below. Our admissions desk will contact you with batch schedules, fee structure, and offline training details in Nagpur.
+              </p>
             </div>
-            
+
             {enrollSuccess ? (
-              <div className="text-center py-6">
-                <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+              <div className="text-center py-6 bg-[#FAF9F6] rounded-[2px] border border-[#063925]/15">
+                <div className="w-9 h-9 bg-[#063925] text-white rounded-full flex items-center justify-center mx-auto mb-2.5">
+                  <svg className="w-5 h-5 text-[#D4AF37]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
                 </div>
-                <h4 className="text-xl font-bold text-text-primary mb-2">Request Submitted!</h4>
-                <p className="text-text-secondary">We have received your enrollment request. You can track its status in your dashboard.</p>
+                <h4 className="text-base font-semibold text-[#1A3326] font-['Manrope'] mb-1">Application Submitted</h4>
+                <p className="text-xs text-[#4A6356] font-['Inter']">Our admissions team will review your application and contact you shortly.</p>
               </div>
             ) : (
-            <form className="space-y-5" onSubmit={handleCourseSubmit}>
-              <div>
-                <label className="block text-xs font-bold text-text-primary uppercase tracking-widest mb-2">Full Name</label>
-                <input required name="name" type="text" className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-[#166534] focus:ring-2 focus:ring-[#166534]/20 outline-none transition-all" placeholder="John Doe" />
-              </div>
-              <div className="grid grid-cols-2 gap-5">
+              <form className="space-y-4" onSubmit={handleCourseSubmit}>
                 <div>
-                  <label className="block text-xs font-bold text-text-primary uppercase tracking-widest mb-2">Email Address</label>
-                  <input required name="email" type="email" className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-[#166534] focus:ring-2 focus:ring-[#166534]/20 outline-none transition-all" placeholder="john@example.com" />
+                  <label className="block text-[11px] font-['Inter'] font-semibold text-[#1A3326] uppercase tracking-wider mb-1.5">
+                    Full Name <span className="text-[#EA4335]">*</span>
+                  </label>
+                  <input
+                    required
+                    name="name"
+                    type="text"
+                    placeholder="e.g. Rahul Sharma"
+                    className="w-full min-h-[46px] px-3.5 py-2.5 rounded-[2px] border border-[#063925]/18 bg-[#FAF9F6] focus:bg-white focus:border-[#063925] outline-none text-xs sm:text-sm font-['Inter'] transition-colors duration-200"
+                  />
                 </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-[11px] font-['Inter'] font-semibold text-[#1A3326] uppercase tracking-wider mb-1.5">
+                      Email Address <span className="text-[#EA4335]">*</span>
+                    </label>
+                    <input
+                      required
+                      name="email"
+                      type="email"
+                      placeholder="rahul@example.com"
+                      className="w-full min-h-[46px] px-3.5 py-2.5 rounded-[2px] border border-[#063925]/18 bg-[#FAF9F6] focus:bg-white focus:border-[#063925] outline-none text-xs sm:text-sm font-['Inter'] transition-colors duration-200"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-['Inter'] font-semibold text-[#1A3326] uppercase tracking-wider mb-1.5">
+                      Phone Number <span className="text-[#EA4335]">*</span>
+                    </label>
+                    <input
+                      required
+                      name="phone"
+                      type="tel"
+                      placeholder="+91 98765 43210"
+                      className="w-full min-h-[46px] px-3.5 py-2.5 rounded-[2px] border border-[#063925]/18 bg-[#FAF9F6] focus:bg-white focus:border-[#063925] outline-none text-xs sm:text-sm font-['Inter'] transition-colors duration-200"
+                    />
+                  </div>
+                </div>
+
                 <div>
-                  <label className="block text-xs font-bold text-text-primary uppercase tracking-widest mb-2">Phone Number</label>
-                  <input required name="phone" type="tel" className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-[#166534] focus:ring-2 focus:ring-[#166534]/20 outline-none transition-all" placeholder="+91 98765 43210" />
+                  <label className="block text-[11px] font-['Inter'] font-semibold text-[#1A3326] uppercase tracking-wider mb-1.5">
+                    Message or Prior Experience (Optional)
+                  </label>
+                  <textarea
+                    name="message"
+                    rows="3"
+                    placeholder="Mention if you prefer online or offline classroom batches in Nagpur..."
+                    className="w-full p-3.5 rounded-[2px] border border-[#063925]/18 bg-[#FAF9F6] focus:bg-white focus:border-[#063925] outline-none text-xs sm:text-sm font-['Inter'] resize-none transition-colors duration-200 leading-relaxed"
+                  />
                 </div>
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-text-primary uppercase tracking-widest mb-2">Message (Optional)</label>
-                <textarea name="message" rows="3" className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white focus:border-[#166534] focus:ring-2 focus:ring-[#166534]/20 outline-none transition-all resize-none" placeholder="Any specific questions?"></textarea>
-              </div>
-              <button type="submit" disabled={isEnrolling} className="w-full py-4 bg-[#166534] text-white font-bold uppercase tracking-widest text-sm rounded-xl hover:bg-[#0f4523] shadow-lg shadow-[#166534]/30 transition-all hover:-translate-y-1 mt-4 disabled:opacity-70 disabled:cursor-not-allowed">
-                {isEnrolling ? 'Submitting...' : 'Submit Inquiry'}
-              </button>
-            </form>
+
+                <button
+                  type="submit"
+                  disabled={isEnrolling}
+                  className="w-full min-h-[46px] py-3 bg-[#063925] hover:bg-[#0B2117] text-white font-['Inter'] font-semibold uppercase tracking-wider text-xs rounded-[2px] transition-colors duration-200 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
+                >
+                  <span>{isEnrolling ? 'Submitting Application...' : 'Submit Enrollment Request'}</span>
+                  {!isEnrolling && <span className="text-[#D4AF37] font-bold">→</span>}
+                </button>
+              </form>
             )}
           </div>
         </div>
       )}
 
-      {/* Course FAQs Section */}
-      <FaqSection faqs={courseFaqs} title="Course FAQs" subtitle="Common questions about our stock market training programs." />
     </div>
   );
 };

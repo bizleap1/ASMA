@@ -15,7 +15,6 @@ import AchievementsSection from '../components/AchievementsSection';
 import FeaturedCoursesSection from '../components/FeaturedCoursesSection';
 import ServicesSection from '../components/ServicesSection';
 import SocialLearningHub from '../components/SocialLearningHub';
-import CoursesSection from './CoursesSection';
 import GallerySection from './GallerySection';
 import AdvantageSection from '../components/AdvantageSection';
 import ReviewsSection from '../components/ReviewsSection';
@@ -63,7 +62,6 @@ const Home = () => {
     <MultiChartSection />
     <ServicesSection />
     <SocialLearningHub />
-    <CoursesSection />
     <GallerySection />
     <AdvantageSection />
     <ReviewsSection />

@@ -1,115 +1,280 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Routes, Route, useLocation, Link, useParams, useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
-import { motion, AnimatePresence } from 'framer-motion';
-import { supabase } from '../supabaseClient';
-import { blogPosts } from '../blogData';
-import shubhangiImg from '../assets/shubhangi.png';
-import krishnaImg from '../assets/krishna.png';
-import vrushaliImg from '../assets/vrushali.png';
-import { serviceData, courseDetails, baseCourses, additionalCourses, FREE_NOTES } from '../data';
-import AnimatedSection from './AnimatedSection';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { motion, useReducedMotion } from 'framer-motion';
 
 const ServicesSection = () => {
-  const services = [
+  const shouldReduceMotion = useReducedMotion();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const easeOut = [0.16, 1, 0.3, 1];
+  const vp = { once: true, amount: 0.15 };
+
+  // Featured 3 services with authentic ASMA financial visual assets
+  const featuredService = {
+    id: "share-market-training",
+    title: "Share Market Training",
+    category: "Education & Mentorship",
+    desc: "Structured classroom and live-market mentorship covering price action, technical analysis, and disciplined execution.",
+    image: "/live-market-training.webp",
+    highlights: ["Live Market Practice", "Technical & Options Analysis", "Lifetime Mentor Support"]
+  };
+
+  const secondaryServices = [
     {
-      title: "Share Market Training",
-      desc: "In-depth courses on stock market investing, trading strategies, technical analysis and financial planning for beginners and advanced learners.",
-      image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=800&auto=format&fit=crop"
+      id: "stock-investment",
+      title: "Stock Investment Guidance",
+      category: "Equity Advisory",
+      desc: "Fundamental equity research and disciplined stock selection strategies for long-term compound wealth creation.",
+      image: "/1-percent-rule.webp"
     },
     {
-      title: "Stock Investment",
-      desc: "Unlock your wealth potential with smart stock investments - guided strategies, expert insights and confident decisions for a secure financial future.",
-      image: "https://images.pexels.com/photos/4386404/pexels-photo-4386404.jpeg?auto=compress&cs=tinysrgb&w=800"
-    },
-    {
+      id: "mutual-fund-investment",
       title: "Mutual Fund Investment",
-      desc: "Grow your wealth steadily with smart mutual fund investments - guided by experts for secure, diversified and goal-oriented financial success.",
-      image: "https://images.unsplash.com/photo-1518186285589-2f7649de83e0?q=80&w=800&auto=format&fit=crop"
+      category: "Portfolio Planning",
+      desc: "Systematic investment planning (SIP) and tailored fund allocations aligned with your financial milestones.",
+      image: "/asma-philosophy.webp"
     }
   ];
 
   return (
-    <AnimatedSection id="services" className="py-10 md:py-16 bg-white relative overflow-hidden">
-      <div className="container mx-auto px-4 md:px-8 lg:px-12 relative z-10">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-10 gap-4 md:gap-8">
+    <section
+      id="services"
+      className="pt-8 md:pt-10 lg:pt-12 pb-6 md:pb-8 lg:pb-9 bg-[#FAF9F5] relative w-full px-4 md:px-8 lg:px-12 overflow-hidden"
+    >
+      <div className="container mx-auto px-1 md:px-0">
+        
+        {/* Header Block */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-10 lg:mb-12 gap-6">
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-bg-secondary/10 text-accent-primary font-bold tracking-widest uppercase text-xs mb-4 md:mb-6">
-              <span className="w-2 h-2 rounded-full bg-accent-primary animate-pulse"></span>
-              What We Do
+            {/* Eyebrow: OUR SERVICES with subtle gold accent line */}
+            <div className="flex items-center gap-2.5 mb-3">
+              <motion.span
+                initial={shouldReduceMotion ? { scaleX: 1 } : { scaleX: 0, originX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={vp}
+                transition={{ duration: 0.4, ease: easeOut }}
+                className="w-[22px] h-[1.5px] bg-[#D4AF37] shrink-0 origin-left"
+              />
+              <motion.span
+                initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={vp}
+                transition={{ duration: 0.4, delay: 0.08, ease: easeOut }}
+                className="text-[12px] font-medium tracking-[0.16em] uppercase text-[#063925]"
+                style={{ fontFamily: "'Inter', sans-serif" }}
+              >
+                OUR SERVICES
+              </motion.span>
             </div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-text-primary leading-tight">
-              Exclusive Financial <span className="text-accent-primary">Solutions</span>
-            </h2>
+
+            {/* Main Heading - Fade-up 16px, 600ms */}
+            <motion.h2
+              initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: isMobile ? 8 : 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={vp}
+              transition={{ duration: isMobile ? 0.35 : 0.6, delay: 0.1, ease: easeOut }}
+              className="text-[28px] sm:text-[34px] lg:text-[38px] xl:text-[40px] font-semibold text-[#1A3326] leading-[1.18] tracking-tight"
+              style={{ fontFamily: "'Manrope', sans-serif" }}
+            >
+              Beyond Market Education. <br className="hidden sm:inline" />
+              <span className="text-[#D4AF37]">Explore Financial Solutions.</span>
+            </motion.h2>
           </div>
-          <p className="text-text-secondary text-sm max-w-md font-bold leading-relaxed mb-2 md:text-right">
-            At Advait Stock Market Academy, we offer comprehensive services to help you grow financially and stay protected.
-          </p>
+
+          {/* Editorial Description - Gentle fade-up 10px, 450ms */}
+          <motion.p
+            initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: isMobile ? 6 : 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={vp}
+            transition={{ duration: isMobile ? 0.35 : 0.45, delay: 0.2, ease: easeOut }}
+            className="text-[14.5px] sm:text-[15.5px] text-[#4A6356] font-normal leading-relaxed max-w-md"
+            style={{ fontFamily: "'Inter', sans-serif" }}
+          >
+            Explore share market training, stock investment and mutual fund services offered by ASMA in Nagpur.
+          </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 auto-rows-min md:auto-rows-[280px] mb-12 md:mb-16">
-          <div className="md:col-span-2 md:row-span-2 relative rounded-[24px] md:rounded-[32px] overflow-hidden group cursor-pointer shadow-[0_10px_40px_rgba(0,0,0,0.06)] hover:shadow-2xl transition-all duration-500 border border-text-primary/5 min-h-[350px] md:min-h-[400px]">
-            <img loading="lazy" src={services[0].image} alt={services[0].title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 ease-out" />
-            <div className="absolute inset-0 bg-gradient-to-t from-text-primary/95 via-text-primary/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-500"></div>
+        {/* Asymmetrical Editorial Grid (55% Featured Left / 45% Stacked Right) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-stretch">
 
-            <div className="absolute inset-0 p-8 md:p-12 flex flex-col justify-between pointer-events-none">
-              <Link to="/service/share-market-training" className="self-end pointer-events-auto overflow-hidden flex items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 group-hover:bg-accent-primary group-hover:border-accent-primary transition-all duration-500 shadow-xl h-14 w-14 group-hover:w-36 group-hover:px-4">
-                <span className="text-white font-bold text-xs uppercase tracking-widest whitespace-nowrap opacity-0 max-w-0 group-hover:opacity-100 group-hover:max-w-xs group-hover:mr-2 transition-all duration-500">Read More</span>
-                <svg className="w-6 h-6 text-white transform -rotate-45 group-hover:rotate-0 transition-transform duration-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-              </Link>
-              <div>
-                <div className="inline-block px-4 py-1.5 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full text-white text-xs font-bold tracking-widest uppercase mb-4 shadow-sm">
-                  Featured
+          {/* Left Column: Featured Share Market Training (Fade-up 18px, 650ms) */}
+          <motion.div
+            initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: isMobile ? 8 : 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={vp}
+            transition={{ duration: isMobile ? 0.4 : 0.65, delay: isMobile ? 0.05 : 0.22, ease: easeOut }}
+            className="lg:col-span-7 flex flex-col"
+          >
+            <Link
+              to={`/service/${featuredService.id}`}
+              className="group bg-white rounded-[6px] border border-black/8 hover:border-[#063925]/30 overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_24px_rgba(6,57,37,0.06)] transition-all duration-[240ms] ease-out flex flex-col h-full"
+            >
+              {/* Image Container - Subtle 1.02 hover zoom, overflow clipped */}
+              <div className="relative aspect-[16/9] sm:aspect-[16/9] lg:aspect-auto lg:h-[200px] xl:h-[215px] overflow-hidden bg-black/5 shrink-0">
+                <img
+                  src={featuredService.image}
+                  alt={featuredService.title}
+                  loading="lazy"
+                  className="w-full h-full object-cover transition-transform duration-[240ms] ease-out group-hover:scale-[1.02]"
+                />
+              </div>
+
+              {/* Card Body */}
+              <div className="p-5 sm:p-6 lg:p-5.5 xl:p-6 flex flex-col justify-between flex-grow">
+                <div>
+                  <h3
+                    className="text-[20px] sm:text-[22px] lg:text-[22px] xl:text-[24px] font-semibold text-[#1A3326] group-hover:text-[#063925] transition-colors leading-snug mb-2 sm:mb-2.5"
+                    style={{ fontFamily: "'Manrope', sans-serif" }}
+                  >
+                    {featuredService.title}
+                  </h3>
+                  <p
+                    className="text-[13.5px] sm:text-[14px] text-[#4A6356] font-normal leading-relaxed mb-3.5 sm:mb-4"
+                    style={{ fontFamily: "'Inter', sans-serif" }}
+                  >
+                    {featuredService.desc}
+                  </p>
+
+                  {/* Highlights Tags */}
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-5">
+                    {featuredService.highlights.map((tag, idx) => (
+                      <span
+                        key={idx}
+                        className="inline-flex items-center text-[11px] sm:text-[11.5px] font-medium text-[#1A3326] bg-[#F2F5F3] px-2.5 py-0.5 sm:py-1 rounded-[3px] border border-black/5"
+                        style={{ fontFamily: "'Inter', sans-serif" }}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-                <h3 className="text-3xl md:text-5xl font-display font-bold text-white mb-4 group-hover:text-accent-primary transition-colors duration-500">{services[0].title}</h3>
-                <p className="text-white/80 font-light leading-relaxed text-base md:text-lg max-w-lg">{services[0].desc}</p>
+
+                {/* Bottom Action */}
+                <div className="pt-3 sm:pt-3.5 border-t border-black/5 flex items-center justify-between">
+                  <span
+                    className="inline-flex items-center gap-2 text-[12px] sm:text-[12.5px] font-semibold uppercase tracking-wider text-[#063925] group-hover:text-[#D4AF37] transition-colors"
+                    style={{ fontFamily: "'Inter', sans-serif" }}
+                  >
+                    <span>Explore Service Details</span>
+                    <svg
+                      className="w-4 h-4 transition-transform duration-[240ms] ease-out group-hover:translate-x-[3px]"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </span>
+                </div>
               </div>
-            </div>
-          </div>
+            </Link>
+          </motion.div>
 
-          <div className="relative rounded-[32px] overflow-hidden group cursor-pointer shadow-lg hover:shadow-xl transition-all duration-500 border border-text-primary/5">
-            <img loading="lazy" src={services[1].image} alt={services[1].title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 ease-out" />
-            <div className="absolute inset-0 bg-gradient-to-t from-text-primary/95 via-text-primary/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-500"></div>
+          {/* Right Column: Two Stacked Cards (Fade-up 14px, 550ms staggered) */}
+          <div className="lg:col-span-5 flex flex-col gap-4 lg:gap-4.5 justify-between">
+            {secondaryServices.map((service, idx) => (
+              <motion.div
+                key={service.id}
+                initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: isMobile ? 8 : 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={vp}
+                transition={{
+                  duration: isMobile ? 0.4 : 0.55,
+                  delay: isMobile ? 0.05 : (idx === 0 ? 0.34 : 0.44),
+                  ease: easeOut
+                }}
+                className="flex-1 flex flex-col"
+              >
+                <Link
+                  to={`/service/${service.id}`}
+                  className="group bg-white rounded-[6px] border border-black/8 hover:border-[#063925]/30 overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_24px_rgba(6,57,37,0.06)] transition-all duration-[240ms] ease-out flex flex-col sm:flex-row h-full"
+                >
+                  {/* Thumbnail Image - Subtle 1.02 hover zoom, overflow clipped */}
+                  <div className="w-full sm:w-[36%] lg:w-[36%] aspect-[16/9] sm:aspect-auto relative overflow-hidden bg-black/5 shrink-0">
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      loading="lazy"
+                      className="w-full h-full object-cover transition-transform duration-[240ms] ease-out group-hover:scale-[1.02]"
+                    />
+                  </div>
 
-            <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-between pointer-events-none">
-              <Link to="/service/stock-investment" className="self-end pointer-events-auto overflow-hidden flex items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 group-hover:bg-accent-primary group-hover:border-accent-primary transition-all duration-500 shadow-xl h-10 w-10 group-hover:w-32 group-hover:px-4">
-                <span className="text-white font-bold text-[10px] uppercase tracking-widest whitespace-nowrap opacity-0 max-w-0 group-hover:opacity-100 group-hover:max-w-xs group-hover:mr-2 transition-all duration-500">Read More</span>
-                <svg className="w-5 h-5 text-white transform -rotate-45 group-hover:rotate-0 transition-transform duration-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-              </Link>
-              <div>
-                <h3 className="text-xl md:text-2xl font-display font-bold text-white mb-2 group-hover:text-accent-primary transition-colors duration-500">{services[1].title}</h3>
-                <p className="text-white/80 font-light leading-relaxed text-sm line-clamp-3">{services[1].desc}</p>
-              </div>
-            </div>
-          </div>
+                  {/* Content */}
+                  <div className="w-full sm:w-[64%] lg:w-[64%] p-4 sm:p-4.5 lg:p-4 xl:p-5 flex flex-col justify-between flex-grow">
+                    <div>
+                      <h3
+                        className="text-[16px] sm:text-[17px] lg:text-[17px] xl:text-[18px] font-semibold text-[#1A3326] group-hover:text-[#063925] transition-colors leading-snug mb-1.5"
+                        style={{ fontFamily: "'Manrope', sans-serif" }}
+                      >
+                        {service.title}
+                      </h3>
+                      <p
+                        className="text-[12.5px] sm:text-[13px] text-[#4A6356] font-normal leading-relaxed mb-3"
+                        style={{ fontFamily: "'Inter', sans-serif" }}
+                      >
+                        {service.desc}
+                      </p>
+                    </div>
 
-          <div className="relative rounded-[32px] overflow-hidden group cursor-pointer shadow-lg hover:shadow-xl transition-all duration-500 border border-text-primary/5">
-            <img loading="lazy" src={services[2].image} alt={services[2].title} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 ease-out" />
-            <div className="absolute inset-0 bg-gradient-to-t from-text-primary/95 via-text-primary/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-            <div className="absolute inset-0 p-6 md:p-8 flex flex-col justify-between pointer-events-none">
-              <Link to="/service/mutual-fund-investment" className="self-end pointer-events-auto overflow-hidden flex items-center justify-center rounded-full bg-white/10 backdrop-blur-md border border-white/20 group-hover:bg-accent-primary group-hover:border-accent-primary transition-all duration-500 shadow-xl h-10 w-10 group-hover:w-32 group-hover:px-4">
-                <span className="text-white font-bold text-[10px] uppercase tracking-widest whitespace-nowrap opacity-0 max-w-0 group-hover:opacity-100 group-hover:max-w-xs group-hover:mr-2 transition-all duration-500">Read More</span>
-                <svg className="w-5 h-5 text-white transform -rotate-45 group-hover:rotate-0 transition-transform duration-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-              </Link>
-              <div>
-                <h3 className="text-xl md:text-2xl font-display font-bold text-white mb-2 group-hover:text-accent-primary transition-colors duration-500">{services[2].title}</h3>
-                <p className="text-white/80 font-light leading-relaxed text-sm line-clamp-3">{services[2].desc}</p>
-              </div>
-            </div>
+                    {/* Bottom CTA */}
+                    <div className="pt-2.5 sm:pt-3 border-t border-black/5 flex items-center justify-between">
+                      <span
+                        className="inline-flex items-center gap-1.5 text-[11.5px] sm:text-[12px] font-semibold uppercase tracking-wider text-[#063925] group-hover:text-[#D4AF37] transition-colors"
+                        style={{ fontFamily: "'Inter', sans-serif" }}
+                      >
+                        <span>Learn More</span>
+                        <svg
+                          className="w-3.5 h-3.5 transition-transform duration-[240ms] ease-out group-hover:translate-x-[3px]"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
           </div>
 
         </div>
 
-        <div className="text-center">
-          <a href="/services" className="inline-flex items-center gap-3 px-10 py-4 bg-text-primary text-white font-bold uppercase tracking-widest text-xs rounded-xl shadow-xl hover:bg-accent-primary transition-all hover:-translate-y-1 group">
-            Explore All Services
-            <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-          </a>
-        </div>
+        {/* Global Explore All Services CTA - Soft fade-in, 400ms */}
+        <motion.div
+          initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: isMobile ? 6 : 8 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={vp}
+          transition={{ duration: 0.4, delay: isMobile ? 0.1 : 0.5, ease: easeOut }}
+          className="text-center pt-6 md:pt-7"
+        >
+          <Link
+            to="/services"
+            className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#063925] hover:text-[#D4AF37] transition-colors group"
+            style={{ fontFamily: "'Inter', sans-serif" }}
+          >
+            <span>Explore All Services</span>
+            <svg
+              className="w-4 h-4 transition-transform duration-200 ease-out group-hover:translate-x-[3px]"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+            </svg>
+          </Link>
+        </motion.div>
 
       </div>
-    </AnimatedSection>
+    </section>
   );
 };
 

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 
-// Sample data for the learning hub
+// Original ASMA media content for YouTube & Instagram Reels
 const mediaContent = {
   youtube: {
     featured: {
@@ -15,6 +16,7 @@ const mediaContent = {
     list: [
       {
         title: "Avoid the hype. Invest with understanding.",
+        description: "Disciplined market perspective on evaluating opportunities without emotional herd mentality.",
         thumbnail: "https://i.ytimg.com/vi/FP0KdwnWhc8/hqdefault.jpg",
         platform: "YouTube",
         sourceType: "youtube",
@@ -23,19 +25,12 @@ const mediaContent = {
       },
       {
         title: "A stock falling, doesn't automatically mean it's a bargain.",
+        description: "Understanding value traps vs true market corrections through structured chart analysis and volume confirmation.",
         thumbnail: "https://i.ytimg.com/vi/c-cFGIe_Kqw/hqdefault.jpg",
         platform: "YouTube",
         sourceType: "youtube",
         meta: "ANALYSIS",
         id: "c-cFGIe_Kqw"
-      },
-      {
-        title: "Small. Learn smart. Grow with discipline.",
-        thumbnail: "https://i.ytimg.com/vi/g-dINon688c/hqdefault.jpg",
-        platform: "YouTube",
-        sourceType: "youtube",
-        meta: "STRATEGY",
-        id: "g-dINon688c"
       }
     ]
   },
@@ -47,11 +42,12 @@ const mediaContent = {
       platform: "Instagram Reel",
       sourceType: "instagram",
       meta: "PSYCHOLOGY",
-      id: "Dc_aB3TTvyS" 
+      id: "Dc_aB3TTvyS"
     },
     list: [
       {
         title: "Trading Strategy Insights",
+        description: "Core rules for disciplined entries, stops and position sizing from live market sessions.",
         thumbnail: "/logo.png",
         platform: "Instagram Reel",
         sourceType: "instagram",
@@ -60,116 +56,76 @@ const mediaContent = {
       },
       {
         title: "Risk Management Basics",
+        description: "Capital preservation essentials every retail trader must master before scaling positions.",
         thumbnail: "/logo.png",
         platform: "Instagram Reel",
         sourceType: "instagram",
         meta: "LEARNING",
         id: "DcVzyqYTu3d"
-      },
-      {
-        title: "Live Market Analysis",
-        thumbnail: "/logo.png",
-        platform: "Instagram Reel",
-        sourceType: "instagram",
-        meta: "ANALYSIS",
-        id: "DcJGyNlTHUU"
-      }
-    ]
-  },
-  shorts: {
-    featured: {
-      title: "Real learning. Real experience. Real growth.",
-      description: "A glimpse into the real learning experience at Advait Share Market Academy. Stop guessing and start analyzing.",
-      thumbnail: "https://i.ytimg.com/vi/loqs401dPqY/maxresdefault.jpg",
-      platform: "YouTube Shorts",
-      sourceType: "youtube",
-      meta: "HIGHLIGHT",
-      id: "loqs401dPqY"
-    },
-    list: [
-      {
-        title: "Avoid the hype. Invest with understanding.",
-        thumbnail: "https://i.ytimg.com/vi/FP0KdwnWhc8/hqdefault.jpg",
-        platform: "YouTube Shorts",
-        sourceType: "youtube",
-        meta: "MINDSET",
-        id: "FP0KdwnWhc8"
-      },
-      {
-        title: "A stock falling, doesn't automatically mean it's a bargain.",
-        thumbnail: "https://i.ytimg.com/vi/c-cFGIe_Kqw/hqdefault.jpg",
-        platform: "YouTube Shorts",
-        sourceType: "youtube",
-        meta: "ANALYSIS",
-        id: "c-cFGIe_Kqw"
-      },
-      {
-        title: "Small. Learn smart. Grow with discipline.",
-        thumbnail: "https://i.ytimg.com/vi/g-dINon688c/hqdefault.jpg",
-        platform: "YouTube Shorts",
-        sourceType: "youtube",
-        meta: "STRATEGY",
-        id: "g-dINon688c"
       }
     ]
   }
 };
 
-// Video Modal Component
+// Video Modal Component: mounts player only when user clicks
 const VideoModal = ({ media, onClose }) => {
-  React.useEffect(() => {
+  useEffect(() => {
     if (media) {
       document.body.style.overflow = 'hidden';
+      const handleKeyDown = (e) => {
+        if (e.key === 'Escape') onClose();
+      };
+      window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        document.body.style.overflow = 'auto';
+        window.removeEventListener('keydown', handleKeyDown);
+      };
     }
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, [media]);
+  }, [media, onClose]);
 
   if (!media) return null;
 
   const isVertical = media.platform.toLowerCase().includes('reel') || media.platform.toLowerCase().includes('short');
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center px-4 md:px-12 py-8">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center px-4 md:px-8 py-6">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-black/90 backdrop-blur-md transition-opacity"
+        className="absolute inset-0 bg-black/85 backdrop-blur-md transition-opacity"
         onClick={onClose}
-      ></div>
+      />
       
-      {/* Modal Content */}
-      <div className={`relative w-full bg-black rounded-2xl shadow-2xl z-10 animate-[fadeIn_0.3s_ease-out] ${isVertical ? 'max-w-sm md:max-w-md' : 'max-w-5xl'}`}>
+      {/* Modal Box */}
+      <div className={`relative w-full bg-black rounded-xl overflow-hidden shadow-2xl z-10 animate-[fadeIn_0.25s_ease-out] ${isVertical ? 'max-w-sm md:max-w-md' : 'max-w-4xl'}`}>
         
-        {/* Visible Close Button (Placed OUTSIDE the box so it never overlaps video UI) */}
+        {/* Close Button */}
         <button 
           onClick={onClose}
-          className="absolute -top-12 right-0 md:-right-12 text-white hover:text-[#d4af37] transition-all z-30 bg-black/50 hover:bg-black backdrop-blur-sm rounded-full p-2 hover:scale-110"
+          aria-label="Close video"
+          className="absolute top-3 right-3 text-white/80 hover:text-white transition-colors z-30 bg-black/60 hover:bg-black/90 backdrop-blur-sm rounded-full p-2"
         >
-          <svg className="w-8 h-8 md:w-6 md:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
         
-        <div className={`relative w-full overflow-hidden rounded-2xl ${isVertical ? 'h-[85vh] max-h-[850px]' : 'pt-[56.25%]'}`}>
+        <div className={`relative w-full ${isVertical ? 'h-[80vh] max-h-[750px]' : 'aspect-video'}`}>
           {media.sourceType === 'youtube' ? (
             <iframe 
-              className="absolute inset-0 w-full h-full"
-              src={`https://www.youtube.com/embed/${media.id}?autoplay=1`} 
+              className="w-full h-full border-0"
+              src={`https://www.youtube.com/embed/${media.id}?autoplay=1&rel=0`} 
               title={media.title}
-              frameBorder="0" 
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
               allowFullScreen
-            ></iframe>
+            />
           ) : (
             <iframe 
-              className="absolute inset-0 w-full h-full"
-              src={`https://www.instagram.com/p/${media.id}/embed`} 
+              className="w-full h-full border-0"
+              src={`https://www.instagram.com/reel/${media.id}/embed`} 
               title={media.title}
-              frameBorder="0" 
               scrolling="no"
               allowTransparency="true"
-            ></iframe>
+            />
           )}
         </div>
       </div>
@@ -177,200 +133,380 @@ const VideoModal = ({ media, onClose }) => {
   );
 };
 
-import AnimatedSection from './AnimatedSection';
-
 const SocialLearningHub = () => {
+  const shouldReduceMotion = useReducedMotion();
   const [activeTab, setActiveTab] = useState('youtube');
   const [activeMedia, setActiveMedia] = useState(null);
-  
+  const [isMobile, setIsMobile] = useState(false);
+  const [hasEnteredViewport, setHasEnteredViewport] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const easeOut = [0.16, 1, 0.3, 1];
+  const vp = { once: true, amount: 0.15 };
+
   const currentContent = mediaContent[activeTab];
 
   return (
-    <AnimatedSection id="social-hub" className="py-20 md:py-28 bg-[#faf9f6]">
-      <div className="container mx-auto px-4 md:px-8 lg:px-12 max-w-[1280px]">
+    <section 
+      id="social-hub" 
+      className="pt-6 sm:pt-8 lg:pt-9 pb-6 sm:pb-8 lg:pb-9 bg-[#FAF9F5] relative w-full px-5 sm:px-6 md:px-8 lg:px-12 overflow-hidden"
+    >
+      <div className="container mx-auto px-0">
         
-        {/* SECTION TITLE AREA */}
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-12 gap-8">
-          <div className="max-w-2xl">
-            <span className="text-[#b59a56] font-bold uppercase tracking-widest text-xs mb-4 block">
-              SOCIAL LEARNING HUB
-            </span>
-            <h2 className="text-3xl md:text-5xl font-display font-black text-[#1a2e22] mb-4 leading-tight">
-              Watch, Learn & Stay Connected
-            </h2>
-            <p className="text-[#3b4d42] text-base md:text-lg">
-              Explore market insights, educational videos, reels, and practical trading content across Advait’s social platforms.
-            </p>
+        {/* Header Block: Left-aligned content + Touch-friendly Tab Controls */}
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end mb-6 sm:mb-8 lg:mb-12 gap-5 sm:gap-6">
+          <div className="max-w-2xl text-left">
+            {/* Eyebrow: SOCIAL LEARNING HUB - left-aligned */}
+            <div className="flex items-center gap-2.5 mb-2.5 sm:mb-3">
+              <motion.span
+                initial={shouldReduceMotion ? { scaleX: 1 } : { scaleX: 0, originX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={vp}
+                transition={{ duration: 0.4, ease: easeOut }}
+                className="w-[22px] h-[1.5px] bg-[#D4AF37] shrink-0 origin-left"
+              />
+              <motion.span
+                initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={vp}
+                transition={{ duration: 0.38, delay: 0.05, ease: easeOut }}
+                className="text-[11.5px] sm:text-[12px] font-medium tracking-[0.16em] uppercase text-[#063925]"
+                style={{ fontFamily: "'Inter', sans-serif" }}
+              >
+                SOCIAL LEARNING HUB
+              </motion.span>
+            </div>
+
+            {/* Main Heading: Left-aligned, Manrope 600, ~30–34px on mobile */}
+            <motion.h2
+              initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: isMobile ? 8 : 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={vp}
+              transition={{ duration: isMobile ? 0.38 : 0.6, delay: isMobile ? 0.05 : 0.1, ease: easeOut }}
+              className="text-[30px] xs:text-[32px] sm:text-[34px] lg:text-[38px] xl:text-[40px] font-semibold text-[#1A3326] leading-[1.16] tracking-tight text-left"
+              style={{ fontFamily: "'Manrope', sans-serif" }}
+            >
+              Learn Beyond <span className="text-[#D4AF37]">the Classroom.</span>
+            </motion.h2>
+
+            {/* Description: Left-aligned, Inter 400, ~15px on mobile */}
+            <motion.p
+              initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: isMobile ? 8 : 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={vp}
+              transition={{ duration: isMobile ? 0.38 : 0.45, delay: isMobile ? 0.08 : 0.18, ease: easeOut }}
+              className="text-[15px] sm:text-[15.5px] text-[#4A6356] font-normal leading-relaxed max-w-xl mt-2.5 sm:mt-3 text-left"
+              style={{ fontFamily: "'Inter', sans-serif" }}
+            >
+              Explore stock market insights, trading education videos and practical learning content from ASMA on YouTube and Instagram.
+            </motion.p>
           </div>
           
-          {/* TAB SWITCHER */}
-          <div className="flex bg-white rounded-xl p-1 border border-[#e6e2d8] shadow-sm self-start lg:self-end shrink-0">
+          {/* Tab Switcher: Two equal-width touch-friendly controls on mobile, smooth 200ms active indicator */}
+          <div className="w-full sm:w-auto grid grid-cols-2 sm:flex bg-white rounded-[6px] p-1 border border-black/8 shadow-sm shrink-0 relative mt-1 sm:mt-0">
             {[
               { id: 'youtube', label: 'YouTube' },
               { id: 'reels', label: 'Instagram Reels' }
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`px-5 py-2.5 text-sm font-semibold rounded-lg transition-all duration-300 ${
-                  activeTab === tab.id 
-                    ? 'bg-[#faf9f6] text-[#b59a56] border border-[#e6e2d8] shadow-[0_2px_8px_rgba(0,0,0,0.04)]' 
-                    : 'text-[#5a6b5e] hover:text-[#1a2e22] border border-transparent'
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
+            ].map((tab) => {
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`relative min-h-[44px] sm:min-h-0 py-2.5 sm:py-2 px-3 sm:px-4 text-center flex items-center justify-center text-[13px] sm:text-xs font-semibold rounded-[4px] transition-colors duration-200 z-10 ${
+                    isActive ? 'text-white' : 'text-[#4A6356] hover:text-[#1A3326]'
+                  }`}
+                  style={{ fontFamily: "'Inter', sans-serif" }}
+                >
+                  {isActive && (
+                    <motion.span
+                      layoutId="socialTabActiveIndicator"
+                      className="absolute inset-0 bg-[#063925] rounded-[4px] -z-10 shadow-sm"
+                      transition={{ duration: 0.2, ease: easeOut }}
+                    />
+                  )}
+                  <span>{tab.label}</span>
+                </button>
+              );
+            })}
           </div>
         </div>
 
-        {/* LAYOUT: TWO-COLUMN CONTENT AREA */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 mb-12">
-          
-          {/* LEFT COLUMN: FEATURED VIDEO CARD (~65%) */}
-          <div 
-            className="lg:col-span-8 group cursor-pointer"
-            onClick={() => setActiveMedia(currentContent.featured)}
+        {/* Video Showcase: 1 Featured Left, 2 Compact Stacked Right */}
+        <motion.div
+          onViewportEnter={() => setHasEnteredViewport(true)}
+          viewport={vp}
+        >
+          {/* Tab content crossfade in 200ms without restarting whole section */}
+          <motion.div
+            key={activeTab}
+            initial={hasEnteredViewport ? { opacity: 0 } : { opacity: 1 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
+            className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 lg:gap-6 items-stretch"
           >
-            <div className="bg-[#fcfbf9] rounded-[20px] border border-[#e6e2d8] shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden flex flex-col h-full">
-              
-              {/* Large Thumbnail Area */}
-              <div className="relative aspect-video w-full overflow-hidden bg-[#1a2e22]">
-                <img 
-                  src={currentContent.featured.thumbnail} 
-                  alt={currentContent.featured.title} 
-                  className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700 ease-in-out"
-                />
-                <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-300"></div>
-                
-                {/* Platform Tag */}
-                <div className="absolute top-4 left-4 bg-[#fcfbf9]/90 backdrop-blur-md px-3 py-1.5 rounded-md flex items-center gap-2 shadow-sm">
-                  <span className="w-2 h-2 rounded-full bg-[#1a2e22]"></span>
-                  <span className="text-xs font-bold text-[#1a2e22] tracking-wider uppercase">{currentContent.featured.platform}</span>
-                </div>
-
-                {/* Centered Play Button */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-16 h-16 md:w-20 md:h-20 bg-[#fcfbf9]/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-white transition-all duration-300">
-                    <svg className="w-6 h-6 md:w-8 md:h-8 text-[#1a2e22] ml-1" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M4 4l12 6-12 6V4z" />
-                    </svg>
-                  </div>
-                </div>
-              </div>
-
-              {/* Featured Card Content */}
-              <div className="p-6 md:p-8 flex flex-col justify-between flex-grow">
-                <div>
-                  <span className="text-[#b59a56] font-bold text-[10px] tracking-widest uppercase mb-3 block">
-                    {currentContent.featured.meta}
-                  </span>
-                  <h3 className="text-xl md:text-2xl font-bold text-[#1a2e22] mb-3 leading-tight group-hover:text-[#b59a56] transition-colors">
-                    {currentContent.featured.title}
-                  </h3>
-                  <p className="text-[#5a6b5e] text-sm md:text-base line-clamp-2 leading-relaxed">
-                    {currentContent.featured.description}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* RIGHT COLUMN: STACK OF 3 CARDS (~35%) */}
-          <div className="lg:col-span-4 flex flex-col gap-6 md:gap-8 justify-between">
-            {currentContent.list.map((item, idx) => (
-              <div 
-                key={idx} 
-                onClick={() => setActiveMedia(item)}
-                className="bg-[#fcfbf9] rounded-2xl border border-[#e6e2d8] p-3 flex items-center gap-4 shadow-sm hover:shadow-md transition-shadow duration-300 cursor-pointer group h-full"
+            
+            {/* Left Column: Featured Video (16:9 for YouTube, preserved uncropped 9:16 for Reels) */}
+            <motion.div 
+              initial={shouldReduceMotion || hasEnteredViewport ? { opacity: 1, y: 0 } : { opacity: 0, y: isMobile ? 8 : 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={vp}
+              transition={{ duration: isMobile ? 0.38 : 0.6, delay: isMobile ? 0.05 : 0.2, ease: easeOut }}
+              className="lg:col-span-7 flex flex-col"
+            >
+              <div
+                onClick={() => setActiveMedia(currentContent.featured)}
+                className="group bg-white rounded-[6px] border border-black/8 hover:border-[#063925]/30 overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_24px_rgba(6,57,37,0.06)] transition-all duration-200 ease-out flex flex-col h-full cursor-pointer"
               >
-                {/* Small Thumbnail */}
-                <div className="relative w-32 h-24 shrink-0 rounded-xl overflow-hidden bg-[#1a2e22]">
-                  <img 
-                    src={item.thumbnail} 
-                    alt={item.title} 
-                    className="w-full h-full object-cover opacity-90 group-hover:scale-110 transition-transform duration-700 ease-in-out"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm">
-                      <svg className="w-3 h-3 text-[#1a2e22] ml-0.5" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M4 4l12 6-12 6V4z" />
-                      </svg>
+                {/* Thumbnail Container: 16:9 for YouTube; Preserved 9:16 frame without cropping for Reels on mobile */}
+                <div className={`relative w-full overflow-hidden bg-[#06261A] shrink-0 flex items-center justify-center ${
+                  activeTab === 'reels' 
+                    ? 'py-3.5 sm:py-5 lg:py-0 lg:aspect-video' 
+                    : 'aspect-video'
+                }`}>
+                  <div className={`relative flex items-center justify-center ${
+                    activeTab === 'reels'
+                      ? 'aspect-[9/16] h-[260px] xs:h-[285px] sm:h-[310px] lg:h-full lg:w-full lg:aspect-video'
+                      : 'w-full h-full'
+                  }`}>
+                    <img 
+                      src={currentContent.featured.thumbnail} 
+                      alt={currentContent.featured.title} 
+                      loading="lazy"
+                      className={`w-full h-full transition-transform duration-300 ease-out md:group-hover:scale-[1.02] ${
+                        currentContent.featured.thumbnail.includes('logo') 
+                          ? 'object-contain p-4 sm:p-5 lg:p-6' 
+                          : 'object-cover'
+                      }`}
+                    />
+
+                    {/* Play Button: clearly visible and easy to tap */}
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/15 md:group-hover:bg-black/20 transition-colors duration-200">
+                      <div className="w-13 h-13 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-white/95 backdrop-blur-md rounded-full flex items-center justify-center shadow-lg md:group-hover:scale-108 transition-all duration-200 ease-out">
+                        <svg className="w-5 h-5 md:w-6 md:h-6 text-[#063925] ml-0.5" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M4 4l12 6-12 6V4z" />
+                        </svg>
+                      </div>
                     </div>
                   </div>
+                  
+                  {/* Platform Badge */}
+                  <div className="absolute top-3 left-3 sm:top-3.5 sm:left-3.5 bg-white/95 backdrop-blur-md px-2.5 py-1 rounded-[4px] flex items-center gap-1.5 shadow-sm z-20">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#063925]" />
+                    <span 
+                      className="text-[10px] font-semibold text-[#1A3326] tracking-wider uppercase"
+                      style={{ fontFamily: "'Inter', sans-serif" }}
+                    >
+                      {currentContent.featured.platform}
+                    </span>
+                  </div>
                 </div>
-                
-                {/* Small Card Content */}
-                <div className="flex flex-col flex-grow py-1">
-                  <span className="text-[9px] font-bold text-[#b59a56] tracking-widest uppercase mb-1.5 block">
-                    {item.meta}
-                  </span>
-                  <h4 className="text-[#1a2e22] font-bold text-sm leading-snug line-clamp-2 group-hover:text-[#b59a56] transition-colors">
-                    {item.title}
-                  </h4>
-                  <span className="text-[#7a8b7e] text-[10px] mt-2 block font-medium uppercase tracking-wider">
-                    {item.platform}
-                  </span>
+
+                {/* Card Body */}
+                <div className="p-4 sm:p-5 lg:p-6 flex flex-col justify-between flex-grow text-left">
+                  <div>
+                    <span 
+                      className="text-[#D4AF37] text-[10.5px] font-semibold tracking-wider uppercase mb-1.5 sm:mb-2 block text-left"
+                      style={{ fontFamily: "'Inter', sans-serif" }}
+                    >
+                      {currentContent.featured.meta}
+                    </span>
+                    <h3 
+                      className="text-[18px] sm:text-[20px] lg:text-[22px] font-semibold text-[#1A3326] md:group-hover:text-[#063925] transition-colors duration-200 leading-snug mb-1.5 sm:mb-2 text-left"
+                      style={{ fontFamily: "'Manrope', sans-serif" }}
+                    >
+                      {currentContent.featured.title}
+                    </h3>
+                    <p 
+                      className="text-[13px] sm:text-[13.5px] text-[#4A6356] font-normal leading-relaxed mb-3 sm:mb-4 text-left"
+                      style={{ fontFamily: "'Inter', sans-serif" }}
+                    >
+                      {currentContent.featured.description}
+                    </p>
+                  </div>
+
+                  {/* Bottom Action */}
+                  <div className="pt-2.5 sm:pt-3 border-t border-black/5 flex items-center justify-between">
+                    <span
+                      className="inline-flex items-center gap-2 text-[12px] font-semibold uppercase tracking-wider text-[#063925] md:group-hover:text-[#D4AF37] transition-colors duration-200"
+                      style={{ fontFamily: "'Inter', sans-serif" }}
+                    >
+                      <span>Watch Full {activeTab === 'youtube' ? 'Video' : 'Reel'}</span>
+                      <svg
+                        className="w-4 h-4 transition-transform duration-200 ease-out md:group-hover:translate-x-[3px]"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    </span>
+                  </div>
                 </div>
               </div>
-            ))}
-            
-            {/* VIEW MORE BUTTON */}
+            </motion.div>
+
+            {/* Right Column: 2 Compact Supporting Video Previews */}
+            <div className="lg:col-span-5 flex flex-col gap-3.5 sm:gap-4 lg:gap-4.5 justify-between">
+              {currentContent.list.map((item, idx) => (
+                <motion.div
+                  key={item.id}
+                  initial={shouldReduceMotion || hasEnteredViewport ? { opacity: 1, y: 0 } : { opacity: 0, y: isMobile ? 8 : 14 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={vp}
+                  transition={{
+                    duration: isMobile ? 0.38 : 0.45,
+                    delay: isMobile ? (0.06 + idx * 0.04) : (0.28 + idx * 0.08),
+                    ease: easeOut
+                  }}
+                  className="flex-1 flex flex-col"
+                >
+                  <div
+                    onClick={() => setActiveMedia(item)}
+                    className="group bg-white rounded-[6px] border border-black/8 hover:border-[#063925]/30 overflow-hidden shadow-[0_3px_16px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_24px_rgba(6,57,37,0.06)] transition-all duration-200 ease-out flex flex-row sm:flex-row h-full cursor-pointer"
+                  >
+                    {/* Thumbnail Image Container: 16:9 for YouTube; Preserved 9:16 for Reels */}
+                    <div className={`relative overflow-hidden bg-[#06261A] shrink-0 self-stretch flex items-center justify-center ${
+                      activeTab === 'reels'
+                        ? 'w-[76px] xs:w-[84px] sm:w-[32%] lg:w-[38%] aspect-[9/16] sm:aspect-auto'
+                        : 'w-[110px] xs:w-[124px] sm:w-[38%] aspect-video sm:aspect-auto'
+                    }`}>
+                      <img 
+                        src={item.thumbnail} 
+                        alt={item.title} 
+                        loading="lazy"
+                        className={`w-full h-full transition-transform duration-300 ease-out md:group-hover:scale-[1.02] ${
+                          item.thumbnail.includes('logo') 
+                            ? 'object-contain p-2 sm:p-3.5' 
+                            : 'object-cover'
+                        }`}
+                      />
+                      {/* Play Button: clearly visible and easy to tap */}
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/15 md:group-hover:bg-black/20 transition-colors duration-200">
+                        <div className="w-8 h-8 sm:w-9 sm:h-9 bg-white/95 backdrop-blur-sm rounded-full flex items-center justify-center shadow-md md:group-hover:scale-108 transition-all duration-200 ease-out">
+                          <svg className="w-3.5 h-3.5 text-[#063925] ml-0.5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M4 4l12 6-12 6V4z" />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Content Container */}
+                    <div className="flex-1 min-w-0 p-3 sm:p-4.5 flex flex-col justify-between text-left">
+                      <div>
+                        <span 
+                          className="text-[#D4AF37] text-[10px] font-semibold tracking-wider uppercase mb-1 block text-left"
+                          style={{ fontFamily: "'Inter', sans-serif" }}
+                        >
+                          {item.meta}
+                        </span>
+                        <h4 
+                          className="text-[14px] xs:text-[14.5px] sm:text-[16px] font-semibold text-[#1A3326] md:group-hover:text-[#063925] transition-colors duration-200 leading-snug mb-1 line-clamp-2 text-left"
+                          style={{ fontFamily: "'Manrope', sans-serif" }}
+                        >
+                          {item.title}
+                        </h4>
+                        <p 
+                          className="text-[12px] sm:text-[12.5px] text-[#4A6356] font-normal leading-relaxed mb-2 line-clamp-2 sm:line-clamp-none text-left hidden xs:block"
+                          style={{ fontFamily: "'Inter', sans-serif" }}
+                        >
+                          {item.description}
+                        </p>
+                      </div>
+
+                      {/* Bottom Action */}
+                      <div className="pt-1.5 sm:pt-2 border-t border-black/5 flex items-center justify-between">
+                        <span
+                          className="inline-flex items-center gap-1.5 text-[11px] sm:text-[11.5px] font-semibold uppercase tracking-wider text-[#063925] md:group-hover:text-[#D4AF37] transition-colors duration-200"
+                          style={{ fontFamily: "'Inter', sans-serif" }}
+                        >
+                          <span>Watch {activeTab === 'youtube' ? 'Video' : 'Reel'}</span>
+                          <svg
+                            className="w-3 h-3 sm:w-3.5 sm:h-3.5 transition-transform duration-200 ease-out md:group-hover:translate-x-[3px]"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+          </motion.div>
+        </motion.div>
+
+        {/* Bottom Bar: Community info & external social CTAs */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center pt-3 sm:pt-4 gap-4 sm:gap-6 mt-5 sm:mt-6">
+          <div 
+            className="flex flex-wrap justify-start items-center gap-x-2.5 sm:gap-x-4 gap-y-1.5 text-[#4A6356] text-xs sm:text-[13px] font-medium text-left"
+            style={{ fontFamily: "'Inter', sans-serif" }}
+          >
+            <span>500+ Educational Videos</span>
+            <span className="text-black/20">•</span>
+            <span>Daily Market Reels</span>
+            <span className="text-black/20">•</span>
+            <span>Live Learning Content</span>
+          </div>
+          
+          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 w-full sm:w-auto justify-start sm:justify-end">
             <a 
               href={activeTab === 'youtube' ? "https://www.youtube.com/@advaitsharemarketacademy-x5p" : "https://www.instagram.com/asma_stockmarket/"}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-2 md:mt-0 flex items-center justify-center gap-2 bg-transparent hover:bg-[#fcfbf9] text-[#1a2e22] py-3 px-4 rounded-xl font-bold text-sm tracking-widest uppercase transition-all duration-300 border border-dashed border-[#d0c9b8] hover:border-[#1a2e22] group"
+              className="inline-flex items-center justify-center gap-1.5 sm:gap-2 bg-white hover:bg-[#FAF9F5] text-[#063925] border border-black/10 hover:border-[#063925]/30 text-xs font-semibold uppercase tracking-wider px-3.5 sm:px-4 py-2.5 rounded-[4px] transition-colors"
+              style={{ fontFamily: "'Inter', sans-serif" }}
             >
-              View More {activeTab === 'youtube' ? 'Videos' : 'Reels'}
-              <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <span>View More on {activeTab === 'youtube' ? 'YouTube' : 'Instagram'}</span>
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
             </a>
-          </div>
-
-        </div>
-
-        {/* BOTTOM ROW */}
-        <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-[#e6e2d8] gap-6">
-          
-          {/* Info List */}
-          <div className="flex flex-wrap justify-center md:justify-start items-center gap-x-4 gap-y-2 text-[#3b4d42] text-sm md:text-base font-medium">
-            <span>500+ Educational Videos</span>
-            <span className="hidden sm:inline-block text-[#d0c9b8]">•</span>
-            <span>Daily Market Reels</span>
-            <span className="hidden sm:inline-block text-[#d0c9b8]">•</span>
-            <span>Live Learning Content</span>
-          </div>
-          
-          {/* Social Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-            <a 
-              href="https://www.youtube.com/@advaitsharemarketacademy-x5p"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2.5 bg-transparent hover:bg-[#b59a56] text-[#b59a56] hover:text-white font-bold text-sm tracking-widest uppercase px-6 py-3 rounded-xl transition-all duration-300 border-2 border-[#b59a56] shadow-sm"
-            >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-              Subscribe
-            </a>
-            <a 
-              href="https://www.instagram.com/asma_stockmarket/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2.5 bg-transparent hover:bg-[#1a2e22] text-[#1a2e22] hover:text-[#b59a56] font-bold text-sm tracking-widest uppercase px-6 py-3 rounded-xl transition-all duration-300 border-2 border-[#1a2e22] shadow-sm"
-            >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
-              Follow
-            </a>
+            <div className="flex items-center gap-2">
+              <a 
+                href="https://www.youtube.com/@advaitsharemarketacademy-x5p"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 bg-[#063925] hover:bg-[#0B2117] text-white text-xs font-semibold uppercase tracking-wider px-3.5 sm:px-4 py-2.5 rounded-[4px] transition-colors shadow-sm"
+                style={{ fontFamily: "'Inter', sans-serif" }}
+              >
+                <svg className="w-4 h-4 fill-current text-white shrink-0" viewBox="0 0 24 24">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+                <span>Subscribe</span>
+              </a>
+              <a 
+                href="https://www.instagram.com/asma_stockmarket/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 border border-black/10 hover:border-[#063925] bg-white text-[#063925] text-xs font-semibold uppercase tracking-wider px-3.5 sm:px-4 py-2.5 rounded-[4px] transition-colors"
+                style={{ fontFamily: "'Inter', sans-serif" }}
+              >
+                <svg className="w-3.5 h-3.5 fill-current text-[#063925] shrink-0" viewBox="0 0 24 24">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                </svg>
+                <span>Follow</span>
+              </a>
+            </div>
           </div>
         </div>
 
       </div>
       
-      {/* Video Modal Render */}
+      {/* Video Modal: only mounts player when clicked */}
       <VideoModal media={activeMedia} onClose={() => setActiveMedia(null)} />
-    </AnimatedSection>
+    </section>
   );
 };
 

@@ -60,97 +60,100 @@ const CoursesSection = ({ isCoursesPage = false }) => {
 
   return (
     <>
-    <AnimatedSection id="courses" className="py-8 md:py-12 bg-white relative overflow-hidden">
-      <div className="container mx-auto px-4 md:px-8 lg:px-12 relative z-10 max-w-[1200px]">
+    <AnimatedSection id="courses" className="py-16 md:py-24 bg-white relative">
+      <div className="container mx-auto px-4 md:px-8 lg:px-12 relative z-10 max-w-7xl">
 
         {/* Header Section */}
-        <div className="text-center mb-8 md:mb-12">
-          <h2 className="text-3xl md:text-5xl font-display font-black text-text-primary tracking-tight mb-4">
-            Professional Trading <span className="text-[#166534]">Curriculum</span>
-          </h2>
-          <p className="text-text-secondary font-medium text-sm md:text-base max-w-2xl mx-auto leading-relaxed">
-            Elevate your trading journey with our premium, expertly crafted courses designed for serious investors and passionate learners.
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-16 gap-6">
+          <div className="max-w-2xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-[4px] bg-[#063925]/10 text-[#063925] font-['Inter'] font-semibold tracking-wider uppercase text-[11px] mb-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></span>
+              Professional Curriculum
+            </div>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-['Manrope'] font-semibold text-[#1A3326] leading-tight tracking-tight">
+              Comprehensive Stock Market Training Programs
+            </h2>
+          </div>
+          <p className="text-[#4A6356] font-['Inter'] font-normal text-sm md:text-base max-w-md leading-relaxed">
+            Elevate your financial literacy and execution discipline with structured offline and online programs in Nagpur.
           </p>
         </div>
 
         {isCoursesPage && (
-          <div className="mb-16 md:mb-20">
+          <div className="mb-14 md:mb-18">
             <LatestUpdatesSection />
           </div>
         )}
 
         {/* Informational Section (Courses Page Only) */}
         {isCoursesPage && (
-          <div className="mb-16 md:mb-20 bg-gradient-to-br from-[#166534]/5 to-transparent border border-[#166534]/15 rounded-[32px] p-8 md:p-12 shadow-2xl text-left relative overflow-hidden group">
-            {/* Background Ambience */}
-            <div className="absolute -top-24 -right-24 w-64 h-64 bg-[#166534]/5 rounded-full blur-3xl pointer-events-none group-hover:bg-[#166534]/10 transition-colors duration-700"></div>
+          <div className="mb-16 md:mb-20 bg-[#F2F5F3] border border-[#063925]/10 rounded-[4px] p-6 md:p-10 lg:p-12 text-left relative overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
 
-            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-
-              {/* Left Column: Heading & Badge */}
-              <div className="lg:col-span-5 space-y-6">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#166534]/10 text-[#166534] font-bold tracking-widest uppercase text-[10px]">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#166534]"></span>
+              {/* Left Column */}
+              <div className="lg:col-span-5 space-y-5">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-[4px] bg-[#063925]/10 text-[#063925] font-['Inter'] font-semibold tracking-wider uppercase text-[10px]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"></span>
                   Why Choose Advait?
                 </div>
 
-                <h3 className="text-3xl md:text-5xl font-display font-black leading-[1.15] text-text-primary tracking-tight">
-                  Master the Markets with <span className="text-transparent bg-clip-text bg-gradient-to-br from-[#166534] to-emerald-700">Advait Academy</span>
+                <h3 className="text-2xl md:text-3xl lg:text-4xl font-['Manrope'] font-semibold leading-tight text-[#1A3326] tracking-tight">
+                  Master the Markets with Nagpur's Premier Academy
                 </h3>
 
-                <div className="h-1.5 w-24 bg-gradient-to-r from-[#166534] to-accent-secondary rounded-full"></div>
-
-                {/* Stats / Highlights chips */}
-                <div className="grid grid-cols-2 gap-4 pt-4">
-                  <div className="p-4 bg-white rounded-2xl border border-[#166534]/10 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
-                    <div className="text-2xl font-display font-black text-[#166534]">100%</div>
-                    <div className="text-[10px] text-text-secondary font-bold uppercase tracking-widest mt-1">Practical Learning</div>
+                {/* Highlights chips */}
+                <div className="grid grid-cols-2 gap-3 pt-2">
+                  <div className="p-3.5 bg-white rounded-[4px] border border-[#063925]/10">
+                    <div className="text-xl font-['Manrope'] font-semibold text-[#063925]">100%</div>
+                    <div className="text-[10px] text-[#4A6356] font-['Inter'] font-semibold uppercase tracking-wider mt-0.5">Practical Market Screen</div>
                   </div>
-                  <div className="p-4 bg-white rounded-2xl border border-[#166534]/10 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
-                    <div className="text-2xl font-display font-black text-[#166534]">Lifetime</div>
-                    <div className="text-[10px] text-text-secondary font-bold uppercase tracking-widest mt-1">Mentor Support</div>
+                  <div className="p-3.5 bg-white rounded-[4px] border border-[#063925]/10">
+                    <div className="text-xl font-['Manrope'] font-semibold text-[#063925]">Lifetime</div>
+                    <div className="text-[10px] text-[#4A6356] font-['Inter'] font-semibold uppercase tracking-wider mt-0.5">Trading Community</div>
                   </div>
                 </div>
 
-                <div className="pt-4">
+                <div className="pt-2">
                   <a
                     href="/ASMA_brochure_updated.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#166534] text-white font-bold uppercase tracking-widest text-xs md:text-sm rounded-xl shadow-[0_10px_30px_rgba(22,101,52,0.3)] hover:bg-[#0f4523] hover:shadow-[0_15px_40px_rgba(22,101,52,0.4)] transition-all hover:-translate-y-1 w-full sm:w-auto"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#063925] hover:bg-[#0B2117] text-white font-['Inter'] font-semibold uppercase tracking-wider text-xs rounded-[4px] transition-all shadow-sm"
                   >
-                    Explore Brochure
-                    <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                    <span>Download Academy Brochure</span>
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
                   </a>
                 </div>
               </div>
 
-              {/* Right Column: Narrative & Key Features */}
-              <div className="lg:col-span-7 space-y-6 lg:border-l lg:border-text-primary/10 lg:pl-10 text-justify">
-                <p className="text-text-primary text-base md:text-lg font-light leading-relaxed">
-                  At Advait Stock Market Academy, we believe that financial independence is achievable for everyone with the right knowledge, discipline, and mentorship. Our curriculum is meticulously designed by industry veterans to take you from a complete beginner to a confident, independent trader.
+              {/* Right Column */}
+              <div className="lg:col-span-7 space-y-4 lg:border-l lg:border-[#063925]/10 lg:pl-10">
+                <p className="text-[#1A3326] text-sm md:text-base font-['Inter'] font-normal leading-relaxed">
+                  Advait Stock Market Academy bridges the gap between academic theory and real-time order execution. Guided by founder Satish Bobade with over 20 years of hands-on experience, our students learn to navigate volatile market environments with calculated risk parameters.
                 </p>
-                <p className="text-text-secondary text-sm md:text-base font-light leading-relaxed">
-                  Whether you are looking to generate secondary income through intraday trading, build generational wealth through value investing, or master the complexities of derivative markets, our courses provide actionable, real-world strategies. We focus deeply not just on technical indicators, but on the crucial elements of risk management and trading psychology.
+                <p className="text-[#4A6356] text-xs md:text-sm font-['Inter'] font-normal leading-relaxed">
+                  Every batch includes live-session practice on live terminals, detailed case studies on breakout formations, and disciplined money management protocols.
                 </p>
 
-                {/* Visual Checkmark benefits */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6 border-t border-black/5">
-                  <div className="flex items-center gap-3">
-                    <div className="w-7 h-7 rounded-full bg-[#166534]/10 flex items-center justify-center text-[#166534] shrink-0 font-bold text-xs">✓</div>
-                    <span className="font-medium text-text-primary text-xs md:text-sm">Practical, Live-Market Training</span>
+                {/* Benefits List */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-[#063925]/10">
+                  <div className="flex items-center gap-2.5 text-xs font-['Inter'] font-medium text-[#1A3326]">
+                    <div className="w-5 h-5 rounded-[2px] bg-[#063925]/10 flex items-center justify-center text-[#063925] shrink-0 font-bold text-[10px]">✓</div>
+                    <span>Practical Live Market Floor</span>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-7 h-7 rounded-full bg-[#166534]/10 flex items-center justify-center text-[#166534] shrink-0 font-bold text-xs">✓</div>
-                    <span className="font-medium text-text-primary text-xs md:text-sm">Proprietary Trading Setups</span>
+                  <div className="flex items-center gap-2.5 text-xs font-['Inter'] font-medium text-[#1A3326]">
+                    <div className="w-5 h-5 rounded-[2px] bg-[#063925]/10 flex items-center justify-center text-[#063925] shrink-0 font-bold text-[10px]">✓</div>
+                    <span>Proprietary Breakout Setups</span>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-7 h-7 rounded-full bg-[#166534]/10 flex items-center justify-center text-[#166534] shrink-0 font-bold text-xs">✓</div>
-                    <span className="font-medium text-text-primary text-xs md:text-sm">Lifetime Mentorship Support</span>
+                  <div className="flex items-center gap-2.5 text-xs font-['Inter'] font-medium text-[#1A3326]">
+                    <div className="w-5 h-5 rounded-[2px] bg-[#063925]/10 flex items-center justify-center text-[#063925] shrink-0 font-bold text-[10px]">✓</div>
+                    <span>Direct Faculty Doubt Clearing</span>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-7 h-7 rounded-full bg-[#166534]/10 flex items-center justify-center text-[#166534] shrink-0 font-bold text-xs">✓</div>
-                    <span className="font-medium text-text-primary text-xs md:text-sm">Risk Management Mastery</span>
+                  <div className="flex items-center gap-2.5 text-xs font-['Inter'] font-medium text-[#1A3326]">
+                    <div className="w-5 h-5 rounded-[2px] bg-[#063925]/10 flex items-center justify-center text-[#063925] shrink-0 font-bold text-[10px]">✓</div>
+                    <span>Risk-to-Reward Psychology</span>
                   </div>
                 </div>
               </div>
@@ -159,81 +162,75 @@ const CoursesSection = ({ isCoursesPage = false }) => {
           </div>
         )}
 
-        {/* Alternating List Layout */}
-        <div className="flex flex-col">
-          {displayItems.map((pkg, index) => {
-            const isEven = index % 2 !== 0; // index 1, 3 etc. are visually 'Even' rows
-
-            return (
-              <div key={index} className="flex flex-col md:flex-row items-center border-b border-gray-100 py-8 md:py-12 gap-6 md:gap-12 group">
-
-                {/* Content Block (Left for Odd, Right for Even) */}
-                <div className={`w-full md:w-1/2 flex flex-col justify-center ${isEven ? 'md:order-2 md:pl-6 text-left' : 'md:pr-6 text-left md:text-right'}`}>
-                  <div className={`w-8 h-[2px] bg-[#166534] mb-4 transform group-hover:scale-x-150 transition-transform duration-500 ${isEven ? 'origin-left' : 'origin-left md:origin-right md:ml-auto'}`}></div>
-                  <h3 className="text-xl md:text-2xl lg:text-3xl font-display font-bold text-text-primary mb-3 leading-tight group-hover:text-[#166534] transition-colors duration-500">
-                    {pkg.title}
-                  </h3>
-                  <p className={`text-text-secondary text-base md:text-lg leading-relaxed font-light mb-4 max-w-md ${isEven ? '' : 'md:ml-auto'}`}>
-                    {pkg.desc}
-                  </p>
-                  
-                  {pkg.curriculum && Array.isArray(pkg.curriculum) && (
-                    <div className={`flex flex-wrap gap-2 mb-6 ${isEven ? '' : 'md:justify-end'}`}>
-                      {pkg.curriculum.map((courseName, cIdx) => (
-                        <span key={cIdx} className="px-3 py-1 bg-[#166534]/5 text-[#166534] rounded-full text-[10px] font-bold uppercase tracking-wider border border-[#166534]/10">
-                          {courseName}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* Price replacing Explore Course */}
-                  <div className={`inline-flex flex-wrap items-center gap-3 mt-2 ${isEven ? '' : 'md:justify-end'}`}>
-                    <Link
-                      to={`/course/${pkg.slug}`}
-                      className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#166534] text-white text-xs md:text-sm font-bold uppercase tracking-widest rounded-full hover:bg-[#0f4523] hover:-translate-y-0.5 transition-all shadow-md w-fit"
-                    >
-                      View Package Details
-                      <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-                    </Link>
-                  </div>
+        {/* Clean Editorial Course List */}
+        <div className="space-y-6">
+          {displayItems.map((pkg, index) => (
+            <div
+              key={index}
+              className="bg-[#F2F5F3]/50 rounded-[4px] border border-[#063925]/10 p-6 md:p-8 hover:border-[#D4AF37]/50 hover:shadow-[0_8px_30px_rgba(6,57,37,0.06)] transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 group"
+            >
+              {/* Left / Info */}
+              <div className="flex-1 max-w-2xl">
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="font-['Manrope'] font-semibold text-xs text-[#063925] bg-[#063925]/10 px-2 py-0.5 rounded-[2px]">
+                    Track #{String(index + 1).padStart(2, '0')}
+                  </span>
+                  <span className="text-xs font-['Inter'] text-[#4A6356]">
+                    {pkg.duration || "Comprehensive Program"}
+                  </span>
                 </div>
 
-                {/* Huge Number with Image Mask (Right for Odd, Left for Even) */}
-                <div className={`w-full md:w-1/2 flex justify-center items-center ${isEven ? 'md:order-1' : ''}`}>
-                  <div
-                    className="text-[80px] md:text-[140px] lg:text-[180px] font-black leading-none tracking-tighter drop-shadow-2xl hover:scale-105 transition-transform duration-700 select-none"
-                    style={{
-                      backgroundImage: `url(${pkg.image})`,
-                      backgroundColor: '#166534', // Fallback color if image fails to load
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center',
-                      WebkitBackgroundClip: 'text',
-                      color: 'transparent',
-                      WebkitTextFillColor: 'transparent',
-                    }}
-                  >
-                    {String(index + 1).padStart(2, '0')}
-                  </div>
-                </div>
+                <h3 className="text-xl md:text-2xl font-['Manrope'] font-semibold text-[#1A3326] mb-2 leading-snug group-hover:text-[#063925] transition-colors">
+                  {pkg.title}
+                </h3>
+                <p className="text-xs md:text-sm font-['Inter'] font-normal text-[#4A6356] leading-relaxed mb-4">
+                  {pkg.desc}
+                </p>
 
+                {/* Modules Tags */}
+                {pkg.curriculum && Array.isArray(pkg.curriculum) && (
+                  <div className="flex flex-wrap gap-1.5">
+                    {pkg.curriculum.map((courseName, cIdx) => (
+                      <span key={cIdx} className="px-2.5 py-1 bg-white text-[#063925] rounded-[2px] text-[10px] font-['Inter'] font-semibold uppercase tracking-wider border border-[#063925]/10">
+                        {courseName}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
-            );
-          })}
+
+              {/* Right / CTA */}
+              <div className="shrink-0 flex flex-col sm:flex-row md:flex-col items-stretch sm:items-center md:items-end gap-3 w-full md:w-auto">
+                <Link
+                  to={`/course/${pkg.slug}`}
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#063925] hover:bg-[#0B2117] text-white text-xs font-['Inter'] font-semibold uppercase tracking-wider rounded-[4px] transition-all shadow-sm w-full sm:w-auto"
+                >
+                  <span>View Details</span>
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </Link>
+              </div>
+            </div>
+          ))}
         </div>
 
-        {/* Explore Courses Button */}
+        {/* Explore All Courses Button on Homepage */}
         {!isCoursesPage && (
-          <div className="mt-10 flex justify-center">
-            <Link to="/courses" className="inline-flex items-center gap-3 px-10 py-4 bg-text-primary text-white font-bold uppercase tracking-widest text-xs rounded-xl shadow-xl hover:bg-accent-primary transition-all hover:-translate-y-1 group">
-              Explore Courses
-              <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+          <div className="mt-12 text-center">
+            <Link
+              to="/courses"
+              className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#063925] hover:bg-[#0B2117] text-white font-['Inter'] font-semibold uppercase tracking-wider text-xs rounded-[4px] shadow-sm hover:shadow-md transition-all duration-200"
+            >
+              <span>Explore All Courses & Batches</span>
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
             </Link>
           </div>
         )}
 
       </div>
-
     </AnimatedSection>
     {isCoursesPage && <FaqSection faqs={courseFaqs} />}
     </>

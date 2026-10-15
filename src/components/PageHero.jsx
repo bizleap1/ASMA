@@ -1,36 +1,42 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Routes, Route, useLocation, Link, useParams, useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
-import { motion, AnimatePresence } from 'framer-motion';
-import { supabase } from '../supabaseClient';
-import { blogPosts } from '../blogData';
-import shubhangiImg from '../assets/shubhangi.png';
-import krishnaImg from '../assets/krishna.png';
-import vrushaliImg from '../assets/vrushali.png';
-import { serviceData, courseDetails, baseCourses, additionalCourses, FREE_NOTES } from '../data';
+import React from 'react';
 import AnimatedSection from './AnimatedSection';
 
 const PageHero = ({ title, subtitle, image, tag }) => (
-  <AnimatedSection className="relative w-full pt-36 pb-16 md:pt-48 md:pb-20 flex items-center justify-center overflow-hidden border-b border-text-primary/10 shadow-sm">
-    <div
-      className="absolute inset-0 w-full h-full bg-cover bg-center bg-fixed"
-      style={{ backgroundImage: `url('${image}')` }}
-    ></div>
+  <AnimatedSection className="relative w-full pt-32 pb-14 md:pt-40 md:pb-16 flex items-center justify-center overflow-hidden border-b border-[#0B2117]/10 bg-[#0B2117]">
+    {/* Background Image with Deep Institutional Overlay */}
+    {image && (
+      <div
+        className="absolute inset-0 w-full h-full bg-cover bg-center transform scale-105 transition-transform duration-1000"
+        style={{ backgroundImage: `url('${image}')` }}
+      />
+    )}
 
-    {/* Strong dark overlay to guarantee white text visibility against complex charts */}
-    <div className="absolute inset-0 bg-black/75"></div>
+    {/* Multi-layered forest-green & vignette gradient */}
+    <div className="absolute inset-0 bg-gradient-to-b from-[#05130D]/90 via-[#0B2117]/85 to-[#0B2117]/95" />
+    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#063925]/30 via-transparent to-transparent pointer-events-none" />
 
-    <div className="relative z-10 text-center px-4 w-full max-w-4xl mx-auto animate-fadeInUp">
-      <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md text-white font-bold tracking-widest uppercase text-[10px] md:text-xs mb-4 border border-white/20 shadow-lg">
-        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+    {/* Content Container */}
+    <div className="relative z-10 text-center px-4 w-full max-w-4xl mx-auto">
+      {/* Editorial Category Tag */}
+      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-[4px] bg-[#05130D]/70 backdrop-blur-md text-[#D4AF37] font-['Inter'] font-semibold tracking-wider uppercase text-[11px] mb-4 border border-[#D4AF37]/30 shadow-sm">
+        <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
         {tag || "Advait Stock Market Academy"}
       </div>
-      <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-black text-white tracking-widest mb-3 drop-shadow-[0_4px_20px_rgba(0,0,0,1)] uppercase">
+
+      {/* Main Page Title */}
+      <h1 className="text-3xl md:text-5xl font-['Manrope'] font-semibold text-white tracking-tight mb-3 leading-tight">
         {title}
       </h1>
-      <p className="text-white/90 text-sm md:text-base font-medium max-w-xl mx-auto drop-shadow-md">
-        {subtitle}
-      </p>
+
+      {/* Subtitle */}
+      {subtitle && (
+        <p className="text-white/85 text-sm md:text-base font-['Inter'] font-normal max-w-2xl mx-auto leading-relaxed">
+          {subtitle}
+        </p>
+      )}
+
+      {/* Subtle Gold Accent Divider */}
+      <div className="w-12 h-0.5 bg-[#D4AF37] mx-auto mt-5 opacity-80" />
     </div>
   </AnimatedSection>
 );

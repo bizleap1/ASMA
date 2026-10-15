@@ -6,7 +6,7 @@ const PageWrapper = ({ children, backHash, seoTitle, seoDesc, seoKeywords, noind
   const location = useLocation();
 
   return (
-    <main className="flex-grow pt-0 pb-12 min-h-screen relative bg-bg-secondary/5">
+    <main className="flex-grow pt-0 pb-0 min-h-screen relative bg-bg-secondary/5">
       <SEO
         title={seoTitle}
         description={seoDesc}

@@ -1,20 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Routes, Route, useLocation, Link, useParams, useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
-import { motion, AnimatePresence } from 'framer-motion';
-import { supabase } from '../supabaseClient';
-import { blogPosts } from '../blogData';
-import shubhangiImg from '../assets/shubhangi.png';
-import krishnaImg from '../assets/krishna.png';
-import vrushaliImg from '../assets/vrushali.png';
-import { serviceData, courseDetails, baseCourses, additionalCourses, FREE_NOTES } from '../data';
+import React from 'react';
 import AnimatedSection from '../components/AnimatedSection';
 
 const PrivacyPolicySection = () => {
   return (
-    <AnimatedSection className="py-12 md:py-24 bg-white">
+    <AnimatedSection className="py-16 md:py-24 bg-white">
       <div className="container mx-auto px-4 md:px-8 max-w-4xl">
-        <div className="space-y-8 text-text-secondary leading-relaxed md:text-lg">
+        <div className="space-y-8 text-[#4A6356] font-['Inter'] font-normal leading-relaxed text-sm md:text-base">
           <p>
             Advait Stock Market Academy website is owned by Advait Stock Market Academy, which is a data controller of your personal data.
           </p>
@@ -25,15 +16,15 @@ const PrivacyPolicySection = () => {
             We take care of your personal data and undertake to guarantee its confidentiality and security.
           </p>
 
-          <div className="space-y-4">
-            <h3 className="text-2xl font-bold text-text-primary">Personal information we collect:</h3>
+          <div className="space-y-3 pt-4 border-t border-[#0B2117]/10">
+            <h2 className="text-xl md:text-2xl font-['Manrope'] font-semibold text-[#1A3326]">Personal information we collect:</h2>
             <p>
               When you visit the Advait Stock Market Academy, we automatically collect certain information about your device, including information about your web browser, IP address, time zone, and some of the installed cookies on your device. Additionally, as you browse the Site, we collect information about the individual web pages or products you view, what websites or search terms referred you to the Site, and how you interact with the Site. We refer to this automatically-collected information as "Device Information." Moreover, we might collect the personal data you provide to us (including but not limited to Name, Surname, Address, payment information, etc.) during registration to be able to fulfill the agreement.
             </p>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-2xl font-bold text-text-primary">Why do we process your data?</h3>
+          <div className="space-y-3 pt-4 border-t border-[#0B2117]/10">
+            <h2 className="text-xl md:text-2xl font-['Manrope'] font-semibold text-[#1A3326]">Why do we process your data?</h2>
             <p>
               Our top priority is customer data security, and, as such, we may process only minimal user data, only as much as it is absolutely necessary to maintain the website. Information collected automatically is used only to identify potential cases of abuse and establish statistical information regarding website usage. This statistical information is not otherwise aggregated in such a way that it would identify any particular user of the system.
             </p>
@@ -42,43 +33,46 @@ const PrivacyPolicySection = () => {
             </p>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-2xl font-bold text-text-primary">Your rights:</h3>
-            <p>If you are a European resident, you have the following rights related to your personal data:</p>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>The right to be informed.</li>
-              <li>The right of access.</li>
-              <li>The right to rectification.</li>
-              <li>The right to erasure.</li>
-              <li>The right to restrict processing.</li>
-              <li>The right to data portability.</li>
-              <li>The right to object.</li>
-              <li>Rights in relation to automated decision-making and profiling.</li>
+          <div className="space-y-3 pt-4 border-t border-[#0B2117]/10">
+            <h2 className="text-xl md:text-2xl font-['Manrope'] font-semibold text-[#1A3326]">Your rights:</h2>
+            <p>If you have questions regarding your personal data rights, you have the following:</p>
+            <ul className="space-y-2 pl-2">
+              {[
+                "The right to be informed.",
+                "The right of access.",
+                "The right to rectification.",
+                "The right to erasure.",
+                "The right to restrict processing.",
+                "The right to data portability.",
+                "The right to object."
+              ].map((item, idx) => (
+                <li key={idx} className="flex items-center gap-2.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#063925]" />
+                  <span>{item}</span>
+                </li>
+              ))}
             </ul>
             <p>
-              If you would like to exercise this right, please contact us through the contact information below.
-            </p>
-            <p>
-              Additionally, if you are a European resident, we note that we are processing your information in order to fulfill contracts we might have with you (for example, if you make an order through the Site), or otherwise to pursue our legitimate business interests listed above. Additionally, please note that your information might be transferred outside of Europe, including Canada and the United States.
+              If you would like to exercise this right, please contact us through our Nagpur admissions desk.
             </p>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-2xl font-bold text-text-primary">Links to other websites:</h3>
+          <div className="space-y-3 pt-4 border-t border-[#0B2117]/10">
+            <h2 className="text-xl md:text-2xl font-['Manrope'] font-semibold text-[#1A3326]">Links to other websites:</h2>
             <p>
               Our website may contain links to other websites that are not owned or controlled by us. Please be aware that we are not responsible for such other websites or third parties' privacy practices. We encourage you to be aware when you leave our website and read the privacy statements of each website that may collect personal information.
             </p>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-2xl font-bold text-text-primary">Information security:</h3>
+          <div className="space-y-3 pt-4 border-t border-[#0B2117]/10">
+            <h2 className="text-xl md:text-2xl font-['Manrope'] font-semibold text-[#1A3326]">Information security:</h2>
             <p>
-              We secure information you provide on computer servers in a controlled, secure environment, protected from unauthorized access, use, or disclosure. We keep reasonable administrative, technical, and physical safeguards to protect against unauthorized access, use, modification, and personal data disclosure in its control and custody. However, no data transmission over the Internet or wireless network can be guaranteed.
+              We secure information you provide on computer servers in a controlled, secure environment, protected from unauthorized access, use, or disclosure. We keep reasonable administrative, technical, and physical safeguards to protect against unauthorized access, use, modification, and personal data disclosure in its control and custody.
             </p>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-2xl font-bold text-text-primary">Legal disclosure:</h3>
+          <div className="space-y-3 pt-4 border-t border-[#0B2117]/10">
+            <h2 className="text-xl md:text-2xl font-['Manrope'] font-semibold text-[#1A3326]">Legal disclosure:</h2>
             <p>
               We will disclose any information we collect, use or receive if required or permitted by law, such as to comply with a subpoena or similar legal process, and when we believe in good faith that disclosure is necessary to protect our rights, protect your safety or the safety of others, investigate fraud, or respond to a government request.
             </p>

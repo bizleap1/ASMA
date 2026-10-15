@@ -54,7 +54,7 @@ const LatestUpdatesSection = () => {
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-[#D4AF37]/30 shadow-sm text-[#B8860B] font-bold tracking-widest uppercase text-[9px] mb-2"
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-[4px] bg-white border border-[#D4AF37]/30 shadow-sm text-[#B8860B] font-bold tracking-widest uppercase text-[9px] mb-2"
             >
               <span className="relative flex h-1.5 w-1.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D4AF37] opacity-75"></span>
@@ -77,13 +77,13 @@ const LatestUpdatesSection = () => {
           <div className="flex items-center gap-3">
             <button 
               onClick={handlePrev}
-              className="w-10 h-10 rounded-full bg-white border border-[#D4AF37]/30 flex items-center justify-center text-[#0B2117] hover:bg-[#0B2117] hover:text-[#D4AF37] hover:border-[#0B2117] transition-all shadow-sm group"
+              className="w-10 h-10 rounded-[4px] bg-white border border-[#D4AF37]/30 flex items-center justify-center text-[#0B2117] hover:bg-[#0B2117] hover:text-[#D4AF37] hover:border-[#0B2117] transition-all shadow-sm group"
             >
               <svg className="w-5 h-5 transform group-hover:-translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
             </button>
             <button 
               onClick={handleNext}
-              className="w-10 h-10 rounded-full bg-white border border-[#D4AF37]/30 flex items-center justify-center text-[#0B2117] hover:bg-[#0B2117] hover:text-[#D4AF37] hover:border-[#0B2117] transition-all shadow-sm group"
+              className="w-10 h-10 rounded-[4px] bg-white border border-[#D4AF37]/30 flex items-center justify-center text-[#0B2117] hover:bg-[#0B2117] hover:text-[#D4AF37] hover:border-[#0B2117] transition-all shadow-sm group"
             >
               <svg className="w-5 h-5 transform group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
             </button>
@@ -133,7 +133,7 @@ const LatestUpdatesSection = () => {
                   
                   <div>
                     <div className="flex items-center gap-2 mb-3">
-                      <span className="bg-[#0B2117] text-[#D4AF37] text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-widest shadow-sm">
+                      <span className="bg-[#0B2117] text-[#D4AF37] text-[10px] font-bold px-2.5 py-0.5 rounded-[4px] uppercase tracking-widest shadow-sm">
                         {item.date}
                       </span>
                       <span className="text-text-secondary text-xs font-medium flex items-center gap-1">
@@ -163,7 +163,7 @@ const LatestUpdatesSection = () => {
                   </div>
                   
                   <div className="mt-auto pt-4 border-t border-gray-100">
-                    <a href="tel:09156953895" className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-[#0B2117] text-white font-bold uppercase tracking-widest text-[11px] rounded-lg shadow-md hover:bg-[#1a4a35] hover:shadow-lg hover:shadow-[#0B2117]/20 transition-all hover:-translate-y-1 w-full group/btn relative overflow-hidden">
+                    <a href="tel:09156953895" className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-[#0B2117] text-white font-bold uppercase tracking-widest text-[11px] rounded-[4px] shadow-md hover:bg-[#1a4a35] hover:shadow-lg hover:shadow-[#0B2117]/20 transition-all hover:-translate-y-1 w-full group/btn relative overflow-hidden">
                       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover/btn:animate-[shimmer_1.5s_infinite]"></div>
                       Inquire Now
                       <svg className="w-3.5 h-3.5 transform group-hover/btn:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
