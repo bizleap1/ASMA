@@ -56,7 +56,7 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col font-sans transition-colors duration-500 bg-bg-primary text-text-primary selection:bg-accent-primary/20 selection:text-text-primary overflow-x-hidden">
+    <div className="min-h-screen flex flex-col font-sans transition-colors duration-500 bg-bg-primary text-text-primary selection:bg-accent-primary/20 selection:text-text-primary overflow-x-clip">
       <ScrollToTop />
       
       {!hideChrome && <TopNav />}

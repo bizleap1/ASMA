@@ -18,8 +18,8 @@ const ScrollToTop = () => {
     }
   }, []);
 
-  // Save current scroll coordinates
-  const saveCurrentScroll = () => {
+  // Save current scroll coordinates to storage (called on idle/unload, never on active scroll frame)
+  const persistScroll = () => {
     if (typeof window === 'undefined') return;
     const x = window.scrollX || document.documentElement.scrollLeft || 0;
     const y = window.scrollY || document.documentElement.scrollTop || 0;
@@ -32,37 +32,49 @@ const ScrollToTop = () => {
     }
 
     if (prevKeyRef.current) {
-      scrollPositions.set(prevKeyRef.current, { x, y });
       try {
         sessionStorage.setItem('scroll_key_' + prevKeyRef.current, JSON.stringify({ x, y }));
       } catch {}
     }
   };
 
-  // Continuously record scroll coordinates as the user scrolls & before unload
+  // Instant in-memory update during active scroll (zero blocking I/O)
+  const updateMemoryScroll = () => {
+    if (typeof window === 'undefined') return;
+    const x = window.scrollX || document.documentElement.scrollLeft || 0;
+    const y = window.scrollY || document.documentElement.scrollTop || 0;
+
+    if (prevKeyRef.current) {
+      scrollPositions.set(prevKeyRef.current, { x, y });
+    }
+  };
+
+  // Record scroll coordinates smoothly without blocking the main render thread
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    let ticking = false;
+    let debounceTimer = null;
     const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          saveCurrentScroll();
-          ticking = false;
-        });
-        ticking = true;
-      }
+      // 1. Instant in-memory tracking
+      updateMemoryScroll();
+
+      // 2. Debounce writing to sessionStorage so disk/storage I/O never runs during active scroll frames
+      if (debounceTimer) clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        persistScroll();
+      }, 200);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('beforeunload', saveCurrentScroll);
-    window.addEventListener('pagehide', saveCurrentScroll);
+    window.addEventListener('beforeunload', persistScroll);
+    window.addEventListener('pagehide', persistScroll);
 
     return () => {
-      saveCurrentScroll();
+      if (debounceTimer) clearTimeout(debounceTimer);
+      persistScroll();
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('beforeunload', saveCurrentScroll);
-      window.removeEventListener('pagehide', saveCurrentScroll);
+      window.removeEventListener('beforeunload', persistScroll);
+      window.removeEventListener('pagehide', persistScroll);
     };
   }, []);
 

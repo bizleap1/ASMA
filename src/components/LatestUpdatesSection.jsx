@@ -6,10 +6,10 @@ const LatestUpdatesSection = () => {
 
   const announcements = [
     {
-      date: "Sept 10th",
+      date: "Oct 31st",
       title: "New Offline Batch Commencing!",
       desc: "We are thrilled to announce our next comprehensive batch covering Technical Analysis and Options Strategies. Seats are highly limited to ensure personalized attention.",
-      image: "/updates_poster_revamped.webp",
+      image: "/poster_batch_31_oct.webp",
       features: [
         "Live Market Practical Sessions",
         "Proprietary Trading Setups & Strategies",
@@ -17,10 +17,10 @@ const LatestUpdatesSection = () => {
       ]
     },
     {
-      date: "Sept 15th",
+      date: "Oct 26th",
       title: "Upcoming Online & Offline Batch!",
       desc: "Join our intensive program starting mid-September. Master the stock market with expert guidance and proven strategies to start your journey towards financial freedom.",
-      image: "/updates_poster.webp",
+      image: "/poster_demo_26_oct.webp",
       features: [
         "Live Interactive Classes",
         "Learn From Anywhere",

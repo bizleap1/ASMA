@@ -39,52 +39,55 @@ const CoursesPage = () => {
   // Verified Academy Announcements (Updated October 2026 Batch Information)
   const announcements = [
     {
-      id: 'oct-batch',
+      id: 'batch-31-oct',
       tag: 'NEW BATCH ANNOUNCEMENT',
-      date: 'Starting 21 October',
+      date: 'Starting 31st October 2026',
       badge: 'Admissions Open',
-      title: 'Admissions Open for Next Offline & Online Batch',
-      desc: 'Join our comprehensive practical stock market batch covering technical analysis, live market execution, and capital protection. Offline sessions held at our Nagpur classroom on Besa–Pipla Road, alongside interactive live online access.',
-      poster: '/updated_poster_1.webp',
-      posterFallback: '/updated_poster_1.PNG',
+      tabLabel: 'Batch 31 Oct',
+      title: 'New Comprehensive Batch Starting 31st October',
+      desc: 'Your journey to financial freedom begins here! Join our flagship stock market training covering technical analysis, options strategies, live execution, and disciplined capital protection.',
+      poster: '/poster_batch_31_oct.webp',
+      posterFallback: '/poster_batch_31_oct.webp',
       features: [
-        'Live Market Practical Floor',
-        'Technical Analysis & Risk Management',
-        'Online & Offline Classroom Modes'
+        'Learn, Practice & Grow in Live Market',
+        'Nagpur Offline Classroom + Live Online',
+        'Lifetime Mentorship & Community Support'
       ],
-      ctaText: 'Enquire for 21 Oct Batch'
+      ctaText: 'Enroll for 31 Oct Batch'
     },
     {
-      id: 'small-batch',
-      tag: 'INTENSIVE MENTORSHIP',
-      date: 'Starting 21st Oct',
-      badge: 'Limited Seats',
-      title: 'Small-Batch Training (Only 5 Students per Batch)',
-      desc: 'Experience high-touch, personalized coaching with strictly limited batch sizes to ensure individual attention, live screen practice, and 1-on-1 doubt clearing directly with senior mentors.',
-      poster: '/updated_poster_2.webp',
-      posterFallback: '/updated_poster_2.PNG',
+      id: 'demo-26-oct',
+      tag: 'FREE DEMO CLASS',
+      date: '26th October • 9:00 AM',
+      badge: 'Complimentary Session',
+      tabLabel: 'Demo 26 Oct',
+      title: 'New Batch Free Demo Class (26th Oct • 9:00 AM)',
+      desc: 'Experience real market education before you enroll. Understand trading basics, price action fundamentals, risk management, and the psychological discipline required for consistent trading.',
+      poster: '/poster_demo_26_oct.webp',
+      posterFallback: '/poster_demo_26_oct.webp',
       features: [
-        'Only 5 Students Per Batch',
-        '20+ Years Market Education Legacy',
-        'Lifetime Mentorship & Free Repeat Classes'
+        'Trading Basics & Chart Interpretation',
+        'Live Market Analysis Demonstration',
+        'Risk Management & Trading Psychology'
       ],
-      ctaText: 'Reserve Small-Batch Seat'
+      ctaText: 'Book Free Demo (26 Oct)'
     },
     {
-      id: 'demo-class',
-      tag: 'EXPERIENCE ASMA',
-      date: '21 October • 9:00 AM',
-      badge: 'Free Demo Class',
-      title: 'Complimentary Live Demo Session',
-      desc: 'Understand how the financial markets really operate before you enroll. Learn the fundamentals of price action, candlestick patterns, and walk through a structured, practical roadmap for trading success.',
-      poster: '/updated_poster_3.webp',
-      posterFallback: '/updated_poster_3.PNG',
+      id: 'demo-29-oct',
+      tag: 'DEMO SESSIONS',
+      date: 'Starting 29th October',
+      badge: 'Mark Your Calendar',
+      tabLabel: 'Demo 29 Oct',
+      title: 'Demo Classes Starting 29th October',
+      desc: 'Mark your calendar! Attend our interactive demo session on 29th October to explore how our mentors analyze markets live and guide beginners to become independent traders.',
+      poster: '/poster_demo_29_oct.webp',
+      posterFallback: '/poster_demo_29_oct.webp',
       features: [
-        'How Markets Actually Work',
-        'Basics of Charts & Price Action',
-        'A Practical Learning Roadmap'
+        'How Markets Actually Work in Real-Time',
+        'Interactive Q&A with Senior Mentors',
+        'Step-by-Step Learning Roadmap'
       ],
-      ctaText: 'Book Free Demo Seat'
+      ctaText: 'Reserve Demo Seat (29 Oct)'
     }
   ];
 
@@ -227,7 +230,7 @@ const CoursesPage = () => {
                       : 'text-[#4A6356] hover:text-[#1A3326]'
                   }`}
                 >
-                  {idx === 0 ? 'Batch 21 Oct' : idx === 1 ? 'Small Batch' : 'Free Demo'}
+                  {ann.tabLabel || (idx === 0 ? 'Batch 31 Oct' : idx === 1 ? 'Demo 26 Oct' : 'Demo 29 Oct')}
                 </button>
               ))}
             </div>
