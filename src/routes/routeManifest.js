@@ -36,9 +36,12 @@ export const CORE_TRAINING_SERVICES = [
   '/service/commodity-currency'
 ];
 
-// 4. Educational Blog Guides (11 URLs)
+// 4. Educational Blog Guides (14 URLs)
 // Verified from src/blogData.js
 export const BLOG_PAGES = [
+  '/blog/new-stock-market-batch-starting-after-diwali-nagpur',
+  '/blog/why-attend-free-demo-classes-stock-market-nagpur',
+  '/blog/psychology-of-disciplined-trading-asma-podcast-insights',
   '/blog/education-first-predictions-never-asma',
   '/blog/live-market-training-stock-market-nagpur',
   '/blog/how-to-learn-stock-market-in-nagpur',

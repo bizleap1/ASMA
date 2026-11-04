@@ -1,5 +1,112 @@
 export const blogPosts = [
   {
+    id: "new-stock-market-batch-starting-after-diwali-nagpur",
+    title: "New Stock Market Batch Starting After Diwali: Fast-Track Your Trading Journey with ASMA Nagpur",
+    excerpt: "Diwali marks the beginning of the traditional financial new year. Discover what makes ASMA's upcoming offline and online batch after Diwali the ideal roadmap for aspiring stock traders in Nagpur.",
+    category: "Trading",
+    readTime: "5 min read",
+    image: "/poster_batch_diwali.webp",
+    author: {
+      name: "Prof. Satish A. Bobade",
+      role: "Founder & Lead Mentor",
+      avatar: "/new photos/podcast-founder-portrait.webp"
+    },
+    content: [
+      { type: "paragraph", text: "In Indian financial culture, Diwali is far more than a festival of lights — it marks the auspicious commencement of Samvat, the traditional new financial year. For generations, traders and investors across the nation have celebrated Muhurat trading to symbolize prosperity, ethical wealth creation, and positive financial momentum." },
+      { type: "paragraph", text: "As we step into this new season, Advait Stock Market Academy (ASMA) in Nagpur is excited to announce our flagship **New Stock Market Batch Starting After Diwali** — designed specifically to transform beginners and struggling market participants into disciplined, self-reliant traders." },
+      { type: "heading", text: "Why Start Your Trading Journey After Diwali?" },
+      { type: "paragraph", text: "The post-Diwali period historically witnesses heightened market activity, quarterly corporate earnings season, and significant institutional capital allocation. Jumping into these dynamic market moves without structured knowledge, however, is a recipe for heavy capital erosion." },
+      { type: "paragraph", text: "Instead of gambling on unverified Telegram channels or social media tips, learning how institutional volume moves price action empowers you to trade with clarity, logic, and calculated probability." },
+      { type: "blockquote", text: "\"The market does not reward those who chase excitement; it rewards those who master patience, risk management, and consistent execution.\"" },
+      { type: "heading", text: "What You Will Master in This Comprehensive Batch" },
+      { type: "paragraph", text: "Our post-Diwali program is a complete end-to-end curriculum bridging classroom conceptual clarity with live market execution:" },
+      { type: "list", items: [
+        "Core Technical Analysis: Candlestick psychology, support & resistance levels, multi-timeframe trendlines, and breakout confirmations.",
+        "Derivatives & Options Strategies: Demystifying Call/Put options, Greeks (Delta, Theta, Vega), open interest (OI) interpretation, and hedging.",
+        "Real-Time Floor Execution: Live market trading practicals conducted directly in our multi-monitor terminal setups in Besa–Pipla Road, Nagpur.",
+        "Strict Capital Preservation: Implementation of the 1% risk rule, automated stop loss discipline, and minimum 1:2 risk-to-reward ratios.",
+        "Long-Term Wealth Compounding: Fundamental equity selection, SIP planning, and building resilient investment portfolios."
+      ]},
+      { type: "heading", text: "Dual Learning Modes: Nagpur Offline Classroom + Live Online" },
+      { type: "paragraph", text: "Whether you are a student, an IT professional, or a business owner in Nagpur, our flexible batch schedule caters to your lifestyle. Attend our immersive offline classroom sessions opposite Atharva Nagari 6, Besa–Pipla Road, or join our live interactive online classes with full session recordings and mentor Q&A." },
+      { type: "heading", text: "Lifetime Mentorship & Community Support" },
+      { type: "paragraph", text: "At ASMA, learning doesn't terminate when the lecture ends. Every student receives lifetime access to our vibrant community of active traders, daily pre-market analysis briefings, and ongoing mentorship to review real trades." },
+      { type: "paragraph", text: "Admissions for the post-Diwali batch are now officially open with limited batch sizes to guarantee personalized attention. Call us at **+91 9156953895** or visit our Nagpur campus to reserve your seat today!" }
+    ]
+  },
+  {
+    id: "why-attend-free-demo-classes-stock-market-nagpur",
+    title: "Why Attending a Free Demo Class is Essential Before Choosing a Stock Market Institute in Nagpur",
+    excerpt: "Don't commit to a trading course blindly. Learn how ASMA's daily free demo sessions in Nagpur allow beginners to evaluate mentors, observe live price action, and understand risk discipline firsthand.",
+    category: "Training",
+    readTime: "6 min read",
+    image: "/poster_daily_demo.webp",
+    author: {
+      name: "Prof. Satish A. Bobade",
+      role: "Founder & Lead Mentor",
+      avatar: "/new photos/podcast-founder-portrait.webp"
+    },
+    content: [
+      { type: "paragraph", text: "With the surge of interest in stock market trading across Maharashtra, dozens of training centers, online webinars, and self-proclaimed mentors have surfaced in Nagpur. Unfortunately, many newcomers invest their hard-earned savings into expensive courses only to discover pre-recorded outdated videos, complicated theoretical jargon, or zero practical mentorship." },
+      { type: "paragraph", text: "This is precisely why attending an authentic, interactive **Free Demo Class** is the single smartest decision any aspiring trader can make before enrolling in any academy." },
+      { type: "heading", text: "What Every Beginner Must Look for in a Demo Class" },
+      { type: "paragraph", text: "A genuine stock market institute will never hide behind vague promises of \"guaranteed 100% returns\" or secret indicator formulas. A transparent demo session should give you direct answers to critical questions:" },
+      { type: "list", items: [
+        "Is the mentor analyzing live, moving charts or just showing static historical snapshots where hindsight is 20/20?",
+        "Does the training emphasize risk management and capital preservation alongside profit potential?",
+        "Are your questions and doubts welcomed openly, or deflected with high-pressure sales tactics?",
+        "Is there a dedicated physical campus with live trading infrastructure you can visit and verify in person?"
+      ]},
+      { type: "blockquote", text: "\"Before you entrust someone to teach you how to protect and multiply your money, ensure they demonstrate full transparency in front of a live market.\"" },
+      { type: "heading", text: "Inside ASMA's Daily Complimentary Demo Sessions" },
+      { type: "paragraph", text: "To assist learners in making confident, informed choices, **Advait Stock Market Academy (ASMA)** conducts **Daily Free Demo Classes** at our state-of-the-art facility on Besa–Pipla Road, Nagpur." },
+      { type: "paragraph", text: "During this complimentary session, you will experience:" },
+      { type: "list", items: [
+        "Trading Basics Decoded: How the stock exchange actually works, from Demat account mechanics to live order routing.",
+        "Live Price Action Walkthrough: Understanding how candlesticks reveal institutional buying and selling pressure in real time.",
+        "Trading Psychology Essentials: Why 90% of retail traders lose money due to emotional impulsiveness, and how systematic rules protect you.",
+        "Personalized Career & Learning Consultation: One-on-one interaction with senior mentors to chart a learning roadmap tailored to your financial goals."
+      ]},
+      { type: "heading", text: "Reserve Your Free Demo Seat Today" },
+      { type: "paragraph", text: "No prior financial background or experience is required. Our daily demo sessions are completely obligation-free. Connect with our student coordinator at **+91 9156953895** or book directly through our website to attend the next upcoming session." }
+    ]
+  },
+  {
+    id: "psychology-of-disciplined-trading-asma-podcast-insights",
+    title: "The Psychology of Disciplined Trading: Key Insights from the ASMA Market Podcast Session",
+    excerpt: "Explore the mental fortitude, emotional control, and probability mindset discussed by ASMA founder Prof. Satish A. Bobade in our latest studio podcast session.",
+    category: "Trading Psychology",
+    readTime: "6 min read",
+    image: "/new photos/podcast-founder-portrait.webp",
+    author: {
+      name: "Prof. Satish A. Bobade",
+      role: "Founder & Lead Mentor",
+      avatar: "/new photos/podcast-founder-portrait.webp"
+    },
+    content: [
+      { type: "paragraph", text: "Ask any seasoned trader what separates consistent market winners from those who blow up their trading capital within months, and you will hear the exact same answer: **Trading is 20% strategy and 80% psychology**." },
+      { type: "paragraph", text: "You can memorize every candlestick formation, master Fibonacci retracements, and understand complex options Greeks, but if you cannot control fear, greed, and impatience when real money is on the line, the market will exploit your weaknesses mercilessly." },
+      { type: "paragraph", text: "In our latest **ASMA Market Insights Podcast** session recorded in our Nagpur media studio, ASMA founder **Prof. Satish A. Bobade** sat down for an in-depth conversation exploring the mental frameworks necessary to survive and thrive in volatile financial markets." },
+      { type: "heading", text: "The Three Deadly Psychological Traps Retail Traders Face" },
+      { type: "paragraph", text: "During the podcast, Prof. Bobade dissected the primary behavioral patterns that lead to severe trading drawdowns:" },
+      { type: "list", items: [
+        "FOMO (Fear of Missing Out): Jumping into a stock or option after a massive green candle has already extended, turning you into exit liquidity for institutional smart money.",
+        "Revenge Trading: Refusing to accept a loss and immediately doubling down on the next trade to \"get even\" with the market, resulting in emotional escalation.",
+        "Moving or Ignoring Stop Losses: The psychological inability to admit being wrong, allowing a small calculated 1% loss to snowball into a catastrophic account wipeout."
+      ]},
+      { type: "blockquote", text: "\"A good trade is not defined by whether it resulted in a profit. A good trade is defined by whether you followed your predefined rules without hesitation.\"" },
+      { type: "heading", text: "Developing a Professional Trader's Mindset" },
+      { type: "paragraph", text: "To transition from impulsive retail speculation to disciplined execution, the podcast outlines three foundational mindset shifts:" },
+      { type: "list", items: [
+        "1. Thinking in Probabilities: Understand that no individual trade is guaranteed. Your edge plays out over a large sample size of 50 to 100 disciplined trades.",
+        "2. Treating Losses as Business Expenses: Just as a physical store pays rent and electricity bills to operate, a trader pays small stop losses to stay in the market game.",
+        "3. Detachment from Monetary Outcomes: Focus strictly on the execution of the process rather than watching the profit-and-loss (P&L) ticker fluctuate every second."
+      ]},
+      { type: "heading", text: "Experience the Full Podcast in Our Media Gallery" },
+      { type: "paragraph", text: "Behind-the-scenes photographs and video excerpts from this exclusive studio recording are now available on our website's **Gallery** and **Social Learning Hub**. We encourage every student and active trader to watch the session and incorporate these psychological principles into their daily trading routine." }
+    ]
+  },
+  {
     id: "education-first-predictions-never-asma",
     title: "Education First, Predictions Never: The ASMA Philosophy",
     excerpt: "Most people's introduction to the stock market is a tip. By the time they ask to be taught properly, they've usually lost money. Discover why ASMA focuses on education over shortcuts.",

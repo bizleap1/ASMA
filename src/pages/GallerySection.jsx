@@ -41,6 +41,8 @@ const GallerySection = ({ isGalleryPage = false }) => {
   ];
 
   const rawPortraitPhotos = [
+    { url: "/new photos/podcast-founder-portrait.webp", title: "Founder Podcast Session", desc: "Exclusive interview and trading mindset session with ASMA founder Prof. Satish A. Bobade." },
+    { url: "/new photos/podcast-studio-behind-scenes.webp", title: "Behind the Scenes Studio", desc: "Inside our media recording studio capturing in-depth market strategies and mentoring sessions." },
     { url: "/new photos/WhatsApp Image 2026-09-18 at 5.34.41 PM.jpeg", title: "Student Classroom", desc: "Dedicated students focusing during intense live market sessions." },
     { url: "/new photos/WhatsApp Image 2026-09-18 at 5.35.18 PM.jpeg", title: "Faculty Mentorship", desc: "Guidance from our lead mentors on trading setups." },
     { url: "/new photos/WhatsApp Image 2026-09-18 at 5.40.48 PM.jpeg", title: "Trading Setups", desc: "Our state-of-the-art multi-monitor trading terminals." },
@@ -74,13 +76,13 @@ const GallerySection = ({ isGalleryPage = false }) => {
 
   // Curated lists with identical 4-column balanced masonry rhythm (Landscape, Portrait, Landscape per column)
   const photoGalleryList = [
-    // Column 1 (initial 3)
-    rawLandscapePhotos[0],
+    // Column 1 (initial 3 - Brand new podcast portrait at top)
     rawPortraitPhotos[0],
+    rawLandscapePhotos[0],
     rawLandscapePhotos[1],
-    // Column 2 (initial 3)
-    rawLandscapePhotos[2],
+    // Column 2 (initial 3 - Brand new studio behind scenes at top)
     rawPortraitPhotos[1],
+    rawLandscapePhotos[2],
     rawLandscapePhotos[3],
     // Column 3 (initial 3)
     rawLandscapePhotos[4],
@@ -98,10 +100,10 @@ const GallerySection = ({ isGalleryPage = false }) => {
     rawPortraitPhotos[5],
     rawLandscapePhotos[11],
     rawLandscapePhotos[12],
-    rawPortraitPhotos[0],
+    rawPortraitPhotos[6],
     rawLandscapePhotos[13],
     rawLandscapePhotos[14],
-    rawPortraitPhotos[1],
+    rawPortraitPhotos[7],
     rawLandscapePhotos[15],
     // Remaining items
     rawLandscapePhotos[16],
@@ -111,9 +113,9 @@ const GallerySection = ({ isGalleryPage = false }) => {
   ];
 
   const videoGalleryList = [
-    // Column 1 (initial 3)
-    rawVideos[0],
+    // Column 1 (initial 3 - Podcast video at top)
     rawVideos[8], // Market Insights Podcast (Portrait video)
+    rawVideos[0],
     rawVideos[2],
     // Column 2 (initial 3)
     rawVideos[3],
@@ -139,34 +141,33 @@ const GallerySection = ({ isGalleryPage = false }) => {
   ];
 
   const allGalleryList = [
-    // Column 1 (initial 3)
+    // Top 3 recent items: 1st Founder Portrait, 2nd Studio Behind the Scenes, 3rd Podcast Session Video
+    rawPortraitPhotos[0],
+    rawPortraitPhotos[1],
+    rawVideos[8], // Market Insights Podcast (3rd position in All)
     rawVideos[0],
-    rawVideos[8], // Market Insights Podcast (Portrait video)
     rawLandscapePhotos[0],
-    // Column 2 (initial 3)
     rawLandscapePhotos[1],
-    rawPortraitPhotos[0], // Portrait photo
     rawVideos[2],
-    // Column 3 (initial 3)
-    rawVideos[3],
-    rawPortraitPhotos[1], // Portrait photo
+    rawPortraitPhotos[2], // Portrait photo
     rawLandscapePhotos[2],
-    // Column 4 (initial 3)
+    rawVideos[3],
+    rawPortraitPhotos[3], // Portrait photo
     rawLandscapePhotos[3],
+    // Next batch (Load More)
     rawVideos[6], // Portrait video
     rawVideos[4],
-    // Next batch (Load More)
     rawVideos[5],
-    rawPortraitPhotos[2],
+    rawPortraitPhotos[4],
     rawLandscapePhotos[4],
     rawLandscapePhotos[5],
-    rawPortraitPhotos[3],
+    rawPortraitPhotos[5],
     rawVideos[7],
     rawVideos[1], // Portrait video
-    rawPortraitPhotos[4],
+    rawPortraitPhotos[6],
     rawLandscapePhotos[6],
     rawLandscapePhotos[7],
-    rawPortraitPhotos[5],
+    rawPortraitPhotos[7],
     rawVideos[8], // Podcast session
     // Remaining items
     rawLandscapePhotos[8],
@@ -262,27 +263,27 @@ const GallerySection = ({ isGalleryPage = false }) => {
               {/* Left Column */}
               <div className="flex gap-4 md:gap-5 lg:w-[32%] h-[560px] lg:h-full">
                 <div className="flex flex-col gap-4 md:gap-5 w-1/2 h-full">
-                  <img loading="lazy" decoding="async" width="200" height="300" src={displayItems[0].url} className="w-full flex-grow-[1.6] object-cover rounded-[4px] border border-[#063925]/10 shadow-sm hover:border-[#D4AF37]/50 transition-all duration-300 cursor-pointer" alt={displayItems[0].title} onClick={() => { setActiveImg(galleryItems.indexOf(displayItems[0])); setIsLightboxOpen(true); }} />
-                  <img loading="lazy" decoding="async" width="200" height="200" src={displayItems[1].url} className="w-full flex-grow-[1] object-cover rounded-[4px] border border-[#063925]/10 shadow-sm hover:border-[#D4AF37]/50 transition-all duration-300 cursor-pointer" alt={displayItems[1].title} onClick={() => { setActiveImg(galleryItems.indexOf(displayItems[1])); setIsLightboxOpen(true); }} />
+                  <img loading="lazy" decoding="async" width="200" height="300" src={displayItems[0].url} className="w-full flex-grow-[1.6] object-cover rounded-[4px] border border-[#063925]/10 shadow-sm hover:border-[#D4AF37]/50 transition-all duration-300 cursor-pointer" alt={displayItems[0].title} onClick={() => { setActiveImg(filteredGallery.indexOf(displayItems[0])); setIsLightboxOpen(true); }} />
+                  <img loading="lazy" decoding="async" width="200" height="200" src={displayItems[1].url} className="w-full flex-grow-[1] object-cover rounded-[4px] border border-[#063925]/10 shadow-sm hover:border-[#D4AF37]/50 transition-all duration-300 cursor-pointer" alt={displayItems[1].title} onClick={() => { setActiveImg(filteredGallery.indexOf(displayItems[1])); setIsLightboxOpen(true); }} />
                 </div>
                 <div className="flex flex-col justify-center w-1/2 h-full py-6 md:py-12">
-                  <img loading="lazy" decoding="async" width="200" height="400" src={displayItems[2].url} className="w-full h-full object-cover rounded-[4px] border border-[#063925]/10 shadow-sm hover:border-[#D4AF37]/50 transition-all duration-300 cursor-pointer" alt={displayItems[2].title} onClick={() => { setActiveImg(galleryItems.indexOf(displayItems[2])); setIsLightboxOpen(true); }} />
+                  <img loading="lazy" decoding="async" width="200" height="400" src={displayItems[2].url} className="w-full h-full object-cover rounded-[4px] border border-[#063925]/10 shadow-sm hover:border-[#D4AF37]/50 transition-all duration-300 cursor-pointer" alt={displayItems[2].title} onClick={() => { setActiveImg(filteredGallery.indexOf(displayItems[2])); setIsLightboxOpen(true); }} />
                 </div>
               </div>
 
               {/* Center Main Column */}
               <div className="lg:w-[36%] h-[380px] lg:h-full flex flex-col justify-center py-2 md:py-6">
-                <img loading="lazy" decoding="async" width="450" height="500" src={displayItems[3].url} className="w-full h-full object-cover rounded-[4px] border border-[#063925]/10 shadow-md hover:border-[#D4AF37]/50 transition-all duration-300 cursor-pointer" alt={displayItems[3].title} onClick={() => { setActiveImg(galleryItems.indexOf(displayItems[3])); setIsLightboxOpen(true); }} />
+                <img loading="lazy" decoding="async" width="450" height="500" src={displayItems[3].url} className="w-full h-full object-cover rounded-[4px] border border-[#063925]/10 shadow-md hover:border-[#D4AF37]/50 transition-all duration-300 cursor-pointer" alt={displayItems[3].title} onClick={() => { setActiveImg(filteredGallery.indexOf(displayItems[3])); setIsLightboxOpen(true); }} />
               </div>
 
               {/* Right Column */}
               <div className="flex gap-4 md:gap-5 lg:w-[32%] h-[560px] lg:h-full">
                 <div className="flex flex-col justify-center w-1/2 h-full py-6 md:py-12">
-                  <img loading="lazy" decoding="async" width="200" height="400" src={displayItems[4].url} className="w-full h-full object-cover rounded-[4px] border border-[#063925]/10 shadow-sm hover:border-[#D4AF37]/50 transition-all duration-300 cursor-pointer" alt={displayItems[4].title} onClick={() => { setActiveImg(galleryItems.indexOf(displayItems[4])); setIsLightboxOpen(true); }} />
+                  <img loading="lazy" decoding="async" width="200" height="400" src={displayItems[4].url} className="w-full h-full object-cover rounded-[4px] border border-[#063925]/10 shadow-sm hover:border-[#D4AF37]/50 transition-all duration-300 cursor-pointer" alt={displayItems[4].title} onClick={() => { setActiveImg(filteredGallery.indexOf(displayItems[4])); setIsLightboxOpen(true); }} />
                 </div>
                 <div className="flex flex-col gap-4 md:gap-5 w-1/2 h-full">
-                  <img loading="lazy" decoding="async" width="200" height="300" src={displayItems[5].url} className="w-full flex-grow-[1.6] object-cover rounded-[4px] border border-[#063925]/10 shadow-sm hover:border-[#D4AF37]/50 transition-all duration-300 cursor-pointer" alt={displayItems[5].title} onClick={() => { setActiveImg(galleryItems.indexOf(displayItems[5])); setIsLightboxOpen(true); }} />
-                  <img loading="lazy" decoding="async" width="200" height="200" src={displayItems[6].url} className="w-full flex-grow-[1] object-cover rounded-[4px] border border-[#063925]/10 shadow-sm hover:border-[#D4AF37]/50 transition-all duration-300 cursor-pointer" alt={displayItems[6].title} onClick={() => { setActiveImg(galleryItems.indexOf(displayItems[6])); setIsLightboxOpen(true); }} />
+                  <img loading="lazy" decoding="async" width="200" height="300" src={displayItems[5].url} className="w-full flex-grow-[1.6] object-cover rounded-[4px] border border-[#063925]/10 shadow-sm hover:border-[#D4AF37]/50 transition-all duration-300 cursor-pointer" alt={displayItems[5].title} onClick={() => { setActiveImg(filteredGallery.indexOf(displayItems[5])); setIsLightboxOpen(true); }} />
+                  <img loading="lazy" decoding="async" width="200" height="200" src={displayItems[6].url} className="w-full flex-grow-[1] object-cover rounded-[4px] border border-[#063925]/10 shadow-sm hover:border-[#D4AF37]/50 transition-all duration-300 cursor-pointer" alt={displayItems[6].title} onClick={() => { setActiveImg(filteredGallery.indexOf(displayItems[6])); setIsLightboxOpen(true); }} />
                 </div>
               </div>
             </div>

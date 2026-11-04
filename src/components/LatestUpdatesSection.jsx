@@ -6,25 +6,25 @@ const LatestUpdatesSection = () => {
 
   const announcements = [
     {
-      date: "Oct 31st",
-      title: "New Offline Batch Commencing!",
-      desc: "We are thrilled to announce our next comprehensive batch covering Technical Analysis and Options Strategies. Seats are highly limited to ensure personalized attention.",
-      image: "/poster_batch_31_oct.webp",
+      date: "Starting After Diwali",
+      title: "New Comprehensive Batch Starting After Diwali",
+      desc: "Your journey to financial freedom begins here! Join our flagship stock market training covering technical analysis, options strategies, live execution, and disciplined capital protection.",
+      image: "/poster_batch_diwali.webp",
       features: [
-        "Live Market Practical Sessions",
-        "Proprietary Trading Setups & Strategies",
-        "Lifetime Mentorship & Community Access"
+        "Learn, Practice & Grow in Live Market",
+        "Nagpur Offline Classroom + Live Online",
+        "Lifetime Mentorship & Community Support"
       ]
     },
     {
-      date: "Oct 26th",
-      title: "Upcoming Online & Offline Batch!",
-      desc: "Join our intensive program starting mid-September. Master the stock market with expert guidance and proven strategies to start your journey towards financial freedom.",
-      image: "/poster_demo_26_oct.webp",
+      date: "Daily Demo Classes",
+      title: "New Batch Free Demo Class (Daily Sessions)",
+      desc: "Experience real market education before you enroll. Understand trading basics, price action fundamentals, risk management, and the psychological discipline required for consistent trading.",
+      image: "/poster_daily_demo.webp",
       features: [
-        "Live Interactive Classes",
-        "Learn From Anywhere",
-        "Flexible Timings & Recordings Available"
+        "Trading Basics & Chart Interpretation",
+        "Live Market Analysis Demonstration",
+        "Risk Management & Trading Psychology"
       ]
     }
   ];

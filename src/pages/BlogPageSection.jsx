@@ -56,6 +56,9 @@ const BlogPageSection = () => {
 
   // Authentic editorial kicker for clean hierarchy
   const getCategoryKicker = (post) => {
+    if (post.id === 'new-stock-market-batch-starting-after-diwali-nagpur') return 'Upcoming Batch';
+    if (post.id === 'why-attend-free-demo-classes-stock-market-nagpur') return 'Free Demo Class';
+    if (post.id === 'psychology-of-disciplined-trading-asma-podcast-insights') return 'Podcast Insights';
     if (post.id === 'education-first-predictions-never-asma') return 'Market Philosophy';
     if (post.id === 'live-market-training-stock-market-nagpur') return 'Live Training';
     if (post.id === 'how-to-learn-stock-market-in-nagpur') return 'Beginner Roadmap';

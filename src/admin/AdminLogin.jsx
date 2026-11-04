@@ -92,11 +92,13 @@ const AdminLogin = () => {
           </div>
         )}
 
-        <form onSubmit={handleLogin} className="space-y-5">
+        <form onSubmit={handleLogin} autoComplete="off" className="space-y-5">
           <div>
             <label className="block text-xs font-bold text-text-secondary uppercase tracking-wider mb-2">Email</label>
             <input
               type="email"
+              name="asma_admin_email"
+              autoComplete="off"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#166534] focus:ring-1 focus:ring-[#166534] transition-colors"
@@ -109,6 +111,8 @@ const AdminLogin = () => {
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
+                name="asma_admin_password"
+                autoComplete="new-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full pl-4 pr-12 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-[#166534] focus:ring-1 focus:ring-[#166534] transition-colors font-medium text-sm"

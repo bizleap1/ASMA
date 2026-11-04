@@ -36,58 +36,41 @@ const CoursesPage = () => {
     setIsAdmissionOpen(false);
   };
 
-  // Verified Academy Announcements (Updated October 2026 Batch Information)
+  // Verified Academy Announcements
   const announcements = [
     {
-      id: 'batch-31-oct',
+      id: 'batch-after-diwali',
       tag: 'NEW BATCH ANNOUNCEMENT',
-      date: 'Starting 31st October 2026',
+      date: 'Starting After Diwali',
       badge: 'Admissions Open',
-      tabLabel: 'Batch 31 Oct',
-      title: 'New Comprehensive Batch Starting 31st October',
+      tabLabel: 'Batch After Diwali',
+      title: 'New Comprehensive Batch Starting After Diwali',
       desc: 'Your journey to financial freedom begins here! Join our flagship stock market training covering technical analysis, options strategies, live execution, and disciplined capital protection.',
-      poster: '/poster_batch_31_oct.webp',
-      posterFallback: '/poster_batch_31_oct.webp',
+      poster: '/poster_batch_diwali.webp',
+      posterFallback: '/poster_batch_diwali.webp',
       features: [
         'Learn, Practice & Grow in Live Market',
         'Nagpur Offline Classroom + Live Online',
         'Lifetime Mentorship & Community Support'
       ],
-      ctaText: 'Enroll for 31 Oct Batch'
+      ctaText: 'Enroll for Diwali Batch'
     },
     {
-      id: 'demo-26-oct',
+      id: 'daily-demo-classes',
       tag: 'FREE DEMO CLASS',
-      date: '26th October • 9:00 AM',
+      date: 'Daily Demo Classes Available',
       badge: 'Complimentary Session',
-      tabLabel: 'Demo 26 Oct',
-      title: 'New Batch Free Demo Class (26th Oct • 9:00 AM)',
+      tabLabel: 'Daily Demo',
+      title: 'New Batch Free Demo Class (Daily Sessions)',
       desc: 'Experience real market education before you enroll. Understand trading basics, price action fundamentals, risk management, and the psychological discipline required for consistent trading.',
-      poster: '/poster_demo_26_oct.webp',
-      posterFallback: '/poster_demo_26_oct.webp',
+      poster: '/poster_daily_demo.webp',
+      posterFallback: '/poster_daily_demo.webp',
       features: [
         'Trading Basics & Chart Interpretation',
         'Live Market Analysis Demonstration',
         'Risk Management & Trading Psychology'
       ],
-      ctaText: 'Book Free Demo (26 Oct)'
-    },
-    {
-      id: 'demo-29-oct',
-      tag: 'DEMO SESSIONS',
-      date: 'Starting 29th October',
-      badge: 'Mark Your Calendar',
-      tabLabel: 'Demo 29 Oct',
-      title: 'Demo Classes Starting 29th October',
-      desc: 'Mark your calendar! Attend our interactive demo session on 29th October to explore how our mentors analyze markets live and guide beginners to become independent traders.',
-      poster: '/poster_demo_29_oct.webp',
-      posterFallback: '/poster_demo_29_oct.webp',
-      features: [
-        'How Markets Actually Work in Real-Time',
-        'Interactive Q&A with Senior Mentors',
-        'Step-by-Step Learning Roadmap'
-      ],
-      ctaText: 'Reserve Demo Seat (29 Oct)'
+      ctaText: 'Book Free Demo Class'
     }
   ];
 
@@ -230,7 +213,7 @@ const CoursesPage = () => {
                       : 'text-[#4A6356] hover:text-[#1A3326]'
                   }`}
                 >
-                  {ann.tabLabel || (idx === 0 ? 'Batch 31 Oct' : idx === 1 ? 'Demo 26 Oct' : 'Demo 29 Oct')}
+                  {ann.tabLabel || (idx === 0 ? 'Batch After Diwali' : 'Daily Demo')}
                 </button>
               ))}
             </div>

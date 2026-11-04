@@ -323,7 +323,7 @@ const TopNav = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-4 xl:gap-7 font-['Inter'] font-medium text-[15px] tracking-normal">
+          <div className="hidden lg:flex items-center gap-4 xl:gap-7 font-sans font-medium text-[15px] tracking-normal">
             {navLinks.map((link) => (
               <Link
                 key={link.id}
@@ -348,7 +348,7 @@ const TopNav = () => {
             {/* Language Toggle */}
             <button
               onClick={toggleLanguage}
-              className={`notranslate hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-[4px] font-['Inter'] font-medium text-xs transition-colors border cursor-pointer ${
+              className={`notranslate hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-[4px] font-sans font-medium text-xs transition-colors border cursor-pointer ${
                 isDarkContent
                   ? 'bg-[#F2F5F3] hover:bg-gray-200 text-[#0B2117] border-[#0B2117]/15'
                   : 'bg-white/10 hover:bg-white/20 text-white border-white/25 backdrop-blur-sm'
@@ -412,7 +412,7 @@ const TopNav = () => {
               <Link
                 to="/login"
                 onClick={() => handleNavClick('/login')}
-                className={`hidden lg:inline-flex items-center px-4 py-2 rounded-[4px] font-['Inter'] font-semibold text-[13px] sm:text-[14px] transition-all duration-200 whitespace-nowrap border ${
+                className={`hidden lg:inline-flex items-center px-4 py-2 rounded-[4px] font-sans font-semibold text-[13px] sm:text-[14px] transition-all duration-200 whitespace-nowrap border ${
                   isDarkContent
                     ? 'text-[#0B2117] border-[#0B2117]/25 hover:border-[#0B2117] hover:bg-[#0B2117]/5'
                     : 'text-white border-white/35 hover:border-white hover:bg-white/10'
@@ -425,7 +425,7 @@ const TopNav = () => {
             {/* Primary Action: Inquire Now */}
             <a
               href="tel:09156953895"
-              className="hidden sm:inline-flex items-center gap-1.5 px-4 md:px-5 py-2 md:py-2.5 bg-[#D4AF37] hover:bg-[#c29d2b] text-[#0B2117] rounded-[4px] font-['Inter'] font-semibold text-[13px] sm:text-[14px] shadow-sm hover:shadow hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 whitespace-nowrap"
+              className="hidden sm:inline-flex items-center gap-1.5 px-4 md:px-5 py-2 md:py-2.5 bg-[#D4AF37] hover:bg-[#c29d2b] text-[#0B2117] rounded-[4px] font-sans font-semibold text-[13px] sm:text-[14px] shadow-sm hover:shadow hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 whitespace-nowrap"
             >
               <span>Inquire Now</span>
             </a>
@@ -461,7 +461,7 @@ const TopNav = () => {
                 key={link.id}
                 to={link.path}
                 onClick={() => handleNavClick(link.path)}
-                className={`py-3 text-base font-['Inter'] font-semibold transition-colors border-b border-gray-100 flex items-center justify-between ${
+                className={`py-3 text-base font-sans font-semibold transition-colors border-b border-gray-100 flex items-center justify-between ${
                   activeSection === link.id ? 'text-[#D4AF37]' : 'text-text-secondary hover:text-text-primary'
                 }`}
               >
@@ -475,7 +475,7 @@ const TopNav = () => {
             {/* Mobile Language Toggle */}
             <button
               onClick={toggleLanguage}
-              className="notranslate flex items-center justify-center gap-2 mt-3 w-full py-3 bg-[#F2F5F3] hover:bg-gray-200 text-text-primary rounded-[4px] font-['Inter'] font-semibold tracking-wide text-xs transition-colors border border-gray-200 text-center cursor-pointer"
+              className="notranslate flex items-center justify-center gap-2 mt-3 w-full py-3 bg-[#F2F5F3] hover:bg-gray-200 text-text-primary rounded-[4px] font-sans font-semibold tracking-wide text-xs transition-colors border border-gray-200 text-center cursor-pointer"
               translate="no"
             >
               <svg className="w-4 h-4 notranslate" translate="no" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -513,7 +513,7 @@ const TopNav = () => {
               <Link
                 to="/login"
                 onClick={() => handleNavClick('/login')}
-                className="mt-2 w-full py-3.5 bg-gray-50 hover:bg-gray-100 text-[#0B2117] border border-gray-200 rounded-[4px] font-['Inter'] font-semibold tracking-wide text-xs transition-colors text-center inline-block flex-shrink-0"
+                className="mt-2 w-full py-3.5 bg-gray-50 hover:bg-gray-100 text-[#0B2117] border border-gray-200 rounded-[4px] font-sans font-semibold tracking-wide text-xs transition-colors text-center inline-block flex-shrink-0"
               >
                 Login
               </Link>
@@ -522,7 +522,7 @@ const TopNav = () => {
             {/* Mobile Primary Action: Inquire Now */}
             <a
               href="tel:09156953895"
-              className="mt-1 mb-4 w-full py-3.5 bg-[#D4AF37] hover:bg-[#c29d2b] text-[#0B2117] rounded-[4px] font-['Inter'] font-semibold tracking-wider text-xs shadow-md transition-all text-center inline-block flex-shrink-0"
+              className="mt-1 mb-4 w-full py-3.5 bg-[#D4AF37] hover:bg-[#c29d2b] text-[#0B2117] rounded-[4px] font-sans font-semibold tracking-wider text-xs shadow-md transition-all text-center inline-block flex-shrink-0"
             >
               Inquire Now
             </a>

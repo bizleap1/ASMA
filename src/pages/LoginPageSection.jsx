@@ -22,12 +22,15 @@ const LoginPageSection = () => {
 
   const easeOut = [0.16, 1, 0.3, 1];
 
-  // Reset scroll to top on switching views so the top portion is never pushed out of sight
+  // Reset scroll to top and clear credentials when switching views
   useEffect(() => {
     if (rightColRef.current) {
       rightColRef.current.scrollTop = 0;
     }
     window.scrollTo(0, 0);
+    setEmail('');
+    setPassword('');
+    setError('');
   }, [view]);
 
   // If session already exists, redirect to authorized destination
@@ -312,13 +315,19 @@ const LoginPageSection = () => {
                   VIEW 1: SIGN IN FORM
                   ============================================================= */}
               {view === 'login' && (
-                <form onSubmit={handleLogin} className="space-y-3.5">
+                <form onSubmit={handleLogin} autoComplete="off" className="space-y-3.5">
                   <div>
                     <label className="block text-[11px] font-['Inter'] font-semibold text-[#1A3326] uppercase tracking-wider mb-1">
                       Email Address
                     </label>
                     <input
                       type="email"
+                      name="asma_student_email"
+                      id="asma_student_email"
+                      autoComplete="off"
+                      autoCorrect="off"
+                      autoCapitalize="off"
+                      spellCheck="false"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
@@ -346,6 +355,9 @@ const LoginPageSection = () => {
                     <div className="relative">
                       <input
                         type={showPassword ? 'text' : 'password'}
+                        name="asma_student_password"
+                        id="asma_student_password"
+                        autoComplete="new-password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
@@ -417,13 +429,15 @@ const LoginPageSection = () => {
                   - Pending approval workflow clearly indicated
                   ============================================================= */}
               {view === 'signup' && (
-                <form onSubmit={handleEmailSignup} className="space-y-2.5">
+                <form onSubmit={handleEmailSignup} autoComplete="off" className="space-y-2.5">
                   <div>
                     <label className="block text-[10.5px] font-['Inter'] font-semibold text-[#1A3326] uppercase tracking-wider mb-1">
                       Full Name <span className="text-[#EA4335]">*</span>
                     </label>
                     <input
                       type="text"
+                      name="asma_signup_name"
+                      autoComplete="off"
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
                       required
@@ -438,6 +452,8 @@ const LoginPageSection = () => {
                     </label>
                     <input
                       type="email"
+                      name="asma_signup_email"
+                      autoComplete="off"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
@@ -452,6 +468,8 @@ const LoginPageSection = () => {
                     </label>
                     <input
                       type="tel"
+                      name="asma_signup_phone"
+                      autoComplete="off"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       required
@@ -466,6 +484,8 @@ const LoginPageSection = () => {
                     </label>
                     <input
                       type={showPassword ? 'text' : 'password'}
+                      name="asma_signup_password"
+                      autoComplete="new-password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
@@ -517,13 +537,15 @@ const LoginPageSection = () => {
                   VIEW 3: FORGOT PASSWORD
                   ============================================================= */}
               {view === 'forgot' && (
-                <form onSubmit={handleForgotPassword} className="space-y-3.5">
+                <form onSubmit={handleForgotPassword} autoComplete="off" className="space-y-3.5">
                   <div>
                     <label className="block text-[11px] font-['Inter'] font-semibold text-[#1A3326] uppercase tracking-wider mb-1">
                       Registered Email Address
                     </label>
                     <input
                       type="email"
+                      name="asma_reset_email"
+                      autoComplete="off"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
