@@ -215,10 +215,10 @@ const AdminCoursePoster = () => {
 
       if (uploadError) {
         console.warn('Storage upload error, using FileReader fallback:', uploadError.message);
+        toast.error(`Cloud Storage upload notice: ${uploadError.message}. Using preview fallback.`);
         const reader = new FileReader();
         reader.onloadend = () => {
           setFormData((prev) => ({ ...prev, image_url: reader.result }));
-          toast.success('Image loaded successfully!');
           setUploadingImage(false);
         };
         reader.readAsDataURL(file);
@@ -232,7 +232,7 @@ const AdminCoursePoster = () => {
       if (data && data.publicUrl) {
         const cacheBusterUrl = `${data.publicUrl}?t=${Date.now()}`;
         setFormData((prev) => ({ ...prev, image_url: cacheBusterUrl }));
-        toast.success('Poster image uploaded successfully!');
+        toast.success('Poster uploaded to Supabase Cloud Storage successfully!');
       }
     } catch (err) {
       toast.error('Upload failed: ' + err.message);
