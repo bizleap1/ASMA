@@ -509,13 +509,13 @@ const AdminCoursePoster = () => {
               setPreviewPosterIndex(0);
               setIsPreviewOpen(true);
             }}
-            className="px-4 py-2.5 rounded-xl border border-gray-200 hover:bg-gray-50 text-gray-700 font-bold text-xs sm:text-sm transition-colors flex items-center gap-1.5 cursor-pointer shadow-2xs"
+            className="px-4 py-2.5 rounded-xl border border-gray-200 hover:bg-gray-50 text-gray-700 font-bold text-xs sm:text-sm transition-colors flex items-center gap-1.5 cursor-pointer shadow-2xs whitespace-nowrap shrink-0"
           >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
             </svg>
-            Live Page Preview
+            <span className="whitespace-nowrap">Live Page Preview</span>
           </button>
           <button
             onClick={openAddModal}
@@ -1086,7 +1086,7 @@ const AdminCoursePoster = () => {
                   return (
                     <div className="space-y-6">
                       {/* Header & Dynamic Tabs */}
-                      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                      <div className={`flex justify-between gap-4 ${previewDevice === 'mobile' ? 'flex-col items-start' : 'flex-col sm:flex-row sm:items-end'}`}>
                         <div>
                           <div className="flex items-center gap-2 mb-1">
                             <span className="w-4 h-[1.5px] bg-[#D4AF37]" />
@@ -1101,12 +1101,16 @@ const AdminCoursePoster = () => {
 
                         {/* Interactive Selector Tabs in Preview */}
                         {activeLivePosters.length > 1 && (
-                          <div className="flex items-center gap-1.5 p-1 bg-white rounded-[4px] border border-[#0B2117]/10 flex-wrap overflow-x-auto">
+                          <div className={`flex items-center gap-1.5 p-1 bg-white rounded-[4px] border border-[#0B2117]/10 ${
+                            previewDevice === 'mobile'
+                              ? 'w-full overflow-x-auto flex-nowrap pb-1 no-scrollbar'
+                              : 'flex-nowrap overflow-x-auto max-w-full'
+                          }`}>
                             {activeLivePosters.map((poster, idx) => (
                               <button
                                 key={poster.id || idx}
                                 onClick={() => setPreviewPosterIndex(idx)}
-                                className={`px-3 py-1.5 text-xs font-semibold rounded-[3px] transition-colors cursor-pointer ${
+                                className={`px-3 py-1.5 text-xs font-semibold rounded-[3px] transition-colors cursor-pointer shrink-0 whitespace-nowrap ${
                                   previewPosterIndex === idx
                                     ? 'bg-[#063925] text-white shadow-xs'
                                     : 'text-[#4A6356] hover:text-[#1A3326]'
@@ -1120,15 +1124,19 @@ const AdminCoursePoster = () => {
                       </div>
 
                       {/* Poster Feature Card */}
-                      <div className="bg-white rounded-[6px] border border-[#0B2117]/10 p-6 sm:p-8 shadow-[0_4px_24px_rgba(11,33,23,0.05)] transition-opacity duration-300">
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center text-left">
+                      <div className="bg-white rounded-[6px] border border-[#0B2117]/10 p-5 sm:p-8 shadow-[0_4px_24px_rgba(11,33,23,0.05)] transition-opacity duration-300">
+                        <div className={
+                          previewDevice === 'mobile'
+                            ? 'flex flex-col gap-6 text-left'
+                            : 'grid grid-cols-1 lg:grid-cols-12 gap-8 items-center text-left'
+                        }>
                           {/* Info */}
-                          <div className={previewDevice === 'mobile' ? 'space-y-4' : 'lg:col-span-7 space-y-4'}>
+                          <div className={previewDevice === 'mobile' ? 'w-full space-y-4' : 'lg:col-span-7 space-y-4'}>
                             <div className="flex flex-wrap items-center gap-2">
-                              <span className="px-2.5 py-1 rounded-[3px] bg-[#063925]/10 text-[#063925] font-semibold uppercase tracking-wider text-[11px]">
+                              <span className="px-2.5 py-1 rounded-[3px] bg-[#063925]/10 text-[#063925] font-semibold uppercase tracking-wider text-[11px] whitespace-nowrap">
                                 {currentPreviewPoster.tag || 'NEW BATCH ANNOUNCEMENT'}
                               </span>
-                              <span className="px-2.5 py-1 rounded-[3px] bg-[#D4AF37]/15 text-[#8C6D1F] font-semibold text-xs">
+                              <span className="px-2.5 py-1 rounded-[3px] bg-[#D4AF37]/15 text-[#8C6D1F] font-semibold text-xs whitespace-nowrap">
                                 {currentPreviewPoster.badge || 'Admissions Open Now'}
                               </span>
                             </div>
@@ -1142,17 +1150,17 @@ const AdminCoursePoster = () => {
                             </p>
 
                             <div className="pt-2 flex flex-wrap items-center gap-3">
-                              <span className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-[#063925] text-white text-xs font-semibold uppercase tracking-wider rounded-[4px]">
+                              <span className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-[#063925] text-white text-xs font-semibold uppercase tracking-wider rounded-[4px] whitespace-nowrap">
                                 {currentPreviewPoster.cta_text || 'Enroll Now'}
                               </span>
-                              <span className="inline-flex items-center justify-center gap-2 px-4 py-3 border border-[#0B2117]/15 text-[#063925] text-xs font-semibold uppercase tracking-wider rounded-[4px]">
+                              <span className="inline-flex items-center justify-center gap-2 px-4 py-3 border border-[#0B2117]/15 text-[#063925] text-xs font-semibold uppercase tracking-wider rounded-[4px] whitespace-nowrap">
                                 Call +91 91569 53895
                               </span>
                             </div>
                           </div>
 
                           {/* Image */}
-                          <div className={previewDevice === 'mobile' ? 'flex justify-center' : 'lg:col-span-5 flex justify-center'}>
+                          <div className={previewDevice === 'mobile' ? 'w-full flex justify-center' : 'lg:col-span-5 flex justify-center'}>
                             <div className="relative w-full max-w-[320px] rounded-[6px] overflow-hidden border border-[#0B2117]/10 shadow-md bg-[#0B2117]">
                               <img
                                 src={currentPreviewPoster.image_url}
