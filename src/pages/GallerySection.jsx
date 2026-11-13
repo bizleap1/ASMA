@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Routes, Route, useLocation, Link, useParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '../supabaseClient';
+import { defaultGalleryItems, defaultHomeGalleryItems } from '../galleryData';
 import { blogPosts } from '../blogData';
 import shubhangiImg from '../assets/shubhangi.png';
 import krishnaImg from '../assets/krishna.png';
@@ -20,6 +21,43 @@ const GallerySection = ({ isGalleryPage = false }) => {
     return location?.state?.category || 'All';
   });
   const [visibleItemsCount, setVisibleItemsCount] = React.useState(12);
+
+  const [items, setItems] = useState(() => {
+    try {
+      const cached = localStorage.getItem('asma_admin_gallery_items');
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch (_) {}
+    return defaultGalleryItems;
+  });
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchGallery = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('gallery_items')
+          .select('*')
+          .eq('is_published', true)
+          .order('gallery_order', { ascending: true });
+
+        if (!error && data && data.length > 0 && isMounted) {
+          setItems(data);
+          try {
+            localStorage.setItem('asma_admin_gallery_items', JSON.stringify(data));
+          } catch (_) {}
+        }
+      } catch (err) {
+        console.warn('Could not fetch gallery items from Supabase:', err);
+      }
+    };
+    fetchGallery();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   React.useEffect(() => {
     if (location?.state?.category) {
@@ -184,14 +222,48 @@ const GallerySection = ({ isGalleryPage = false }) => {
     rawLandscapePhotos[19],
   ];
 
-  // Preserved for Home page display
-  const homeGalleryItems = rawLandscapePhotos.slice(0, 7);
-  const displayItems = homeGalleryItems;
+  // Homepage items (Always at least 7 items for the approved 7-slot balanced grid)
+  const homepageItems = useMemo(() => {
+    const active = (items || [])
+      .filter((it) => it.is_published && it.show_on_homepage)
+      .sort((a, b) => (a.homepage_order ?? 999) - (b.homepage_order ?? 999));
 
-  const currentGalleryList = isGalleryPage 
-    ? (filterCategory === 'Photos' ? photoGalleryList : filterCategory === 'Videos' ? videoGalleryList : allGalleryList)
-    : homeGalleryItems;
+    if (active.length >= 7) return active.slice(0, 7);
 
+    // Fill remaining slots seamlessly from default set so 7-slot grid is never empty or broken
+    const existingUrls = new Set(active.map((x) => x.url));
+    const fillers = defaultHomeGalleryItems.filter((x) => !existingUrls.has(x.url));
+    return [...active, ...fillers].slice(0, 7);
+  }, [items]);
+
+  const displayItems = homepageItems;
+
+  // Gallery Page items (Respects show_on_gallery flag and filter category)
+  const galleryPageItems = useMemo(() => {
+    const active = (items || [])
+      .filter((it) => it.is_published && it.show_on_gallery)
+      .sort((a, b) => (a.gallery_order ?? 999) - (b.gallery_order ?? 999));
+
+    const source = active.length > 0 ? active : allGalleryList;
+
+    if (filterCategory === 'Photos') {
+      const photos = source.filter((it) => {
+        const isVid = it.media_type === 'video' || (it.url && it.url.toLowerCase().endsWith('.mp4'));
+        return !isVid;
+      });
+      return photos.length > 0 ? photos : photoGalleryList;
+    }
+    if (filterCategory === 'Videos') {
+      const vids = source.filter((it) => {
+        const isVid = it.media_type === 'video' || (it.url && it.url.toLowerCase().endsWith('.mp4'));
+        return isVid;
+      });
+      return vids.length > 0 ? vids : videoGalleryList;
+    }
+    return source;
+  }, [items, filterCategory]);
+
+  const currentGalleryList = isGalleryPage ? galleryPageItems : displayItems;
   const filteredGallery = currentGalleryList;
   const paginatedGallery = isGalleryPage ? filteredGallery.slice(0, visibleItemsCount) : [];
 

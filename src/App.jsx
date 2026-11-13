@@ -39,6 +39,7 @@ import AdminLogin from './admin/AdminLogin';
 import ProtectedRoute from './admin/ProtectedRoute';
 import AdminCourses from './admin/AdminCourses';
 import AdminCoursePoster from './admin/AdminCoursePoster';
+import AdminGalleryManager from './admin/AdminGalleryManager';
 import AdminNotes from './admin/AdminNotes';
 import AdminAccessRequests from './admin/AdminAccessRequests';
 import AdminEnrollments from './admin/AdminEnrollments';
@@ -101,6 +102,7 @@ function App() {
             <Route index element={<Navigate to="courses" replace />} />
             <Route path="courses" element={<AdminCourses />} />
             <Route path="posters" element={<AdminCoursePoster />} />
+            <Route path="gallery" element={<AdminGalleryManager />} />
             <Route path="notes" element={<AdminNotes />} />
             <Route path="access-requests" element={<AdminAccessRequests />} />
             <Route path="enrollments" element={<AdminEnrollments />} />

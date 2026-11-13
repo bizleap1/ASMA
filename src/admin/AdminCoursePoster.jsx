@@ -503,28 +503,28 @@ const AdminCoursePoster = () => {
             Manage multiple promotional posters simultaneously. Each published poster gets its own button on the public Courses page.
           </p>
         </div>
-        <div className="flex items-center gap-3 shrink-0 flex-wrap sm:flex-nowrap">
+        <div className="flex items-center gap-3 shrink-0 flex-wrap sm:flex-nowrap w-full sm:w-auto">
           <button
             onClick={() => {
               setPreviewPosterIndex(0);
               setIsPreviewOpen(true);
             }}
-            className="px-4 py-2.5 rounded-xl border border-gray-200 hover:bg-gray-50 text-gray-700 font-bold text-xs sm:text-sm transition-colors flex items-center gap-1.5 cursor-pointer shadow-2xs whitespace-nowrap shrink-0"
+            className="flex-1 sm:flex-none justify-center px-4 py-2.5 rounded-xl border border-gray-200 hover:bg-gray-50 text-gray-700 font-bold text-xs sm:text-sm transition-colors inline-flex items-center gap-2 cursor-pointer shadow-2xs whitespace-nowrap shrink-0"
           >
-            <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-4 h-4 shrink-0 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
             </svg>
-            <span className="whitespace-nowrap">Live Page Preview</span>
+            <span className="whitespace-nowrap select-none">Live Page Preview</span>
           </button>
           <button
             onClick={openAddModal}
-            className="bg-[#166534] hover:bg-green-800 text-white px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow-lg shadow-green-900/20 transition-all hover:-translate-y-0.5 flex items-center gap-2 cursor-pointer shrink-0 whitespace-nowrap"
+            className="flex-1 sm:flex-none justify-center bg-[#166534] hover:bg-green-800 text-white px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow-lg shadow-green-900/20 transition-all hover:-translate-y-0.5 inline-flex items-center gap-2 cursor-pointer shrink-0 whitespace-nowrap"
           >
             <svg className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
             </svg>
-            <span className="whitespace-nowrap">Add New Poster</span>
+            <span className="whitespace-nowrap select-none">Add New Poster</span>
           </button>
         </div>
       </div>
@@ -1078,7 +1078,7 @@ const AdminCoursePoster = () => {
             <div className="flex-1 overflow-y-auto p-4 sm:p-8 bg-[#FAF9F6] flex justify-center">
               <div
                 className={`transition-all duration-300 w-full ${
-                  previewDevice === 'mobile' ? 'max-w-[420px]' : 'max-w-4xl'
+                  previewDevice === 'mobile' ? 'max-w-[400px]' : 'max-w-4xl'
                 }`}
               >
                 {activeLivePosters.length > 0 ? (() => {
@@ -1086,7 +1086,7 @@ const AdminCoursePoster = () => {
                   return (
                     <div className="space-y-6">
                       {/* Header & Dynamic Tabs */}
-                      <div className={`flex justify-between gap-4 ${previewDevice === 'mobile' ? 'flex-col items-start' : 'flex-col sm:flex-row sm:items-end'}`}>
+                      <div className={`flex justify-between gap-4 ${previewDevice === 'mobile' ? 'flex-col items-start' : 'flex-col md:flex-row md:items-end'}`}>
                         <div>
                           <div className="flex items-center gap-2 mb-1">
                             <span className="w-4 h-[1.5px] bg-[#D4AF37]" />
@@ -1104,7 +1104,7 @@ const AdminCoursePoster = () => {
                           <div className={`flex items-center gap-1.5 p-1 bg-white rounded-[4px] border border-[#0B2117]/10 ${
                             previewDevice === 'mobile'
                               ? 'w-full overflow-x-auto flex-nowrap pb-1 no-scrollbar'
-                              : 'flex-nowrap overflow-x-auto max-w-full'
+                              : 'flex-nowrap overflow-x-auto max-w-full no-scrollbar self-start md:self-auto'
                           }`}>
                             {activeLivePosters.map((poster, idx) => (
                               <button
@@ -1128,20 +1128,20 @@ const AdminCoursePoster = () => {
                         <div className={
                           previewDevice === 'mobile'
                             ? 'flex flex-col gap-6 text-left'
-                            : 'grid grid-cols-1 lg:grid-cols-12 gap-8 items-center text-left'
+                            : 'grid grid-cols-1 md:grid-cols-12 gap-8 items-center text-left'
                         }>
                           {/* Info */}
-                          <div className={previewDevice === 'mobile' ? 'w-full space-y-4' : 'lg:col-span-7 space-y-4'}>
+                          <div className={previewDevice === 'mobile' ? 'w-full space-y-4' : 'md:col-span-7 space-y-4'}>
                             <div className="flex flex-wrap items-center gap-2">
-                              <span className="px-2.5 py-1 rounded-[3px] bg-[#063925]/10 text-[#063925] font-semibold uppercase tracking-wider text-[11px] whitespace-nowrap">
+                              <span className="px-2.5 py-1 rounded-[3px] bg-[#063925]/10 text-[#063925] font-semibold uppercase tracking-wider text-[11px] whitespace-nowrap shrink-0">
                                 {currentPreviewPoster.tag || 'NEW BATCH ANNOUNCEMENT'}
                               </span>
-                              <span className="px-2.5 py-1 rounded-[3px] bg-[#D4AF37]/15 text-[#8C6D1F] font-semibold text-xs whitespace-nowrap">
+                              <span className="px-2.5 py-1 rounded-[3px] bg-[#D4AF37]/15 text-[#8C6D1F] font-semibold text-xs whitespace-nowrap shrink-0">
                                 {currentPreviewPoster.badge || 'Admissions Open Now'}
                               </span>
                             </div>
 
-                            <h3 className="text-xl sm:text-2xl font-semibold text-[#1A3326] tracking-tight">
+                            <h3 className="text-xl sm:text-2xl font-semibold text-[#1A3326] tracking-tight leading-snug">
                               {currentPreviewPoster.title || 'Promotional Poster Headline'}
                             </h3>
 
@@ -1150,18 +1150,18 @@ const AdminCoursePoster = () => {
                             </p>
 
                             <div className="pt-2 flex flex-wrap items-center gap-3">
-                              <span className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-[#063925] text-white text-xs font-semibold uppercase tracking-wider rounded-[4px] whitespace-nowrap">
+                              <span className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-[#063925] text-white text-xs font-semibold uppercase tracking-wider rounded-[4px] whitespace-nowrap shrink-0">
                                 {currentPreviewPoster.cta_text || 'Enroll Now'}
                               </span>
-                              <span className="inline-flex items-center justify-center gap-2 px-4 py-3 border border-[#0B2117]/15 text-[#063925] text-xs font-semibold uppercase tracking-wider rounded-[4px] whitespace-nowrap">
+                              <span className="inline-flex items-center justify-center gap-2 px-4 py-3 border border-[#0B2117]/15 text-[#063925] text-xs font-semibold uppercase tracking-wider rounded-[4px] whitespace-nowrap shrink-0">
                                 Call +91 91569 53895
                               </span>
                             </div>
                           </div>
 
                           {/* Image */}
-                          <div className={previewDevice === 'mobile' ? 'w-full flex justify-center' : 'lg:col-span-5 flex justify-center'}>
-                            <div className="relative w-full max-w-[320px] rounded-[6px] overflow-hidden border border-[#0B2117]/10 shadow-md bg-[#0B2117]">
+                          <div className={previewDevice === 'mobile' ? 'w-full flex justify-center' : 'md:col-span-5 flex justify-center'}>
+                            <div className="relative w-full max-w-[300px] rounded-[6px] overflow-hidden border border-[#0B2117]/10 shadow-md bg-[#0B2117]">
                               <img
                                 src={currentPreviewPoster.image_url}
                                 alt={currentPreviewPoster.title}
