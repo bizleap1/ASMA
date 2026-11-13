@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { courseFaqs } from '../data';
+import { supabase } from '../supabaseClient';
+import { defaultAcademyPosters } from '../admin/AdminCoursePoster';
 
 const CoursesPage = () => {
   const shouldReduceMotion = useReducedMotion();
@@ -9,7 +11,64 @@ const CoursesPage = () => {
   const [openFaq, setOpenFaq] = useState(null);
   const [isAdmissionOpen, setIsAdmissionOpen] = useState(false);
   const [selectedCourseForModal, setSelectedCourseForModal] = useState('Advanced Foundation');
-  const [activeAnnouncement, setActiveAnnouncement] = useState(0);
+
+  // Managed Course Posters from Admin
+  const [managedPosters, setManagedPosters] = useState([]);
+  const [postersLoaded, setPostersLoaded] = useState(false);
+  const [activePosterIndex, setActivePosterIndex] = useState(0);
+
+  useEffect(() => {
+    const fetchPosters = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('course_posters')
+          .select('*')
+          .eq('status', 'published')
+          .eq('is_active', true)
+          .order('display_order', { ascending: true })
+          .order('created_at', { ascending: false });
+
+        if (!error && data && data.length > 0) {
+          const now = new Date();
+          const active = data.filter((p) => {
+            if (p.start_date && new Date(p.start_date) > now) return false;
+            if (p.expiry_date && new Date(p.expiry_date) < now) return false;
+            return true;
+          });
+          setManagedPosters(active);
+        } else {
+          // Check local fallback
+          const stored = typeof window !== 'undefined' ? localStorage.getItem('asma_course_posters') : null;
+          if (stored) {
+            try {
+              const parsed = JSON.parse(stored);
+              const now = new Date();
+              const active = parsed.filter((p) => {
+                if (p.status !== 'published' || p.is_active === false) return false;
+                if (p.start_date && new Date(p.start_date) > now) return false;
+                if (p.expiry_date && new Date(p.expiry_date) < now) return false;
+                return true;
+              });
+              setManagedPosters(active);
+            } catch (_) {
+              setManagedPosters([]);
+            }
+          } else if (error) {
+            // Initial fallback before database table creation
+            setManagedPosters(defaultAcademyPosters);
+          } else {
+            setManagedPosters([]);
+          }
+        }
+      } catch (err) {
+        console.warn('Error fetching course posters:', err);
+      } finally {
+        setPostersLoaded(true);
+      }
+    };
+
+    fetchPosters();
+  }, []);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -39,38 +98,76 @@ const CoursesPage = () => {
   // Verified Academy Announcements
   const announcements = [
     {
-      id: 'batch-after-diwali',
+      id: 'batch-20-nov',
       tag: 'NEW BATCH ANNOUNCEMENT',
-      date: 'Starting After Diwali',
-      badge: 'Admissions Open',
-      tabLabel: 'Batch After Diwali',
-      title: 'New Comprehensive Batch Starting After Diwali',
-      desc: 'Your journey to financial freedom begins here! Join our flagship stock market training covering technical analysis, options strategies, live execution, and disciplined capital protection.',
-      poster: '/poster_batch_diwali.webp',
-      posterFallback: '/poster_batch_diwali.webp',
+      date: 'Starting 20th November',
+      badge: 'Admissions Open Now',
+      tabLabel: 'Batch 20 Nov',
+      title: 'New Stock Market Batch Starting 20th November',
+      desc: 'Join our comprehensive stock market training batch starting 20th November. Master practical market learning, price action, options strategies, live market exposure, and disciplined risk management with guidance by experienced mentors.',
+      poster: '/poster_batch_20_nov.webp',
+      posterFallback: '/poster_batch_20_nov.webp',
       features: [
-        'Learn, Practice & Grow in Live Market',
-        'Nagpur Offline Classroom + Live Online',
-        'Lifetime Mentorship & Community Support'
+        'Practical Market Learning',
+        'Live Market Exposure',
+        'Beginner to Advanced',
+        'Guidance by Experienced Mentors'
       ],
-      ctaText: 'Enroll for Diwali Batch'
+      ctaText: 'Enroll for 20 Nov Batch'
     },
     {
-      id: 'daily-demo-classes',
+      id: 'demo-17-nov',
       tag: 'FREE DEMO CLASS',
-      date: 'Daily Demo Classes Available',
-      badge: 'Complimentary Session',
-      tabLabel: 'Daily Demo',
-      title: 'New Batch Free Demo Class (Daily Sessions)',
-      desc: 'Experience real market education before you enroll. Understand trading basics, price action fundamentals, risk management, and the psychological discipline required for consistent trading.',
-      poster: '/poster_daily_demo.webp',
-      posterFallback: '/poster_daily_demo.webp',
+      date: '17th November • 11 A.M. Onwards',
+      badge: 'Admissions Open Now',
+      tabLabel: 'Demo 17 Nov',
+      title: 'Free Demo Class – 17th November (11 A.M. Onwards)',
+      desc: 'Attend our complimentary live demo session on 17th November from 11 A.M. onwards. Experience live market dynamics, practical market analysis, and chart interpretation before enrolling.',
+      poster: '/poster_demo_17_nov.webp',
+      posterFallback: '/poster_demo_17_nov.webp',
       features: [
-        'Trading Basics & Chart Interpretation',
-        'Live Market Analysis Demonstration',
-        'Risk Management & Trading Psychology'
+        'Practical Market Learning',
+        'Live Market Exposure',
+        'Beginner to Advanced',
+        'Guidance by Experienced Mentors'
       ],
-      ctaText: 'Book Free Demo Class'
+      ctaText: 'Book Free Demo (17 Nov)'
+    },
+    {
+      id: 'demo-18-nov',
+      tag: 'FREE DEMO CLASS',
+      date: '18th November • 11 A.M. Onwards',
+      badge: 'Admissions Open Now',
+      tabLabel: 'Demo 18 Nov',
+      title: 'ASMA Presents Demo Class – 18th November (11 A.M. Onwards)',
+      desc: 'Discover how professional mentors analyze price movements in real time. Join the 18th November demo session to understand our structured curriculum and live floor trading methodology.',
+      poster: '/poster_demo_18_nov.webp',
+      posterFallback: '/poster_demo_18_nov.webp',
+      features: [
+        'Practical Market Learning',
+        'Live Market Exposure',
+        'Beginner to Advanced',
+        'Guidance by Experienced Mentors'
+      ],
+      ctaText: 'Book Free Demo (18 Nov)'
+    },
+    {
+      id: 'demo-19-nov',
+      tag: 'FREE DEMO CLASS',
+      date: '19th November • 11 A.M. Onwards',
+      badge: 'Admissions Open Now',
+      tabLabel: 'Demo 19 Nov',
+      title: 'Interactive Demo Class – 19th November (11 A.M. Onwards)',
+      desc: 'Final demo session on 19th November at 11 A.M. onwards before the commencement of our new batch. Get hands-on preview of live trading terminals, setup psychology, and risk management.',
+      poster: '/poster_demo_19_nov.webp',
+      posterFallback: '/poster_demo_19_nov.webp',
+      features: [
+        'Practical Market Learning',
+        'Live Market Exposure',
+        'Beginner to Advanced',
+        'Guidance by Experienced Mentors'
+      ],
+      ctaText: 'Book Free Demo (19 Nov)'
     }
   ];
 
@@ -118,8 +215,6 @@ const CoursesPage = () => {
       ]
     }
   ];
-
-  const currentAnnouncement = announcements[activeAnnouncement];
 
   return (
     <div className="bg-[#FAF9F6] min-h-screen text-[#1A3326]">
@@ -178,140 +273,175 @@ const CoursesPage = () => {
         </div>
       </section>
 
-      {/* 2. WHAT'S TRENDING NOW — ACADEMY ANNOUNCEMENTS (Compact Feature Layout) */}
-      <section className="pt-6 sm:pt-8 md:pt-10 pb-12 sm:pb-14 md:pb-16 bg-[#FAF9F6] border-b border-[#0B2117]/10 w-full px-4 md:px-8 lg:px-12">
-        <div className="container mx-auto px-1 md:px-0 w-full max-w-7xl">
-          {/* Header & Tab Controls */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 sm:mb-10 text-left">
-            <div>
-              <div className="flex items-center gap-2 mb-2">
-                <span className="w-4 h-[1.5px] bg-[#D4AF37]" />
-                <span
-                  className="text-[11px] sm:text-[11.5px] font-semibold tracking-[0.16em] uppercase text-[#063925]"
-                  style={{ fontFamily: "'Inter', sans-serif" }}
-                >
-                  ACADEMY ANNOUNCEMENTS
-                </span>
-              </div>
-              <h2
-                className="text-[24px] sm:text-[28px] md:text-[34px] font-semibold text-[#1A3326] tracking-tight leading-snug"
-                style={{ fontFamily: "'Manrope', sans-serif" }}
-              >
-                What's Trending <span className="text-[#D4AF37]">Now.</span>
-              </h2>
-            </div>
+      {/* 2. WHAT'S TRENDING NOW — PROMOTIONAL POSTER & ANNOUNCEMENTS */}
+      {postersLoaded && managedPosters.length > 0 && (() => {
+        const currentPoster = managedPosters[activePosterIndex] || managedPosters[0];
+        const posterFeatures = currentPoster.features || [
+          'Practical Market Learning',
+          'Live Market Exposure',
+          'Beginner to Advanced',
+          'Guidance by Experienced Mentors'
+        ];
 
-            {/* Announcement Selector Tabs */}
-            <div className="flex items-center gap-1.5 p-1 bg-white rounded-[4px] border border-[#0B2117]/10 self-start md:self-auto">
-              {announcements.map((ann, idx) => (
-                <button
-                  key={ann.id}
-                  onClick={() => setActiveAnnouncement(idx)}
-                  className={`px-3 sm:px-4 py-1.5 text-xs font-['Inter'] font-semibold rounded-[3px] transition-colors duration-200 cursor-pointer ${
-                    activeAnnouncement === idx
-                      ? 'bg-[#063925] text-white shadow-xs'
-                      : 'text-[#4A6356] hover:text-[#1A3326]'
-                  }`}
-                >
-                  {ann.tabLabel || (idx === 0 ? 'Batch After Diwali' : 'Daily Demo')}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Feature Card */}
-          <motion.div
-            key={currentAnnouncement.id}
-            initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: isMobile ? 8 : 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, ease: easeOut }}
-            className="bg-white rounded-[6px] border border-[#0B2117]/10 p-6 sm:p-8 lg:p-10 shadow-[0_4px_24px_rgba(11,33,23,0.05)]"
-          >
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center text-left">
-              {/* Left / Info (7 Cols) */}
-              <div className="lg:col-span-7 space-y-4 sm:space-y-5">
-                <div className="flex flex-wrap items-center gap-2.5">
-                  <span className="px-2.5 py-1 rounded-[3px] bg-[#063925]/10 text-[#063925] font-['Inter'] font-semibold uppercase tracking-wider text-[11px]">
-                    {currentAnnouncement.tag}
-                  </span>
-                  <span className="px-2.5 py-1 rounded-[3px] bg-[#FAF9F6] border border-[#0B2117]/10 text-[#063925] font-['Inter'] font-semibold text-xs">
-                    {currentAnnouncement.date}
-                  </span>
-                  <span className="px-2.5 py-1 rounded-[3px] bg-[#D4AF37]/15 text-[#8C6D1F] font-['Inter'] font-semibold text-xs">
-                    {currentAnnouncement.badge}
-                  </span>
-                </div>
-
-                <h3
-                  className="text-[22px] sm:text-[26px] md:text-[30px] font-semibold text-[#1A3326] tracking-tight leading-snug"
-                  style={{ fontFamily: "'Manrope', sans-serif" }}
-                >
-                  {currentAnnouncement.title}
-                </h3>
-
-                <p
-                  className="text-[14.5px] sm:text-[15.5px] text-[#4A6356] font-normal leading-[1.7]"
-                  style={{ fontFamily: "'Inter', sans-serif" }}
-                >
-                  {currentAnnouncement.desc}
-                </p>
-
-                {/* Features List */}
-                <div className="space-y-2 pt-1 border-t border-[#0B2117]/10">
-                  {currentAnnouncement.features.map((feat, fIdx) => (
-                    <div key={fIdx} className="flex items-center gap-2.5 text-xs sm:text-[13px] font-['Inter'] text-[#1A3326]">
-                      <span className="w-4 h-4 rounded-full bg-[#063925]/10 flex items-center justify-center text-[#063925] font-bold text-[10px] shrink-0">
-                        ✓
-                      </span>
-                      <span className="font-medium">{feat}</span>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Actions */}
-                <div className="pt-2 flex flex-wrap items-center gap-3">
-                  <button
-                    onClick={() => {
-                      setSelectedCourseForModal(currentAnnouncement.title);
-                      setIsAdmissionOpen(true);
-                    }}
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#063925] hover:bg-[#0B2117] text-white text-xs font-['Inter'] font-semibold uppercase tracking-wider rounded-[4px] shadow-sm transition-colors duration-200 cursor-pointer min-h-[46px]"
+        return (
+          <section className="pt-6 sm:pt-8 md:pt-10 pb-12 sm:pb-14 md:pb-16 bg-[#FAF9F6] border-b border-[#0B2117]/10 w-full px-4 md:px-8 lg:px-12">
+            <div className="container mx-auto px-1 md:px-0 w-full max-w-7xl">
+              {/* Header & Tab Controls */}
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 sm:mb-10 text-left">
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="w-4 h-[1.5px] bg-[#D4AF37]" />
+                    <span
+                      className="text-[11px] sm:text-[11.5px] font-semibold tracking-[0.16em] uppercase text-[#063925]"
+                      style={{ fontFamily: "'Inter', sans-serif" }}
+                    >
+                      ACADEMY ANNOUNCEMENTS
+                    </span>
+                  </div>
+                  <h2
+                    className="text-[24px] sm:text-[28px] md:text-[34px] font-semibold text-[#1A3326] tracking-tight leading-snug"
+                    style={{ fontFamily: "'Manrope', sans-serif" }}
                   >
-                    <span>{currentAnnouncement.ctaText}</span>
-                    <svg className="w-4 h-4 text-[#D4AF37]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                    </svg>
-                  </button>
-
-                  <a
-                    href="tel:+919156953895"
-                    className="inline-flex items-center justify-center gap-2 px-5 py-3.5 border border-[#0B2117]/15 hover:border-[#063925] text-[#063925] text-xs font-['Inter'] font-semibold uppercase tracking-wider rounded-[4px] transition-colors duration-200 min-h-[46px]"
-                  >
-                    <span>Call +91 91569 53895</span>
-                  </a>
+                    What's Trending <span className="text-[#D4AF37]">Now.</span>
+                  </h2>
                 </div>
+
+                {/* Announcement Selector Tabs (Shown if multiple posters are active) */}
+                {managedPosters.length > 1 && (
+                  <div className="flex items-center gap-1.5 p-1 bg-white rounded-[4px] border border-[#0B2117]/10 self-start md:self-auto flex-nowrap overflow-x-auto max-w-full no-scrollbar">
+                    {managedPosters.map((poster, idx) => (
+                      <button
+                        key={poster.id || idx}
+                        onClick={() => setActivePosterIndex(idx)}
+                        className={`px-3 sm:px-4 py-1.5 text-xs font-['Inter'] font-semibold rounded-[3px] transition-colors duration-200 cursor-pointer shrink-0 whitespace-nowrap ${
+                          activePosterIndex === idx
+                            ? 'bg-[#063925] text-white shadow-xs'
+                            : 'text-[#4A6356] hover:text-[#1A3326]'
+                        }`}
+                      >
+                        {poster.tab_label || poster.badge || poster.title || `Announcement ${idx + 1}`}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
 
-              {/* Right / Visual Poster (5 Cols) */}
-              <div className="lg:col-span-5 flex justify-center">
+              {/* Feature Card with smooth 250ms crossfade */}
+              <AnimatePresence mode="wait">
                 <motion.div
+                  key={currentPoster.id || activePosterIndex}
                   initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 0.55, ease: easeOut }}
-                  className="relative w-full max-w-[340px] rounded-[6px] overflow-hidden border border-[#0B2117]/10 shadow-[0_6px_24px_rgba(11,33,23,0.08)] bg-[#0B2117]"
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.25, ease: 'easeInOut' }}
+                  className="bg-white rounded-[6px] border border-[#0B2117]/10 p-6 sm:p-8 lg:p-10 shadow-[0_4px_24px_rgba(11,33,23,0.05)]"
                 >
-                  <img
-                    src={currentAnnouncement.poster}
-                    alt={currentAnnouncement.title}
-                    className="w-full h-auto object-contain block"
-                    loading="eager"
-                  />
-                </motion.div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center text-left">
+                  {/* Left / Info (7 Cols) */}
+                  <div className="lg:col-span-7 space-y-4 sm:space-y-5">
+                    <div className="flex flex-wrap items-center gap-2.5">
+                      <span className="px-2.5 py-1 rounded-[3px] bg-[#063925]/10 text-[#063925] font-['Inter'] font-semibold uppercase tracking-wider text-[11px]">
+                        {currentPoster.tag || 'NEW BATCH ANNOUNCEMENT'}
+                      </span>
+                      {currentPoster.date_label && (
+                        <span className="px-2.5 py-1 rounded-[3px] bg-[#FAF9F6] border border-[#0B2117]/10 text-[#063925] font-['Inter'] font-semibold text-xs">
+                          {currentPoster.date_label}
+                        </span>
+                      )}
+                      <span className="px-2.5 py-1 rounded-[3px] bg-[#D4AF37]/15 text-[#8C6D1F] font-['Inter'] font-semibold text-xs">
+                        {currentPoster.badge || 'Admissions Open Now'}
+                      </span>
+                    </div>
+
+                    <h3
+                      className="text-[22px] sm:text-[26px] md:text-[30px] font-semibold text-[#1A3326] tracking-tight leading-snug"
+                      style={{ fontFamily: "'Manrope', sans-serif" }}
+                    >
+                      {currentPoster.title || 'New Stock Market Batch'}
+                    </h3>
+
+                    {currentPoster.description && (
+                      <p
+                        className="text-[14.5px] sm:text-[15.5px] text-[#4A6356] font-normal leading-[1.7]"
+                        style={{ fontFamily: "'Inter', sans-serif" }}
+                      >
+                        {currentPoster.description}
+                      </p>
+                    )}
+
+                    {/* Features List */}
+                    <div className="space-y-2 pt-1 border-t border-[#0B2117]/10">
+                      {posterFeatures.map((feat, fIdx) => (
+                        <div key={fIdx} className="flex items-center gap-2.5 text-xs sm:text-[13px] font-['Inter'] text-[#1A3326]">
+                          <span className="w-4 h-4 rounded-full bg-[#063925]/10 flex items-center justify-center text-[#063925] font-bold text-[10px] shrink-0">
+                            ✓
+                          </span>
+                          <span className="font-medium">{feat}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Actions */}
+                    <div className="pt-2 flex flex-wrap items-center gap-3">
+                      {currentPoster.cta_link ? (
+                        <a
+                          href={currentPoster.cta_link}
+                          target={currentPoster.cta_link.startsWith('http') ? '_blank' : '_self'}
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#063925] hover:bg-[#0B2117] text-white text-xs font-['Inter'] font-semibold uppercase tracking-wider rounded-[4px] shadow-sm transition-colors duration-200 cursor-pointer min-h-[46px]"
+                        >
+                          <span>{currentPoster.cta_text || 'Enroll Now'}</span>
+                          <svg className="w-4 h-4 text-[#D4AF37]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                          </svg>
+                        </a>
+                      ) : (
+                        <button
+                          onClick={() => {
+                            setSelectedCourseForModal(currentPoster.title || 'Advanced Foundation');
+                            setIsAdmissionOpen(true);
+                          }}
+                          className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#063925] hover:bg-[#0B2117] text-white text-xs font-['Inter'] font-semibold uppercase tracking-wider rounded-[4px] shadow-sm transition-colors duration-200 cursor-pointer min-h-[46px]"
+                        >
+                          <span>{currentPoster.cta_text || 'Enroll Now'}</span>
+                          <svg className="w-4 h-4 text-[#D4AF37]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                          </svg>
+                        </button>
+                      )}
+
+                      <a
+                        href="tel:+919156953895"
+                        className="inline-flex items-center justify-center gap-2 px-5 py-3.5 border border-[#0B2117]/15 hover:border-[#063925] text-[#063925] text-xs font-['Inter'] font-semibold uppercase tracking-wider rounded-[4px] transition-colors duration-200 min-h-[46px]"
+                      >
+                        <span>Call +91 91569 53895</span>
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Right / Visual Poster (5 Cols) */}
+                  <div className="lg:col-span-5 flex justify-center">
+                    <motion.div
+                      initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.55, ease: easeOut }}
+                      className="relative w-full max-w-[340px] rounded-[6px] overflow-hidden border border-[#0B2117]/10 shadow-[0_6px_24px_rgba(11,33,23,0.08)] bg-[#0B2117]"
+                    >
+                      <img
+                        src={currentPoster.image_url || currentPoster.poster}
+                        alt={currentPoster.title || 'Promotional Poster'}
+                        className="w-full h-auto object-contain block"
+                        loading="eager"
+                      />
+                    </motion.div>
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </section>
+        );
+      })()}
 
       {/* 3. WHY CHOOSE ADVAIT? (Practical Learning & Brochure Section) */}
       <section className="py-14 sm:py-16 md:py-20 bg-white border-b border-[#0B2117]/10 w-full px-4 md:px-8 lg:px-12">

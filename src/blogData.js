@@ -5,7 +5,7 @@ export const blogPosts = [
     excerpt: "Diwali marks the beginning of the traditional financial new year. Discover what makes ASMA's upcoming offline and online batch after Diwali the ideal roadmap for aspiring stock traders in Nagpur.",
     category: "Trading",
     readTime: "5 min read",
-    image: "/poster_batch_diwali.webp",
+    image: "/poster_batch_20_nov.webp",
     author: {
       name: "Prof. Satish A. Bobade",
       role: "Founder & Lead Mentor",
@@ -40,7 +40,7 @@ export const blogPosts = [
     excerpt: "Don't commit to a trading course blindly. Learn how ASMA's daily free demo sessions in Nagpur allow beginners to evaluate mentors, observe live price action, and understand risk discipline firsthand.",
     category: "Training",
     readTime: "6 min read",
-    image: "/poster_daily_demo.webp",
+    image: "/poster_demo_17_nov.webp",
     author: {
       name: "Prof. Satish A. Bobade",
       role: "Founder & Lead Mentor",

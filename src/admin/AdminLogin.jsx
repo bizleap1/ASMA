@@ -31,17 +31,28 @@ const AdminLogin = () => {
     setLoading(true);
     setError('');
 
+    const cleanEmail = email.trim();
+    const cleanPassword = password;
+
     try {
       const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
+        email: cleanEmail,
+        password: cleanPassword,
       });
 
-      if (authError) throw authError;
+      if (authError) {
+        let msg = authError.message;
+        if (!msg || msg === '{}' || authError.code === 'invalid_credentials' || msg.includes('Invalid login credentials')) {
+          msg = 'Invalid email or password. Please check your credentials.';
+        }
+        setError(msg);
+        setLoading(false);
+        return;
+      }
 
-      if (authData.session) {
+      if (authData?.session) {
         // Verify admin
-        const isSuperAdmin = authData.session.user.email === 'admin@asmaonline.in';
+        const isSuperAdmin = authData.session.user.email?.toLowerCase() === 'admin@asmaonline.in';
         const { data: adminData, error: adminError } = await supabase
           .from('admins')
           .select('email')
@@ -50,13 +61,44 @@ const AdminLogin = () => {
 
         if (!isSuperAdmin && (adminError || !adminData)) {
           await supabase.auth.signOut();
-          throw new Error('Access denied. You do not have admin privileges.');
+          setError('Access denied. You do not have admin privileges.');
+          setLoading(false);
+          return;
         }
 
         navigate('/admin/courses');
       }
     } catch (err) {
-      setError(err.message || 'An error occurred during login');
+      const msg = err?.message;
+      if (!msg || msg === '{}' || msg.includes('invalid_credentials')) {
+        setError('Invalid email or password. Please check your credentials.');
+      } else {
+        setError(msg);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleForgotPassword = async () => {
+    const cleanEmail = email.trim();
+    if (!cleanEmail) {
+      setError('Please enter your admin email above first.');
+      return;
+    }
+    setLoading(true);
+    try {
+      const { error: resetError } = await supabase.auth.resetPasswordForEmail(cleanEmail, {
+        redirectTo: `${window.location.origin}/admin/login`
+      });
+      if (resetError) {
+        setError(resetError.message || 'Could not send reset instructions.');
+      } else {
+        setError('');
+        alert('Password reset link has been sent to ' + cleanEmail);
+      }
+    } catch (err) {
+      setError(err?.message || 'Could not send reset instructions.');
     } finally {
       setLoading(false);
     }
@@ -138,6 +180,15 @@ const AdminLogin = () => {
                 )}
               </button>
             </div>
+          </div>
+          <div className="flex justify-end -mt-2">
+            <button
+              type="button"
+              onClick={handleForgotPassword}
+              className="text-xs font-semibold text-[#166534] hover:underline cursor-pointer"
+            >
+              Forgot password?
+            </button>
           </div>
           <button
             type="submit"

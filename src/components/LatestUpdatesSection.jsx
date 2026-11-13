@@ -6,25 +6,51 @@ const LatestUpdatesSection = () => {
 
   const announcements = [
     {
-      date: "Starting After Diwali",
-      title: "New Comprehensive Batch Starting After Diwali",
-      desc: "Your journey to financial freedom begins here! Join our flagship stock market training covering technical analysis, options strategies, live execution, and disciplined capital protection.",
-      image: "/poster_batch_diwali.webp",
+      date: "Starting 20th November",
+      title: "New Stock Market Batch Starting 20th November",
+      desc: "Join our comprehensive stock market training batch starting 20th November. Master practical market learning, price action, options strategies, live market exposure, and disciplined risk management.",
+      image: "/poster_batch_20_nov.webp",
       features: [
-        "Learn, Practice & Grow in Live Market",
-        "Nagpur Offline Classroom + Live Online",
-        "Lifetime Mentorship & Community Support"
+        "Practical Market Learning",
+        "Live Market Exposure",
+        "Beginner to Advanced",
+        "Guidance by Experienced Mentors"
       ]
     },
     {
-      date: "Daily Demo Classes",
-      title: "New Batch Free Demo Class (Daily Sessions)",
-      desc: "Experience real market education before you enroll. Understand trading basics, price action fundamentals, risk management, and the psychological discipline required for consistent trading.",
-      image: "/poster_daily_demo.webp",
+      date: "17th November • 11 A.M.",
+      title: "Free Demo Class – 17th November (11 A.M. Onwards)",
+      desc: "Attend our complimentary live demo session on 17th November from 11 A.M. onwards. Experience live market dynamics, practical market analysis, and chart interpretation before enrolling.",
+      image: "/poster_demo_17_nov.webp",
       features: [
-        "Trading Basics & Chart Interpretation",
-        "Live Market Analysis Demonstration",
-        "Risk Management & Trading Psychology"
+        "Practical Market Learning",
+        "Live Market Exposure",
+        "Beginner to Advanced",
+        "Guidance by Experienced Mentors"
+      ]
+    },
+    {
+      date: "18th November • 11 A.M.",
+      title: "ASMA Presents Demo Class – 18th November",
+      desc: "Discover how professional mentors analyze price movements in real time. Join the 18th November demo session to understand our structured curriculum and live floor trading methodology.",
+      image: "/poster_demo_18_nov.webp",
+      features: [
+        "Practical Market Learning",
+        "Live Market Exposure",
+        "Beginner to Advanced",
+        "Guidance by Experienced Mentors"
+      ]
+    },
+    {
+      date: "19th November • 11 A.M.",
+      title: "Interactive Demo Class – 19th November",
+      desc: "Final demo session on 19th November at 11 A.M. onwards before the commencement of our new batch. Hands-on preview of live trading terminals and risk management.",
+      image: "/poster_demo_19_nov.webp",
+      features: [
+        "Practical Market Learning",
+        "Live Market Exposure",
+        "Beginner to Advanced",
+        "Guidance by Experienced Mentors"
       ]
     }
   ];
