@@ -462,7 +462,7 @@ const AdminCoursePoster = () => {
   };
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto pb-12">
+    <div className="space-y-6 max-w-7xl mx-auto pb-12 w-full min-w-0">
       <Helmet>
         <title>Multiple Course Posters Management | ASMA Admin</title>
       </Helmet>
@@ -491,19 +491,19 @@ const AdminCoursePoster = () => {
       )}
 
       {/* Header Banner */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-5 sm:p-6 rounded-2xl border border-gray-100 shadow-xs">
-        <div>
-          <h1 className="text-xl sm:text-2xl font-bold text-text-primary flex items-center gap-2.5">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-5 sm:p-6 rounded-2xl border border-gray-100 shadow-xs w-full min-w-0">
+        <div className="flex-1 min-w-0 pr-0 md:pr-4">
+          <h1 className="text-xl sm:text-2xl font-bold text-text-primary flex flex-wrap items-center gap-2.5">
             <span>Course Posters</span>
-            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
+            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 whitespace-nowrap">
               Multiple Posters Active
             </span>
           </h1>
-          <p className="text-xs sm:text-sm text-text-secondary mt-1">
+          <p className="text-xs sm:text-sm text-text-secondary mt-1 leading-relaxed">
             Manage multiple promotional posters simultaneously. Each published poster gets its own button on the public Courses page.
           </p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 shrink-0 flex-wrap sm:flex-nowrap">
           <button
             onClick={() => {
               setPreviewPosterIndex(0);
@@ -519,12 +519,12 @@ const AdminCoursePoster = () => {
           </button>
           <button
             onClick={openAddModal}
-            className="bg-[#166534] hover:bg-green-800 text-white px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow-lg shadow-green-900/20 transition-all hover:-translate-y-0.5 flex items-center gap-2 cursor-pointer shrink-0"
+            className="bg-[#166534] hover:bg-green-800 text-white px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow-lg shadow-green-900/20 transition-all hover:-translate-y-0.5 flex items-center gap-2 cursor-pointer shrink-0 whitespace-nowrap"
           >
-            <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
             </svg>
-            Add New Poster
+            <span className="whitespace-nowrap">Add New Poster</span>
           </button>
         </div>
       </div>
