@@ -138,3 +138,7 @@ SELECT
   true,
   2
 WHERE NOT EXISTS (SELECT 1 FROM public.course_posters WHERE tab_label = 'Demo 18 Nov');
+
+-- 7. Notify PostgREST to instantly reload schema cache
+NOTIFY pgrst, 'reload schema';
+

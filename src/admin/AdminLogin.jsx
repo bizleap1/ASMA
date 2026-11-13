@@ -41,9 +41,11 @@ const AdminLogin = () => {
       });
 
       if (authError) {
-        let msg = authError.message;
-        if (!msg || msg === '{}' || authError.code === 'invalid_credentials' || msg.includes('Invalid login credentials')) {
+        let msg = authError?.message || authError?.error_description;
+        if (!msg || typeof msg !== 'string' || msg.trim() === '' || msg.trim() === '{}' || authError.code === 'invalid_credentials' || msg.includes('Invalid login credentials')) {
           msg = 'Invalid email or password. Please check your credentials.';
+        } else if (msg.includes('Failed to fetch') || msg.includes('NetworkError') || msg.includes('fetch failed')) {
+          msg = 'Unable to connect to Supabase server. Please check your internet connection and try again.';
         }
         setError(msg);
         setLoading(false);
@@ -69,12 +71,15 @@ const AdminLogin = () => {
         navigate('/admin/courses');
       }
     } catch (err) {
-      const msg = err?.message;
-      if (!msg || msg === '{}' || msg.includes('invalid_credentials')) {
-        setError('Invalid email or password. Please check your credentials.');
+      let msg = err?.message || err?.error_description;
+      if (!msg || typeof msg !== 'string' || msg.trim() === '' || msg.trim() === '{}') {
+        msg = 'Invalid email or password. Please check your credentials.';
+      } else if (msg.includes('Failed to fetch') || msg.includes('NetworkError') || msg.includes('fetch failed')) {
+        msg = 'Unable to connect to Supabase server. Please check your connection and try again.';
       } else {
         setError(msg);
       }
+      setError(msg);
     } finally {
       setLoading(false);
     }
@@ -130,7 +135,7 @@ const AdminLogin = () => {
 
         {error && (
           <div className="mb-6 p-3 bg-red-50 text-red-600 text-sm font-medium rounded-xl border border-red-100 text-center">
-            {error}
+            {typeof error === 'string' && error !== '{}' ? error : 'Invalid email or password. Please check your credentials.'}
           </div>
         )}
 

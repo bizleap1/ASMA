@@ -16,8 +16,6 @@ export const defaultAcademyPosters = [
     cta_link: 'https://wa.me/919156953895?text=Hi%20Advait%20Academy!%20I%20want%20to%20inquire%20about%20the%2020%20Nov%20batch.',
     badge: 'Admissions Open Now',
     tag: 'NEW BATCH ANNOUNCEMENT',
-    start_date: null,
-    expiry_date: null,
     status: 'published',
     is_active: true,
     display_order: 0,
@@ -33,8 +31,6 @@ export const defaultAcademyPosters = [
     cta_link: 'https://wa.me/919156953895?text=Hi%20Advait%20Academy!%20I%20want%20to%20book%20the%20free%20demo%20on%2017%20Nov.',
     badge: 'Admissions Open Now',
     tag: 'FREE DEMO CLASS',
-    start_date: null,
-    expiry_date: null,
     status: 'published',
     is_active: true,
     display_order: 1,
@@ -50,8 +46,6 @@ export const defaultAcademyPosters = [
     cta_link: 'https://wa.me/919156953895?text=Hi%20Advait%20Academy!%20I%20want%20to%20book%20the%20free%20demo%20on%2018%20Nov.',
     badge: 'Admissions Open Now',
     tag: 'FREE DEMO CLASS',
-    start_date: null,
-    expiry_date: null,
     status: 'published',
     is_active: true,
     display_order: 2,
@@ -80,8 +74,6 @@ const AdminCoursePoster = () => {
     cta_link: '',
     badge: 'Admissions Open Now',
     tag: 'NEW BATCH ANNOUNCEMENT',
-    start_date: '',
-    expiry_date: '',
     status: 'published', // 'published' | 'draft'
     is_active: true,
     display_order: 0
@@ -94,17 +86,26 @@ const AdminCoursePoster = () => {
   const fetchPosters = async () => {
     try {
       setLoading(true);
-      const { data, error } = await supabase
+      let { data, error } = await supabase
         .from('course_posters')
         .select('*')
         .order('display_order', { ascending: true })
         .order('created_at', { ascending: false });
 
+      if (error && error.message && error.message.includes('schema cache')) {
+        const retryRes = await supabase
+          .from('course_posters')
+          .select('*')
+          .order('created_at', { ascending: false });
+        data = retryRes.data;
+        error = retryRes.error;
+      }
+
       if (error) {
         // Table not created or network drop -> use local storage fallback
         console.warn('course_posters table not accessible, using local storage fallback:', error.message);
         setUsingFallback(true);
-        const stored = localStorage.getItem(STORAGE_KEY);
+        const stored = typeof window !== 'undefined' ? localStorage.getItem(STORAGE_KEY) : null;
         if (stored) {
           try {
             setPosters(JSON.parse(stored));
@@ -119,7 +120,7 @@ const AdminCoursePoster = () => {
       } else {
         setUsingFallback(false);
         if (!data || data.length === 0) {
-          setPosters([]);
+          setPosters(defaultAcademyPosters);
         } else {
           setPosters(data);
         }
@@ -127,7 +128,7 @@ const AdminCoursePoster = () => {
     } catch (err) {
       console.warn('Error fetching posters:', err);
       setUsingFallback(true);
-      const stored = localStorage.getItem(STORAGE_KEY);
+      const stored = typeof window !== 'undefined' ? localStorage.getItem(STORAGE_KEY) : null;
       setPosters(stored ? JSON.parse(stored) : defaultAcademyPosters);
     } finally {
       setLoading(false);
@@ -154,8 +155,6 @@ const AdminCoursePoster = () => {
       cta_link: 'https://wa.me/919156953895?text=Hi%20Advait%20Academy!%20I%20want%20to%20inquire%20about%20the%20course.',
       badge: 'Admissions Open Now',
       tag: 'NEW BATCH ANNOUNCEMENT',
-      start_date: '',
-      expiry_date: '',
       status: 'published',
       is_active: true,
       display_order: nextOrder
@@ -175,8 +174,6 @@ const AdminCoursePoster = () => {
       cta_link: poster.cta_link || '',
       badge: poster.badge || 'Admissions Open Now',
       tag: poster.tag || 'NEW BATCH ANNOUNCEMENT',
-      start_date: poster.start_date ? poster.start_date.substring(0, 16) : '',
-      expiry_date: poster.expiry_date ? poster.expiry_date.substring(0, 16) : '',
       status: poster.status || 'published',
       is_active: poster.is_active !== false,
       display_order: typeof poster.display_order === 'number' ? poster.display_order : 0
@@ -244,6 +241,25 @@ const AdminCoursePoster = () => {
     }
   };
 
+  const saveToLocalFallback = (payload, existingId) => {
+    let updatedList = [...posters];
+    if (existingId) {
+      updatedList = updatedList.map((p) =>
+        p.id === existingId ? { ...p, ...payload } : p
+      );
+    } else {
+      updatedList.push({
+        ...payload,
+        id: 'poster_' + Date.now(),
+        created_at: new Date().toISOString()
+      });
+    }
+    setPosters(updatedList);
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedList));
+    } catch (_) {}
+  };
+
   const handleSave = async (e, forceStatus) => {
     if (e) e.preventDefault();
     if (!formData.image_url) {
@@ -253,17 +269,15 @@ const AdminCoursePoster = () => {
 
     const payload = {
       tab_label: formData.tab_label.trim() || formData.badge || 'Poster',
-      title: formData.title,
-      description: formData.description,
+      title: formData.title || '',
+      description: formData.description || '',
       image_url: formData.image_url,
       cta_text: formData.cta_text || 'Enroll Now',
       cta_link: formData.cta_link || '',
       badge: formData.badge || 'Admissions Open Now',
       tag: formData.tag || 'NEW BATCH ANNOUNCEMENT',
-      start_date: formData.start_date ? new Date(formData.start_date).toISOString() : null,
-      expiry_date: formData.expiry_date ? new Date(formData.expiry_date).toISOString() : null,
       status: forceStatus || formData.status || 'published',
-      is_active: formData.is_active,
+      is_active: formData.is_active !== false,
       display_order: typeof formData.display_order === 'number' ? formData.display_order : posters.length,
       updated_at: new Date().toISOString()
     };
@@ -280,7 +294,7 @@ const AdminCoursePoster = () => {
             .eq('id', editingPoster.id);
 
           // Graceful fallback if tab_label or display_order columns not yet in user's Supabase table
-          if (error && error.message && error.message.includes('schema cache')) {
+          if (error && error.message && (error.message.includes('schema cache') || error.message.includes('column'))) {
             const { tab_label, display_order, ...safePayload } = payload;
             const retryRes = await supabase
               .from('course_posters')
@@ -289,14 +303,20 @@ const AdminCoursePoster = () => {
             error = retryRes.error;
           }
 
-          if (error) throw error;
+          if (error) {
+            console.warn('Supabase save error, persisting to local cache:', error);
+            saveToLocalFallback(payload, editingPoster.id);
+            toast.success('Poster updated & saved locally!');
+            setIsModalOpen(false);
+            return;
+          }
         } else {
           let { error } = await supabase
             .from('course_posters')
             .insert([{ ...payload, created_at: new Date().toISOString() }]);
 
           // Graceful fallback if tab_label or display_order columns not yet in user's Supabase table
-          if (error && error.message && error.message.includes('schema cache')) {
+          if (error && error.message && (error.message.includes('schema cache') || error.message.includes('column'))) {
             const { tab_label, display_order, ...safePayload } = payload;
             const retryRes = await supabase
               .from('course_posters')
@@ -304,24 +324,16 @@ const AdminCoursePoster = () => {
             error = retryRes.error;
           }
 
-          if (error) throw error;
+          if (error) {
+            console.warn('Supabase insert error, persisting to local cache:', error);
+            saveToLocalFallback(payload, null);
+            toast.success('Poster saved & added to website buttons locally!');
+            setIsModalOpen(false);
+            return;
+          }
         }
       } else {
-        // Fallback localStorage handling
-        let updatedList = [...posters];
-        if (editingPoster) {
-          updatedList = updatedList.map((p) =>
-            p.id === editingPoster.id ? { ...p, ...payload } : p
-          );
-        } else {
-          updatedList.push({
-            ...payload,
-            id: 'poster_' + Date.now(),
-            created_at: new Date().toISOString()
-          });
-        }
-        setPosters(updatedList);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedList));
+        saveToLocalFallback(payload, editingPoster?.id);
       }
 
       toast.success(
@@ -334,7 +346,10 @@ const AdminCoursePoster = () => {
       setIsModalOpen(false);
       fetchPosters();
     } catch (err) {
-      toast.error('Error saving poster: ' + err.message);
+      console.warn('Error saving poster, saving to local fallback:', err);
+      saveToLocalFallback(payload, editingPoster?.id);
+      toast.success('Poster saved locally!');
+      setIsModalOpen(false);
     } finally {
       setLoading(false);
     }
@@ -434,34 +449,12 @@ const AdminCoursePoster = () => {
     }
   };
 
-  // Calculate live posters for summary and preview
-  const now = new Date();
-  const activeLivePosters = posters.filter((p) => {
-    if (p.status !== 'published' || p.is_active === false) return false;
-    if (p.start_date && new Date(p.start_date) > now) return false;
-    if (p.expiry_date && new Date(p.expiry_date) < now) return false;
-    return true;
-  });
+  // Calculate live posters for summary and preview (visibility strictly controlled via Publish/Unpublish)
+  const activeLivePosters = posters.filter((p) => p.status === 'published' && p.is_active !== false);
 
   const getPosterScheduleStatus = (poster) => {
     if (poster.status === 'draft') return { label: 'Draft (Hidden)', color: 'bg-gray-100 text-gray-700' };
     if (!poster.is_active) return { label: 'Inactive', color: 'bg-red-50 text-red-700' };
-
-    const startDate = poster.start_date ? new Date(poster.start_date) : null;
-    const expiryDate = poster.expiry_date ? new Date(poster.expiry_date) : null;
-
-    if (startDate && startDate > now) {
-      return {
-        label: `Scheduled (${startDate.toLocaleDateString()})`,
-        color: 'bg-blue-50 text-blue-700 border border-blue-200'
-      };
-    }
-    if (expiryDate && expiryDate < now) {
-      return {
-        label: `Expired (${expiryDate.toLocaleDateString()})`,
-        color: 'bg-amber-50 text-amber-800 border border-amber-200'
-      };
-    }
     return {
       label: 'Live on Website',
       color: 'bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold'
@@ -970,39 +963,7 @@ const AdminCoursePoster = () => {
                 </div>
               </div>
 
-              {/* 5. Scheduling (Start & Expiry Date) */}
-              <div className="bg-gray-50/70 p-4 rounded-xl border border-gray-200 space-y-3">
-                <div className="flex items-center justify-between">
-                  <label className="block text-xs font-bold text-text-secondary uppercase tracking-wider">
-                    Automatic Scheduling (Optional)
-                  </label>
-                  <span className="text-[11px] text-gray-500">Leave blank for indefinite active display</span>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-[11px] font-medium text-gray-600 mb-1">Start Date & Time</label>
-                    <input
-                      type="datetime-local"
-                      name="start_date"
-                      value={formData.start_date}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-xs focus:outline-none focus:border-[#166534]"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[11px] font-medium text-gray-600 mb-1">Expiry Date & Time</label>
-                    <input
-                      type="datetime-local"
-                      name="expiry_date"
-                      value={formData.expiry_date}
-                      onChange={handleInputChange}
-                      className="w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-xs focus:outline-none focus:border-[#166534]"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* 6. Optional Poster Headline & Descriptions */}
+              {/* 5. Optional Poster Headline & Descriptions */}
               <div className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>

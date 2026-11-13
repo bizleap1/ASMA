@@ -20,7 +20,7 @@ const CoursesPage = () => {
   useEffect(() => {
     const fetchPosters = async () => {
       try {
-        const { data, error } = await supabase
+        let { data, error } = await supabase
           .from('course_posters')
           .select('*')
           .eq('status', 'published')
@@ -28,40 +28,38 @@ const CoursesPage = () => {
           .order('display_order', { ascending: true })
           .order('created_at', { ascending: false });
 
+        if (error && error.message && error.message.includes('schema cache')) {
+          const retryRes = await supabase
+            .from('course_posters')
+            .select('*')
+            .eq('status', 'published')
+            .order('created_at', { ascending: false });
+          data = retryRes.data;
+          error = retryRes.error;
+        }
+
         if (!error && data && data.length > 0) {
-          const now = new Date();
-          const active = data.filter((p) => {
-            if (p.start_date && new Date(p.start_date) > now) return false;
-            if (p.expiry_date && new Date(p.expiry_date) < now) return false;
-            return true;
-          });
-          setManagedPosters(active);
+          // Visibility is strictly controlled through status='published' and is_active=true (no date restrictions)
+          setManagedPosters(data);
         } else {
           // Check local fallback
           const stored = typeof window !== 'undefined' ? localStorage.getItem('asma_course_posters') : null;
           if (stored) {
             try {
               const parsed = JSON.parse(stored);
-              const now = new Date();
-              const active = parsed.filter((p) => {
-                if (p.status !== 'published' || p.is_active === false) return false;
-                if (p.start_date && new Date(p.start_date) > now) return false;
-                if (p.expiry_date && new Date(p.expiry_date) < now) return false;
-                return true;
-              });
-              setManagedPosters(active);
+              const active = parsed.filter((p) => p.status === 'published' && p.is_active !== false);
+              setManagedPosters(active.length > 0 ? active : defaultAcademyPosters);
             } catch (_) {
-              setManagedPosters([]);
+              setManagedPosters(defaultAcademyPosters);
             }
-          } else if (error) {
-            // Initial fallback before database table creation
-            setManagedPosters(defaultAcademyPosters);
           } else {
-            setManagedPosters([]);
+            // Initial fallback
+            setManagedPosters(defaultAcademyPosters);
           }
         }
       } catch (err) {
         console.warn('Error fetching course posters:', err);
+        setManagedPosters(defaultAcademyPosters);
       } finally {
         setPostersLoaded(true);
       }
