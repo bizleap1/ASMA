@@ -76,36 +76,12 @@ const AboutSection = () => {
                 />
               </picture>
             </motion.div>
-            
-            {/* Founder Name & Designation - Gentle fade-in, 450ms */}
-            <motion.div
-              initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={vp}
-              transition={{ duration: isMobile ? 0.3 : 0.45, delay: isMobile ? 0.05 : 0.15, ease: easeOut }}
-              className="w-full max-w-[340px] sm:max-w-[360px] mt-3.5 text-center lg:text-left"
-            >
-              <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5 justify-center lg:justify-start">
-                <span
-                  className="text-[20px] sm:text-[22px] lg:text-[24px] font-semibold text-[#1A3326] tracking-tight leading-snug"
-                  style={{ fontFamily: "'Manrope', sans-serif" }}
-                >
-                  Satish Bobade
-                </span>
-                <span
-                  className="text-[12.5px] sm:text-[13px] lg:text-[13.5px] text-[#718079] font-normal leading-snug"
-                  style={{ fontFamily: "'Inter', sans-serif" }}
-                >
-                  Founder &amp; Head Mentor
-                </span>
-              </div>
-            </motion.div>
           </div>
 
           {/* Right Column: Editorial Content */}
           <div className="lg:col-span-7 flex flex-col justify-center">
             {/* Eyebrow - Subtle gold line reveal and text fade-in, 400ms */}
-            <div className="flex items-center gap-2.5 mb-2.5">
+            <div className="flex items-center gap-2.5 mb-3">
               <motion.span
                 initial={shouldReduceMotion ? { scaleX: 1, opacity: 1 } : { scaleX: 0, opacity: 0 }}
                 whileInView={{ scaleX: 1, opacity: 1 }}
@@ -132,11 +108,33 @@ const AboutSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={vp}
               transition={{ duration: isMobile ? 0.35 : 0.6, delay: isMobile ? 0.06 : 0.1, ease: easeOut }}
-              className="text-3xl sm:text-4xl lg:text-[40px] xl:text-[44px] font-semibold text-[#1A3326] leading-[1.16] tracking-tight mb-3"
+              className="text-3xl sm:text-4xl lg:text-[40px] xl:text-[44px] font-semibold text-[#1A3326] leading-[1.2] tracking-tight mb-3.5 sm:mb-4"
               style={{ fontFamily: "'Manrope', sans-serif" }}
             >
               Master the Market with <span className="text-[#D4AF37]">Confidence</span>
             </motion.h2>
+
+            {/* Founder Highlight - Prominent Badge with Gold & Forest Green Accents */}
+            <motion.div
+              initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: isMobile ? 4 : 8 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={vp}
+              transition={{ duration: isMobile ? 0.3 : 0.45, delay: isMobile ? 0.07 : 0.12, ease: easeOut }}
+              className="inline-flex self-start flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 bg-gradient-to-r from-[#D4AF37]/25 via-[#D4AF37]/15 to-[#FAF9F5] border border-[#D4AF37]/60 rounded-xl px-3.5 sm:px-4 py-2 mb-4 sm:mb-4.5 shadow-sm"
+            >
+              <span
+                className="text-[18px] sm:text-[20px] lg:text-[22px] font-bold text-[#063925] tracking-tight leading-snug"
+                style={{ fontFamily: "'Manrope', sans-serif" }}
+              >
+                Mr. Satish Bobade
+              </span>
+              <span
+                className="inline-flex items-center px-2.5 py-0.5 rounded-md bg-[#063925] text-[#D4AF37] text-[11px] sm:text-[11.5px] font-semibold tracking-wider uppercase shadow-xs self-start sm:self-auto"
+                style={{ fontFamily: "'Inter', sans-serif" }}
+              >
+                Founder &amp; Head Mentor
+              </span>
+            </motion.div>
 
             {/* Refined Secondary Statement - Soft fade-in, 450ms */}
             <motion.p
@@ -144,7 +142,7 @@ const AboutSection = () => {
               whileInView={{ opacity: 1 }}
               viewport={vp}
               transition={{ duration: isMobile ? 0.3 : 0.45, delay: isMobile ? 0.08 : 0.16, ease: easeOut }}
-              className="text-[16px] sm:text-[17px] lg:text-[18.5px] font-semibold text-[#1A3326] leading-snug mb-2.5"
+              className="text-[16px] sm:text-[17px] lg:text-[18.5px] font-semibold text-[#1A3326] leading-snug mb-2.5 sm:mb-3"
               style={{ fontFamily: "'Inter', sans-serif" }}
             >
               Central India's Most Experienced Stock Market Academy
@@ -156,7 +154,7 @@ const AboutSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={vp}
               transition={{ duration: isMobile ? 0.3 : 0.45, delay: isMobile ? 0.1 : 0.22, ease: easeOut }}
-              className="text-[14.5px] sm:text-[15.5px] lg:text-[16.5px] text-[#4A6356] font-normal leading-relaxed max-w-xl"
+              className="text-[14.5px] sm:text-[15.5px] lg:text-[16.5px] text-[#4A6356] font-normal leading-relaxed max-w-xl mb-4 sm:mb-5"
               style={{ fontFamily: "'Inter', sans-serif" }}
             >
               Practical stock market training in Nagpur, focused on market understanding, technical analysis and risk management.
@@ -168,7 +166,7 @@ const AboutSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={vp}
               transition={{ duration: isMobile ? 0.35 : 0.5, delay: isMobile ? 0.12 : 0.28, ease: easeOut }}
-              className="flex items-baseline gap-2 sm:gap-2.5 mt-4 mb-5 flex-wrap"
+              className="flex items-baseline gap-2 sm:gap-2.5 mb-5 flex-wrap"
             >
               <span
                 className="text-[22px] sm:text-[25px] lg:text-[27px] font-semibold text-[#D4AF37] leading-none"

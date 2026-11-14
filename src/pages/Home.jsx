@@ -12,6 +12,7 @@ import SEO from '../components/SEO';
 import MultiChartSection from '../components/MultiChartSection';
 import AboutSection from '../components/AboutSection';
 import AchievementsSection from '../components/AchievementsSection';
+import TrendingAnnouncementsSection from '../components/TrendingAnnouncementsSection';
 import FeaturedCoursesSection from '../components/FeaturedCoursesSection';
 import ServicesSection from '../components/ServicesSection';
 import SocialLearningHub from '../components/SocialLearningHub';
@@ -56,9 +57,10 @@ const Home = () => {
         schema={homeSchema}
       />
       <VideoHero />
-    <AboutSection />
-    <AchievementsSection />
-    <FeaturedCoursesSection />
+      <AboutSection />
+      <AchievementsSection />
+      <TrendingAnnouncementsSection />
+      <FeaturedCoursesSection />
     <MultiChartSection />
     <ServicesSection />
     <SocialLearningHub />

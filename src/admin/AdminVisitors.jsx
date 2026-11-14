@@ -45,6 +45,22 @@ const AdminVisitors = () => {
     }
   };
 
+  const deleteVisitor = async (id, name) => {
+    if (!window.confirm(`Are you sure you want to delete the lead for "${name || 'this visitor'}"?`)) return;
+    try {
+      const { error } = await supabase
+        .from('visitors')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+      toast.success("Lead deleted successfully.");
+      fetchVisitors();
+    } catch (err) {
+      toast.error("Error deleting lead: " + err.message);
+    }
+  };
+
   const filteredVisitors = visitors.filter(v => 
     v.name?.toLowerCase().includes(search.toLowerCase()) || 
     v.email?.toLowerCase().includes(search.toLowerCase()) ||
@@ -99,8 +115,19 @@ const AdminVisitors = () => {
                     <span>{visitor.phone}</span>
                   </div>
                 </div>
-                <div className="flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-gray-50">
-                  <div className="text-xs text-gray-400 font-medium mb-2">{new Date(visitor.created_at).toLocaleDateString()}</div>
+                <div className="flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-gray-50 gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-gray-400 font-medium">{new Date(visitor.created_at).toLocaleDateString()}</span>
+                    <button
+                      onClick={() => deleteVisitor(visitor.id, visitor.name)}
+                      title="Delete Inquiry"
+                      className="p-1 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded transition-colors cursor-pointer"
+                    >
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                    </button>
+                  </div>
                   <select 
                     value={visitor.status} 
                     onChange={(e) => updateStatus(visitor.id, e.target.value)}
