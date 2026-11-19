@@ -6,10 +6,12 @@ import { toast } from '../utils/notification';
 import SEO from '../components/SEO';
 
 const LoginPageSection = () => {
-  const [view, setView] = useState('login'); // 'login', 'signup', 'forgot'
+  const [view, setView] = useState('login'); // 'login', 'signup', 'forgot', 'reset-password'
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -30,12 +32,38 @@ const LoginPageSection = () => {
     window.scrollTo(0, 0);
     setEmail('');
     setPassword('');
+    setNewPassword('');
+    setConfirmPassword('');
     setError('');
   }, [view]);
 
-  // If session already exists, redirect to authorized destination
+  // Handle password recovery link / session checks
   useEffect(() => {
+    // If arriving with recovery token in hash or query, trigger reset-password view
+    const isRecoveryHash = typeof window !== 'undefined' && (
+      window.location.hash?.includes('type=recovery') ||
+      window.location.search?.includes('type=recovery')
+    );
+
+    if (isRecoveryHash) {
+      setView('reset-password');
+    }
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event) => {
+      if (event === 'PASSWORD_RECOVERY') {
+        setView('reset-password');
+      }
+    });
+
     const checkSession = async () => {
+      // Don't auto-redirect to dashboard if user is completing password recovery
+      if (
+        window.location.hash?.includes('type=recovery') ||
+        window.location.search?.includes('type=recovery')
+      ) {
+        return;
+      }
+
       try {
         const { data: { session } } = await supabase.auth.getSession();
         if (session?.user) {
@@ -57,6 +85,10 @@ const LoginPageSection = () => {
       }
     };
     checkSession();
+
+    return () => {
+      subscription?.unsubscribe();
+    };
   }, [navigate]);
 
   const handleLogin = async (e) => {
@@ -178,13 +210,57 @@ const LoginPageSection = () => {
       });
 
       if (resetError) {
-        setError(resetError.message);
+        if (resetError.message?.toLowerCase().includes('recovery email')) {
+          setError('Email service is currently offline or unconfigured on Supabase. Please contact support or set up Custom SMTP in your Supabase dashboard.');
+        } else {
+          setError(resetError.message);
+        }
       } else {
         setResetSent(true);
         toast.success('Password reset instructions sent to your email.');
       }
     } catch (err) {
       setError(err?.message || 'Could not send reset instructions.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleUpdatePassword = async (e) => {
+    e.preventDefault();
+    if (loading) return;
+    setError('');
+
+    if (newPassword.length < 6) {
+      setError('Password must be at least 6 characters long.');
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      setError('Passwords do not match.');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const { error: updateError } = await supabase.auth.updateUser({
+        password: newPassword
+      });
+
+      if (updateError) {
+        setError(updateError.message || 'Failed to update password.');
+      } else {
+        toast.success('Password updated successfully! Please sign in with your new password.');
+        await supabase.auth.signOut();
+        if (typeof window !== 'undefined' && window.history?.replaceState) {
+          window.history.replaceState(null, '', window.location.pathname);
+        }
+        setView('login');
+        setNewPassword('');
+        setConfirmPassword('');
+      }
+    } catch (err) {
+      setError(err?.message || 'An error occurred while updating password.');
     } finally {
       setLoading(false);
     }
@@ -283,11 +359,13 @@ const LoginPageSection = () => {
                   {view === 'login' && 'Welcome Back.'}
                   {view === 'signup' && 'Create Account.'}
                   {view === 'forgot' && 'Reset Password.'}
+                  {view === 'reset-password' && 'Create New Password.'}
                 </h1>
                 <p className="text-[12.5px] sm:text-[13px] text-[#4A6356] font-['Inter'] leading-relaxed">
                   {view === 'login' && 'Sign in to continue to your account.'}
                   {view === 'signup' && 'Submit your details to request account access. Registrations are reviewed by administrators before access is granted.'}
                   {view === 'forgot' && 'Enter your registered email to receive password reset instructions.'}
+                  {view === 'reset-password' && 'Enter and confirm your new account password below.'}
                 </p>
               </div>
 
@@ -588,6 +666,92 @@ const LoginPageSection = () => {
                       className="text-[#063925] hover:text-[#D4AF37] font-semibold underline ml-1 cursor-pointer"
                     >
                       Back to sign in
+                    </button>
+                  </div>
+                </form>
+              )}
+
+              {/* =============================================================
+                  VIEW 4: CREATE NEW PASSWORD (FROM RECOVERY LINK)
+                  ============================================================= */}
+              {view === 'reset-password' && (
+                <form onSubmit={handleUpdatePassword} autoComplete="off" className="space-y-3.5">
+                  <div>
+                    <label className="block text-[11px] font-['Inter'] font-semibold text-[#1A3326] uppercase tracking-wider mb-1">
+                      New Password <span className="text-[#EA4335]">*</span>
+                    </label>
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      name="asma_new_password"
+                      autoComplete="new-password"
+                      value={newPassword}
+                      onChange={(e) => setNewPassword(e.target.value)}
+                      required
+                      placeholder="Minimum 6 characters"
+                      className="w-full min-h-[42px] px-3.5 py-2 bg-white border border-[#063925]/20 rounded-[4px] focus:outline-none focus:border-[#063925] text-xs sm:text-sm font-['Inter'] text-[#1A3326] placeholder-[#4A6356]/60 transition-colors duration-180"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-['Inter'] font-semibold text-[#1A3326] uppercase tracking-wider mb-1">
+                      Confirm New Password <span className="text-[#EA4335]">*</span>
+                    </label>
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      name="asma_confirm_password"
+                      autoComplete="new-password"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      required
+                      placeholder="Re-enter new password"
+                      className="w-full min-h-[42px] px-3.5 py-2 bg-white border border-[#063925]/20 rounded-[4px] focus:outline-none focus:border-[#063925] text-xs sm:text-sm font-['Inter'] text-[#1A3326] placeholder-[#4A6356]/60 transition-colors duration-180"
+                    />
+                  </div>
+
+                  <div className="flex items-center justify-between pt-0.5">
+                    <label className="flex items-center gap-1.5 text-xs text-[#4A6356] font-['Inter'] cursor-pointer select-none">
+                      <input
+                        type="checkbox"
+                        checked={showPassword}
+                        onChange={(e) => setShowPassword(e.target.checked)}
+                        className="rounded border-[#063925]/30 text-[#063925] focus:ring-0"
+                      />
+                      <span>Show Password</span>
+                    </label>
+                  </div>
+
+                  <div className="pt-1.5">
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className={`w-full min-h-[44px] py-3 bg-[#063925] hover:bg-[#0B2117] text-white font-['Inter'] font-semibold uppercase tracking-wider text-xs rounded-[4px] transition-colors duration-200 flex items-center justify-center gap-2 cursor-pointer shadow-xs ${
+                        loading ? 'opacity-70 cursor-wait' : ''
+                      }`}
+                    >
+                      {loading ? (
+                        <>
+                          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                          <span>Updating Password...</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>Update Password</span>
+                          <span className="text-[#D4AF37] font-bold">→</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+
+                  <div className="pt-3 text-center text-xs font-['Inter'] text-[#4A6356]">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setView('login');
+                        setError('');
+                      }}
+                      className="text-[#063925] hover:text-[#D4AF37] font-semibold underline cursor-pointer"
+                    >
+                      Cancel and back to sign in
                     </button>
                   </div>
                 </form>
